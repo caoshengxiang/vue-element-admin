@@ -1,7 +1,7 @@
 <template>
-    <div>
-      详情
-    </div>
+  <div>
+    详情
+  </div>
 </template>
 
 <script>

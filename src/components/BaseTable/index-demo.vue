@@ -31,7 +31,11 @@
         </div>
       </div>
       <div class="con">
-        <fixed-thead :table-data="tableData" :default-form-thead="defaultFormThead">
+        <fixed-thead
+          :table-data="tableData"
+          :default-form-thead="defaultFormThead"
+          @cell-click="cellClickHandle"
+        >
           <el-table-column
             fixed="right"
             label="操作"
@@ -48,8 +52,8 @@
 </template>
 
 <script>
-  import FixedThead from '../../components/BaseTable/FixedThead'
-  import defaultFormThead from './tableSet'
+  import FixedThead from './FixedThead'
+  import defaultFormThead from './tableSet_demo'
 
   export default {
     name: 'ElectronicLicenseIndex',
@@ -62,49 +66,13 @@
         tableData: [
           {
             id: 1,
-            t1: '1102021',
+            t1: '1102020',
             t2: 'xx123456789456123',
-            t3: 0,
-            t4: '车辆运行良好',
-            t5: 'xx2020',
-            t6: '绿色',
-            t7: '2016-09-21 08:50:08'
-          }, {
-            id: 2,
-            t1: '1102022',
-            t2: 'xx123456789456124',
-            t3: 1,
-            t4: '车辆运行良好',
-            t5: 'xx2020',
-            t6: '绿色',
-            t7: '2016-09-21 08:50:08'
-          }, {
-            id: 3,
-            t1: '1102023',
-            t2: 'xx123456789456125',
-            t3: 0,
-            t4: '车辆运行良好',
-            t5: 'xx2020',
-            t6: '绿色',
-            t7: '2016-09-21 08:50:08'
-          }, {
-            id: 4,
-            t1: '1102024',
-            t2: 'xx123456789456126',
-            t3: 0,
-            t4: '车辆运行良好',
-            t5: 'xx2020',
-            t6: '绿色',
-            t7: '2016-09-21 08:50:08'
-          }, {
-            id: 5,
-            t1: '1102025',
-            t2: 'xx123456789456127',
-            t3: 0,
-            t4: '车辆运行良好',
-            t5: 'xx2020',
-            t6: '绿色',
-            t7: '2016-09-21 08:50:08'
+            t3: '是',
+            t4: 'orange-10',
+            t5: 'orange-10',
+            t6: 'orange-10',
+            t7: 'orange-10'
           }
         ],
         defaultFormThead: defaultFormThead
@@ -113,11 +81,24 @@
     methods: {
       logout(row) {
         console.log(row)
+      },
+      cellClickHandle(obj) {
+        if (obj.key === 't4') {
+          alert(obj.name)
+        }
+        if (obj.key === 't5') {
+          alert(obj.name)
+        }
+        if (obj.key === 't6') {
+          alert(obj.name)
+        }
+        if (obj.key === 't7') {
+          alert(obj.name)
+        }
       }
     }
   }
 </script>
 
 <style scoped lang="scss">
-
 </style>

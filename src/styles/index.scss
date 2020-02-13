@@ -189,3 +189,49 @@ aside {
 .multiselect--active {
   z-index: 1000 !important;
 }
+
+
+.com-container {
+  padding: 10px 10px;
+  background: #f0f2f5;
+  min-height: 90vh;
+
+  .com-con {
+    background: #ffffff;
+    border: 5px;
+    padding: 10px;
+
+    .com-search-bar {
+      .com-search-box {
+        .com-search-item {
+          display: inline-block;
+          min-width: 180px;
+          &.com-search-item-time {
+            width: 320px;
+          }
+          .com-search-item-label {
+            color: #8c939d;
+          }
+        }
+      }
+
+      .com-btns-box {
+        margin-top: 10px;
+      }
+    }
+  }
+}
+.com-el-talble-col-name {
+  color: #0a76a4;
+  cursor: pointer;
+  .cell {
+    &:hover{
+      text-decoration: underline;
+    }
+
+  }
+}
+.com-el-talble-col-title-name {
+  color: #909399;
+  cursor: auto;
+}

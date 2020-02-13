@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">共享单车智慧治理平台</h3>
       </div>
 
       <el-form-item prop="username">
@@ -57,19 +57,19 @@
           <span>Password : any</span>
         </div>
 
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
-        </el-button>
+<!--        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">-->
+<!--          Or connect with-->
+<!--        </el-button>-->
       </div>
     </el-form>
 
-    <el-dialog title="Or connect with" :visible.sync="showDialog">
-      Can not be simulated on local, so please combine you own business simulation! ! !
-      <br>
-      <br>
-      <br>
-      <social-sign />
-    </el-dialog>
+<!--    <el-dialog title="Or connect with" :visible.sync="showDialog">-->
+<!--      Can not be simulated on local, so please combine you own business simulation! ! !-->
+<!--      <br>-->
+<!--      <br>-->
+<!--      <br>-->
+<!--      <social-sign />-->
+<!--    </el-dialog>-->
   </div>
 </template>
 
