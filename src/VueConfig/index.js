@@ -1,3 +1,7 @@
 
+// https://webpack.js.org/guides/dependency-management/#requirecontext
+// require.context('./prototype', true, /\.js$/)
 // 添加prototype
 import './prototype/moment'
+import './prototype/api'
+import './prototype/vueCookies'

@@ -4,8 +4,7 @@ const defaultFormThead = [{
   key: 't1',
   name: '单车编号',
   disabled: true,
-  sortable: true,
-  width: '200px'
+  sortable: true
 }, {
   key: 't2',
   name: '电子牌照'

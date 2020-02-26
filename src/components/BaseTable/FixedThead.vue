@@ -5,6 +5,8 @@ props:
 
 1. tableData [] 表格数据 格式同element
 
+1. total 分页总数
+
 1. defaultFormThead [] 表头数据
   item：
   {
@@ -12,11 +14,13 @@ props:
     name: '', // 字段名称，【必填】
     disabled: Boolean, // 表头显示不可配置, 和colCanConfig同为true生效
     sortable:  Boolean, // 是否排序
-    width: '200px' // 表格固定宽度，无则自动
+    width: '160px' // 默认160px，表格固定宽度，无则自动
+    minWidth: '',
     formatter: Function // 用来格式化内容
     className: String, // 列的 className, 如果只改变单元格不该标题需要和labelClassName配合使用
     labelClassName: String, // 当前列标题的自定义类名
     styleObject: {}, // 配置显示样式. 目前没有生效？
+    showOverflowTooltip, 默认true, 显示超出提示
   }
 
 event:
@@ -44,12 +48,14 @@ slot:
     </div>
     <el-table
       :key="key"
-      size="mini"
       :data="tableData"
       border
+      stripe
       fit
       highlight-current-row
+      tooltip-effect="dark"
       style="width: 100%"
+      header-cell-class-name="header-row-bg"
       @cell-click="cellClickHandler">
       <el-table-column
         v-for="(item,index) in formThead"
@@ -57,14 +63,29 @@ slot:
         :label="item.name"
         :sortable="item.sortable"
         :prop="item.key"
-        :width="item.width"
+        :width="item.width || '160px'"
+        :min-width="item.minWidth || '160px'"
         :formatter="item.formatter"
         :class-name="item.className"
         :label-class-name="item.labelClassName"
         :style="item.styleObject"
+        :show-overflow-tooltip="item.showOverflowTooltip === undefined ? true : item.showOverflowTooltip"
       />
       <slot></slot>
     </el-table>
+    <!--分页-->
+    <div class="pages-box">
+      <el-pagination
+        background
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagesOptions.currentPage"
+        layout="total,sizes, prev, pager, next, jumper"
+        :page-sizes="[10, 20, 30, 40]"
+        :page-size="pagesOptions.pageSize">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -87,13 +108,21 @@ slot:
         default() {
           return []
         }
+      },
+      total: {
+        type: Number,
+        default: 0
       }
     },
     data() {
       return {
         key: 1, // table key
         checkboxVal: [], // checkboxVal
-        formThead: this.defaultFormThead // 默认表头 Default header
+        formThead: this.defaultFormThead, // 默认表头 Default header
+        pagesOptions: { // 分页参数， 注意初始时调用页面的默认值保持一致
+          pageSize: 20,
+          currentPage: 1
+        }
       }
     },
     watch: {
@@ -115,6 +144,15 @@ slot:
           key: column.property,
           name: column.label
         })
+      },
+      handleSizeChange(val) {
+        // console.log(`每页 ${val} 条`)
+        this.pagesOptions.currentPage = 1
+        this.pagesOptions.pageSize = val
+      },
+      handleCurrentChange(val) {
+        // console.log(`当前页: ${val}`)
+        this.pagesOptions.currentPage = val
       }
     },
     created() {
@@ -124,9 +162,20 @@ slot:
     }
   }
 </script>
+<style>
+  .header-row-bg {
+    background-color: #dcdcdc !important;
+    color: #333333;
+  }
+</style>
 <style scoped lang="scss">
   .fixed-thead {
     margin-top: 10px;
+  }
+  .pages-box {
+    text-align: right;
+    padding: 10px 0;
+    border-top: 6px solid #f0f2f5;
   }
 </style>
 

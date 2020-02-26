@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import settings from '../../settings'
 
 const state = {
   sidebar: {
@@ -6,7 +7,7 @@ const state = {
     withoutAnimation: false
   },
   device: 'desktop',
-  size: Cookies.get('size') || 'medium'
+  size: Cookies.get('size') || settings.elDefaultSize
 }
 
 const mutations = {
