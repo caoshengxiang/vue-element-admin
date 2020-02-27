@@ -83,6 +83,12 @@ export const constantRoutes = [
       name: 'electronic-license-index',
       component: () => import('@/views/electronic-license/index'),
       meta: { title: '电子牌照', icon: 'dashboard' }
+    }, {
+      path: 'add',
+      name: 'electronic-license-add',
+      component: () => import('@/views/electronic-license/add'),
+      meta: { title: '电子牌照（添加/编辑）', icon: 'dashboard' },
+      hidden: true
     }]
   },
   {
@@ -95,6 +101,12 @@ export const constantRoutes = [
       name: 'point-index',
       component: () => import('@/views/point/index'),
       meta: { title: '点位查看', icon: 'dashboard' }
+    }, {
+      path: 'add',
+      name: 'point-add',
+      component: () => import('@/views/point/add'),
+      meta: { title: '点位（添加/编辑）', icon: 'dashboard' },
+      hidden: true
     }]
   },
   {
@@ -191,6 +203,18 @@ export const constantRoutes = [
       name: 'user-index',
       component: () => import('@/views/user/index'),
       meta: { title: '人员管理', icon: 'dashboard' }
+    }]
+  },
+  {
+    path: '/ingLog',
+    name: 'ingLog',
+    component: Layout,
+    redirect: '/ingLog/index',
+    children: [{
+      path: 'index',
+      name: 'insLog-index',
+      component: () => import('@/views/ingLog/index'),
+      meta: { title: '巡查日志', icon: 'dashboard' }
     }]
   },
   {

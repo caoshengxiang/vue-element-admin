@@ -82,7 +82,7 @@ slot:
         @current-change="handleCurrentChange"
         :current-page="pagesOptions.currentPage"
         layout="total,sizes, prev, pager, next, jumper"
-        :page-sizes="[10, 20, 30, 40]"
+        :page-sizes="[5, 10, 20, 30, 40]"
         :page-size="pagesOptions.pageSize">
       </el-pagination>
     </div>
