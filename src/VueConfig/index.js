@@ -5,3 +5,4 @@
 import './prototype/moment'
 import './prototype/api'
 import './prototype/vueCookies'
+import './prototype/qs'
