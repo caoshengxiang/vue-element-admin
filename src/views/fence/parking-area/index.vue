@@ -1,55 +1,93 @@
 <template>
-  <div class="com-container">
-    <div class="com-con">
-      <div class="com-search-bar">
-        <div class="com-search-box">
-          <div class="com-search-item com-search-item-time">
-            <span class="com-search-item-label">有效期:</span>
-            <el-date-picker
-              style="width: 260px;"
-              v-model="value1"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期">
-            </el-date-picker>
+  <div v-loading="loading" class="com-container">
+    <div class="com-con-box">
+      <div class="com-bar">
+        <div class="com-bar-show">
+          <div class="com-bar-left">
+            <span class="com-bar-item"><el-button type="primary" @click="add">添加</el-button></span>
           </div>
-          <div class="com-search-item">
-            <el-select v-model="form.value" clearable placeholder="是否有摄像头">
-              <el-option label="有摄像头" :value="1"></el-option>
-              <el-option label="无摄像头" :value="0"></el-option>
-            </el-select>
-          </div>
-          <div class="com-search-item">
-            <el-input
-              style="width: 200px;"
-              placeholder="围栏或点位或街道关键字"
-              v-model="form.name"
-              clearable>
-            </el-input>
-          </div>
-          <div class="com-search-item">
-            <el-button type="primary">查询</el-button>
-            <el-button>重置</el-button>
+          <div class="com-bar-right">
+            <span class="com-search-item com-bar-item">
+              <el-input
+                v-model="searchForm.keyword"
+                placeholder="请输入关键词"
+                clearable
+              />
+            </span>
+            <span class="com-bar-item">
+              <el-button icon="el-icon-search" type="primary" @click="search">查询</el-button>
+              <el-button type="primary" plain @click="moreShow = !moreShow">更多
+                <i v-if="!moreShow" class="el-icon-arrow-right el-icon--right"/>
+                <i v-else class="el-icon-arrow-up el-icon--right"/>
+              </el-button>
+            </span>
           </div>
         </div>
-        <div class="com-btns-box">
-          <el-button type="primary">注册</el-button>
-          <el-button type="primary">批量注册</el-button>
-          <el-button type="primary">下载注册模板</el-button>
-          <el-button type="primary">批量注销</el-button>
-          <el-button type="primary">下载注销模板</el-button>
+        <div v-show="moreShow" class="com-more-search">
+          <el-form ref="searchForm" :model="searchForm" label-width="90px" class="demo-ruleForm">
+            <el-row>
+              <el-col :xs="24" :sm="6">
+                <el-form-item label="摄像头" prop="hasCamera">
+                  <el-select v-model="searchForm.hasCamera" clearable placeholder="是否有摄像头">
+                    <el-option label="有摄像头" :value="true"/>
+                    <el-option label="无摄像头" :value="false"/>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="6">
+                <el-form-item label="所属点位" prop="parkingSpotId">
+                  <el-select v-model="searchForm.parkingSpotId" clearable placeholder="所属点位">
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item label="有效期" prop="focused">
+                  <el-date-picker
+                    value-format="yyyy-MM-DD HH:mm:ss"
+                    :default-time="['00:00:00', '23:59:59']"
+                    v-model="valueTime"
+                    style="width: 260px;"
+                    type="daterange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20" style="padding-left: 90px;">
+              <el-col :xs="24" :sm="6">
+                <el-button
+                  icon="el-icon-search"
+                  type="primary"
+                  style="width: 100%;margin-bottom: 14px"
+                  @click="search('searchForm')"
+                >查 询
+                </el-button>
+              </el-col>
+              <el-col :xs="24" :sm="6">
+                <el-button style="width: 100%;margin-bottom: 14px;" @click="resetForm('searchForm')">重 置</el-button>
+              </el-col>
+            </el-row>
+          </el-form>
         </div>
       </div>
       <div class="con">
-        <fixed-thead :table-data="tableData" :default-form-thead="defaultFormThead">
+        <fixed-thead
+          :total="total"
+          :table-data="tableData"
+          :default-form-thead="defaultFormThead"
+          @pageQueryChange="pageQueryChange"
+        >
           <el-table-column
             fixed="right"
             label="操作"
+            width="160"
           >
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="logout(scope.row)">图片</el-button>
-              <el-button type="text" size="small" @click="logout(scope.row)">地图</el-button>
+              <el-button type="text" size="small" @click="handleType(scope.row, 1)">编辑</el-button>
+              <el-button type="text" size="small" @click="handleType(scope.row, 2)">图片</el-button>
+              <el-button type="text" size="small" @click="handleType(scope.row, 3)">边界</el-button>
             </template>
           </el-table-column>
         </fixed-thead>
@@ -63,56 +101,70 @@
   import defaultFormThead from './tableSet'
 
   export default {
-    name: 'ElectronicLicenseIndex',
+    name: 'FenceAreaIndex',
     components: { FixedThead },
     data() {
       return {
-        value1: '',
-        form: {
-          name: '',
-          value: ''
+        /**/
+        loading: false,
+        moreShow: false,
+        searchForm: {
+          type: 1,
+          keyword: '',
+          hasCamera: '',
+          validStart: '',
+          validEnd: ''
         },
-        tableData: [
-          {
-            id: 1,
-            t1: '100001',
-            t2: '天府三街A口-左',
-            t3: '天府三街A口',
-            t4: '高新区天府大道天府三街',
-            t5: '2015-10-02 ~ 2025-10-10',
-            t6: '100'
-          }, {
-            id: 2,
-            t1: '100002',
-            t2: '天府三街A口-左',
-            t3: '天府三街A口',
-            t4: '高新区天府大道天府三街',
-            t5: '2015-10-02 ~ 2025-10-10',
-            t6: '150'
-          }, {
-            id: 2,
-            t1: '100002',
-            t2: '天府三街A口-左',
-            t3: '天府三街A口',
-            t4: '高新区天府大道天府三街',
-            t5: '2015-10-02 ~ 2025-10-10',
-            t6: '200'
-          }, {
-            id: 2,
-            t1: '100002',
-            t2: '天府三街A口-左',
-            t3: '天府三街A口',
-            t4: '高新区天府大道天府三街',
-            t5: '2015-10-02 ~ 2025-10-10',
-            t6: '250'
-          }
-        ],
-        defaultFormThead: defaultFormThead
+        pageForm: {
+          size: 20,
+          current: 1
+        },
+        total: 0,
+        tableData: [],
+        defaultFormThead: defaultFormThead,
+        /**/
+        valueTime: null
       }
     },
+    created() {
+      this.getList()
+    },
     methods: {
-      logout(row) {
-        console.log(row)
+      /**/
+      search() {
+        this.getList()
+      },
+      pageQueryChange(pageForm) {
+        this.pageForm = pageForm
+        this.getList()
+      },
+      resetForm(formName) {
+        this.searchForm.keyword = ''
+        this.$refs[formName].resetFields()
+        this.getList()
+      },
+      getList() {
+        this.loading = true
+        this.searchForm.validStart = this.valueTime ? this.valueTime[0] : ''
+        this.searchForm.validEnd = this.valueTime ? this.valueTime[1] : ''
+        this.$api.fence.list(Object.assign({},
+          this.pageForm,
+          this.searchForm
+        )).then(res => {
+          const { data } = res
+          this.total = data.total
+          this.tableData = data.records
+          this.loading = false
+        }).catch(() => { this.loading = false })
+      },
+      /**/
+      add() {
+        this.$router.push({ name: 'fence-area-add' })
+      },
+      handleType(row, type) {
+        if (type === 1) {
+          this.$router.push({ name: 'fence-area-add', query: { id: row.id }})
+        }
       }
     }
   }

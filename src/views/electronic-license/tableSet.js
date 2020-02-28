@@ -1,10 +1,9 @@
 import moment from 'moment'
 
 const defaultFormThead = [{
-  key: 't1',
+  key: 'bikeNo',
   name: '单车编号',
-  disabled: true,
-  sortable: true
+  disabled: true
 }, {
   key: 't2',
   name: '电子牌照'

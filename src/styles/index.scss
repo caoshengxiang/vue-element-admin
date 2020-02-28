@@ -199,6 +199,7 @@ aside {
   .com-con-box {
     background: #ffffff;
     padding: 10px;
+    min-height: 600px;
     .com-bar {
       position: relative;
       border-bottom: 5px solid #f0f2f5;
@@ -227,6 +228,8 @@ aside {
       .com-more-search {
         //min-height: 80px;
         background: #fafafa;
+        border: 1px dashed #CCCCCC;
+        padding-top: 10px
       }
     }
 
@@ -243,6 +246,6 @@ aside {
   }
 }
 .com-el-talble-col-title-name {
-  color: #909399;
+  color: #333333;
   cursor: auto;
 }

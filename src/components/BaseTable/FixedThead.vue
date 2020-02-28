@@ -1,11 +1,11 @@
 <!--el普通表格-->
 <!--
 props:
-1.colCanConfig 默认false 。是否能配置el-table-column 单元格的显示隐藏
+1.colCanConfig 默认false 。是否能配置（提供用户选项字段的显示隐藏）el-table-column 单元格的显示隐藏
 
 1. tableData [] 表格数据 格式同element
 
-1. total 分页总数
+1. total 分页总数, undefined 或小于0 不显示分页
 
 1. defaultFormThead [] 表头数据
   item：
@@ -25,6 +25,7 @@ props:
 
 event:
 1.cell-click 单元格的点击事件
+1. pageQueryChange 分页参数改变
 
 slot:
 1. 默认 最后添加el-table-column ， 操作列
@@ -33,7 +34,7 @@ slot:
 
 <template>
   <div class="fixed-thead">
-    <div class="filter-container" v-show="colCanConfig">
+    <div v-show="colCanConfig" class="filter-container">
       <!--      <span>显示字段：</span>-->
       <el-checkbox-group v-model="checkboxVal">
         <el-checkbox
@@ -56,7 +57,8 @@ slot:
       tooltip-effect="dark"
       style="width: 100%"
       header-cell-class-name="header-row-bg"
-      @cell-click="cellClickHandler">
+      @cell-click="cellClickHandler"
+    >
       <el-table-column
         v-for="(item,index) in formThead"
         :key="index"
@@ -71,20 +73,20 @@ slot:
         :style="item.styleObject"
         :show-overflow-tooltip="item.showOverflowTooltip === undefined ? true : item.showOverflowTooltip"
       />
-      <slot></slot>
+      <slot />
     </el-table>
     <!--分页-->
-    <div class="pages-box">
+    <div v-if="total !== undefined && total >= 0" class="pages-box">
       <el-pagination
         background
         :total="total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="pagesOptions.currentPage"
+        :current-page="pagesOptions.current"
         layout="total,sizes, prev, pager, next, jumper"
         :page-sizes="[5, 10, 20, 30, 40]"
-        :page-size="pagesOptions.pageSize">
-      </el-pagination>
+        :page-size="pagesOptions.size"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
     </div>
   </div>
 </template>
@@ -120,8 +122,8 @@ slot:
         checkboxVal: [], // checkboxVal
         formThead: this.defaultFormThead, // 默认表头 Default header
         pagesOptions: { // 分页参数， 注意初始时调用页面的默认值保持一致
-          pageSize: 20,
-          currentPage: 1
+          size: 20,
+          current: 1
         }
       }
     },
@@ -135,6 +137,11 @@ slot:
         this.key = this.key + 1// 为了保证table 每次都会重渲 In order to ensure the table will be re-rendered each time
       }
     },
+    created() {
+      this.checkboxVal = this.defaultFormThead.map(item => {
+        return item.key
+      })
+    },
     methods: {
       cellClickHandler(row, column, cell, event) {
         // column.property 是key
@@ -147,18 +154,15 @@ slot:
       },
       handleSizeChange(val) {
         // console.log(`每页 ${val} 条`)
-        this.pagesOptions.currentPage = 1
-        this.pagesOptions.pageSize = val
+        this.pagesOptions.current = 1
+        this.pagesOptions.size = val
+        this.$emit('pageQueryChange', this.pagesOptions)
       },
       handleCurrentChange(val) {
         // console.log(`当前页: ${val}`)
-        this.pagesOptions.currentPage = val
+        this.pagesOptions.current = val
+        this.$emit('pageQueryChange', this.pagesOptions)
       }
-    },
-    created() {
-      this.checkboxVal = this.defaultFormThead.map(item => {
-        return item.key
-      })
     }
   }
 </script>
@@ -172,6 +176,7 @@ slot:
   .fixed-thead {
     margin-top: 10px;
   }
+
   .pages-box {
     text-align: right;
     padding: 10px 0;

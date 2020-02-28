@@ -1,22 +1,27 @@
-import moment from 'moment'
-
 const defaultFormThead = [{
-  key: 't1',
+  key: 'id',
   name: 'ID'
 }, {
-  key: 't2',
+  key: 'name',
   name: '围栏名称'
 }, {
-  key: 't3',
+  key: 'spot',
   name: '所属点位'
 }, {
-  key: 't4',
+  key: 'street',
   name: '所属街道'
 }, {
-  key: 't5',
-  name: '摄像头'
+  key: 'hasCamera',
+  name: '摄像头',
+  formatter: (row, column, cellValue, index) => {
+    return row.hasCamera ? '有摄像头' : '无摄像头'
+  }
 }, {
-  key: 't6',
-  name: '已停数量'
+  key: 'validStart_validEnd',
+  name: '有效期',
+  width: '300px',
+  formatter: (row, column, cellValue, index) => {
+    return row.validStart + ' - ' + row.validEnd
+  }
 }]
 export default defaultFormThead

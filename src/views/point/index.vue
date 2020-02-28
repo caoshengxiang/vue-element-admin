@@ -1,5 +1,5 @@
 <template>
-  <div class="com-container point">
+  <div v-loading="loading" class="com-container point">
     <div class="com-con-box">
       <div class="com-bar">
         <div class="com-bar-show">
@@ -17,8 +17,8 @@
             <span class="com-bar-item">
               <el-button icon="el-icon-search" type="primary" @click="search">查询</el-button>
               <el-button type="primary" plain @click="moreShow = !moreShow">更多
-                <i v-if="!moreShow" class="el-icon-arrow-right el-icon--right"></i>
-                <i v-else class="el-icon-arrow-up el-icon--right"></i>
+                <i v-if="!moreShow" class="el-icon-arrow-right el-icon--right" />
+                <i v-else class="el-icon-arrow-up el-icon--right" />
               </el-button>
             </span>
           </div>
@@ -26,17 +26,48 @@
         <div v-show="moreShow" class="com-more-search">
           <el-form ref="searchForm" :model="searchForm" label-width="90px" class="demo-ruleForm">
             <el-row>
-              <!--              <el-col :xs="24" :sm="6">-->
-              <!--                <el-form-item label="单车编号" prop="bikeNo">-->
-              <!--                  <el-input clearable v-model="searchForm.bikeNo"/>-->
-              <!--                </el-form-item>-->
-              <!--              </el-col>-->
+              <el-col :xs="24" :sm="6">
+                <el-form-item label="点位名称" prop="name">
+                  <el-input v-model="searchForm.name" />
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="6">
+                <el-form-item label="街道" prop="regionId">
+                  <el-select v-model="searchForm.regionId" placeholder="请选择">
+                    <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item label="容量范围">
+                  <el-input v-model.number="searchForm.capacityStart" style="width: 40%" type="number" />
+                  到
+                  <el-input v-model.number="searchForm.capacityEnd" style="width: 40%" type="number" />
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="6">
+                <el-form-item label="重点点位" prop="focused">
+                  <el-radio-group v-model="searchForm.focused">
+                    <el-radio :label="true">是</el-radio>
+                    <el-radio :label="false">否</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </el-col>
             </el-row>
-            <el-form-item>
-              <el-button icon="el-icon-search" type="primary" style="width: 200px" @click="search('searchForm')">查 询
-              </el-button>
-              <el-button style="width: 200px" @click="resetForm('searchForm')">重 置</el-button>
-            </el-form-item>
+            <el-row :gutter="20" style="padding-left: 90px;">
+              <el-col :xs="24" :sm="6">
+                <el-button icon="el-icon-search" type="primary" style="width: 100%;margin-bottom: 14px" @click="search('searchForm')">查 询
+                </el-button>
+              </el-col>
+              <el-col :xs="24" :sm="6">
+                <el-button style="width: 100%;margin-bottom: 14px;" @click="resetForm('searchForm')">重 置</el-button>
+              </el-col>
+            </el-row>
           </el-form>
         </div>
       </div>
@@ -46,16 +77,18 @@
           :table-data="tableData"
           :default-form-thead="defaultFormThead"
           @cell-click="cellClickHandle"
+          @pageQueryChange="pageQueryChange"
         >
           <el-table-column
             fixed="right"
             label="操作"
-            min-width="120px"
+            min-width="180px"
           >
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="logout(scope.row)">容量</el-button>
-              <el-button type="text" size="small" @click="logout(scope.row)">围栏</el-button>
-              <el-button type="text" size="small" @click="logout(scope.row)">边界</el-button>
+              <el-button type="text" size="small" @click="handleType(scope.row, 2)">围栏</el-button>
+              <el-button type="text" size="small" @click="handleType(scope.row, 3)">边界</el-button>
+              <el-button type="text" size="small" @click="handleType(scope.row, 4)">编辑</el-button>
+              <el-button type="text" size="small" @click="handleType(scope.row, 1)">删除</el-button>
             </template>
           </el-table-column>
         </fixed-thead>
@@ -69,10 +102,28 @@
   import defaultFormThead from './tableSet'
 
   export default {
-    name: 'Index',
+    name: 'PointIndex',
     components: { FixedThead },
     data() {
       return {
+        /**/
+        loading: false,
+        moreShow: false,
+        searchForm: {
+          keyword: '',
+          name: '',
+          focused: '',
+          capacityStart: '',
+          capacityEnd: ''
+        },
+        pageForm: {
+          size: 20,
+          current: 1
+        },
+        total: 0,
+        tableData: [],
+        defaultFormThead: defaultFormThead,
+        /**/
         options: [
           {
             value: 1,
@@ -96,29 +147,27 @@
             value: 7,
             label: '中和街道办事处'
           }
-        ],
-        loading: false,
-        moreShow: false,
-        searchForm: {
-          keyword: ''
-        },
-        pageForm: {
-          pageSize: 20,
-          currentPage: 1
-        },
-        total: 0,
-        tableData: [],
-        defaultFormThead: defaultFormThead
+        ]
       }
+    },
+    created() {
+      this.getList()
     },
     methods: {
       /**/
       search() {
         this.getList()
       },
+      pageQueryChange(pageForm) {
+        this.pageForm = pageForm
+        this.getList()
+      },
       resetForm(formName) {
         this.searchForm.keyword = ''
+        this.searchForm.capacityStart = ''
+        this.searchForm.capacityEnd = ''
         this.$refs[formName].resetFields()
+        this.getList()
       },
       getList() {
         this.loading = true
@@ -136,12 +185,38 @@
       add() {
         this.$router.push({ name: 'point-add' })
       },
-      logout(row) {
-        console.log(row)
+      handleType(row, type) {
+        switch (type) {
+          case 1: // 删除
+            this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.$api.points.del(row.id).then(res => {
+                if (res.code === 200) {
+                  this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                  })
+                  this.getList()
+                }
+              })
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '已取消删除'
+              })
+            })
+            break
+          case 4: // 编辑
+            this.$router.push({ name: 'point-add', query: { id: row.id }})
+        }
       },
       cellClickHandle(obj) {
-        if (obj.key === 't4') {
-          alert(obj.name)
+        if (obj.key === 'maxCapacity') { // 容量
+          const row = obj.row
+          this.$router.push({ name: 'point-capacity', query: { id: row.id }})
         }
         if (obj.key === 't5') {
           alert(obj.name)

@@ -2,6 +2,8 @@
   <div class="dashboard-container">
     <div class="dashboard-text">
       大屏临时链接：<a href="http://49.235.131.71:9512/#/data/v" target="_blank">http://49.235.131.71:9512/#/data/v</a>
+      <br>
+      gis大屏临时链接：<a href="http://49.235.131.71:9512/#/data/map" target="_blank">http://49.235.131.71:9512/#/data/map</a>
     </div>
   </div>
 </template>

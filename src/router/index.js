@@ -107,6 +107,12 @@ export const constantRoutes = [
       component: () => import('@/views/point/add'),
       meta: { title: '点位（添加/编辑）', icon: 'dashboard' },
       hidden: true
+    }, {
+      path: 'capacity',
+      name: 'point-capacity',
+      component: () => import('@/views/point/capacity'),
+      meta: { title: '潮汐容量', icon: 'dashboard' },
+      hidden: true
     }]
   },
   {
@@ -123,17 +129,31 @@ export const constantRoutes = [
         meta: { title: '停放区', icon: 'dashboard' }
       },
       {
+        path: 'add',
+        name: 'fence-area-add',
+        component: () => import('@/views/fence/parking-area/add'),
+        meta: { title: '停放区（添加/编辑）', icon: 'dashboard' },
+        hidden: true
+      },
+      {
         path: 'no-stop',
         name: 'no-stop',
         component: () => import('@/views/fence/no-stop/index'),
         meta: { title: '禁停区', icon: 'dashboard' }
       },
       {
-        path: 'fence-map',
-        name: 'fence-map',
-        component: () => import('@/views/fence/map/index'),
-        meta: { title: '围栏地图', icon: 'dashboard' }
+        path: 'add',
+        name: 'fence-no-add',
+        component: () => import('@/views/fence/no-stop/add'),
+        meta: { title: '禁停区（添加/编辑）', icon: 'dashboard' },
+        hidden: true
       }
+      // {
+      //   path: 'fence-map',
+      //   name: 'fence-map',
+      //   component: () => import('@/views/fence/map/index'),
+      //   meta: { title: '围栏地图', icon: 'dashboard' }
+      // }
     ]
   },
   {

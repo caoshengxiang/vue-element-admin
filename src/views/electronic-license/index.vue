@@ -16,7 +16,7 @@
               </el-upload>
             </span>
 
-            <span class="com-bar-item"><el-button type="primary" @click="excelExport">注册模板</el-button></span>
+            <span class="com-bar-item"><el-button type="text" @click="excelExport">下载注册模板</el-button></span>
             <span class="com-bar-item">
               <el-upload
                 action=""
@@ -27,7 +27,7 @@
                 <el-button type="primary">批量注销</el-button>
               </el-upload>
             </span>
-            <span class="com-bar-item"><el-button type="primary" @click="excelExport2">注销模板</el-button></span>
+            <span class="com-bar-item"><el-button type="text" @click="excelExport2">下载注销模板</el-button></span>
           </div>
           <div class="com-bar-right">
             <span class="com-search-item com-bar-item">
@@ -40,8 +40,8 @@
             <span class="com-bar-item">
               <el-button icon="el-icon-search" type="primary" @click="search">查询</el-button>
               <el-button type="primary" plain @click="moreShow = !moreShow">更多
-                <i v-if="!moreShow" class="el-icon-arrow-right el-icon--right"></i>
-                <i v-else class="el-icon-arrow-up el-icon--right"></i>
+                <i v-if="!moreShow" class="el-icon-arrow-right el-icon--right" />
+                <i v-else class="el-icon-arrow-up el-icon--right" />
               </el-button>
             </span>
           </div>
@@ -51,32 +51,32 @@
             <el-row>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="单车编号" prop="bikeNo">
-                  <el-input clearable v-model="searchForm.bikeNo"/>
+                  <el-input v-model="searchForm.bikeNo" clearable />
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="电子牌照" prop="electroLicence">
-                  <el-input clearable v-model="searchForm.electroLicence"/>
+                  <el-input v-model="searchForm.electroLicence" clearable />
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="公司" prop="company">
-                  <el-input clearable v-model="searchForm.company"/>
+                  <el-input v-model="searchForm.company" clearable />
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="型号" prop="model">
-                  <el-input clearable v-model="searchForm.model"/>
+                  <el-input v-model="searchForm.model" clearable />
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="颜色" prop="color">
-                  <el-input clearable v-model="searchForm.color"/>
+                  <el-input v-model="searchForm.color" clearable />
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="车况" prop="condition">
-                  <el-select clearable v-model="searchForm.condition" placeholder="请选择">
+                  <el-select v-model="searchForm.condition" clearable placeholder="请选择">
                     <el-option
                       v-for="item in electroLicence_condition"
                       :key="item.value"
@@ -88,7 +88,7 @@
               </el-col>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="状态" prop="state">
-                  <el-select clearable v-model="searchForm.state" placeholder="请选择">
+                  <el-select v-model="searchForm.state" clearable placeholder="请选择">
                     <el-option
                       v-for="item in electroLicence_state"
                       :key="item.value"
@@ -107,11 +107,15 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-form-item>
-              <el-button icon="el-icon-search" type="primary" style="width: 200px" @click="search('searchForm')">查 询
-              </el-button>
-              <el-button style="width: 200px" @click="resetForm('searchForm')">重 置</el-button>
-            </el-form-item>
+            <el-row :gutter="20" style="padding-left: 90px;">
+              <el-col :xs="24" :sm="6">
+                <el-button icon="el-icon-search" type="primary" style="width: 100%;margin-bottom: 14px" @click="search('searchForm')">查 询
+                </el-button>
+              </el-col>
+              <el-col :xs="24" :sm="6">
+                <el-button style="width: 100%;margin-bottom: 14px;" @click="resetForm('searchForm')">重 置</el-button>
+              </el-col>
+            </el-row>
           </el-form>
         </div>
       </div>
@@ -162,8 +166,8 @@
           bluetooth: ''
         },
         pageForm: {
-          pageSize: 20,
-          currentPage: 1
+          size: 20,
+          current: 1
         },
         total: 0,
         tableData: [],

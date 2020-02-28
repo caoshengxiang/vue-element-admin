@@ -2,30 +2,34 @@
   <div v-loading="loading" class="com-container">
     <div class="com-con-box">
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="160px" class="demo-ruleForm">
-        <el-form-item label="点位名称" prop="name">
-          <el-input v-model="ruleForm.name" />
+        <el-form-item label="围栏名称" prop="name">
+          <el-input v-model="ruleForm.name"/>
         </el-form-item>
-        <el-form-item label="重点点位" prop="focused">
-          <el-radio-group v-model="ruleForm.focused">
-            <el-radio :label="true">是</el-radio>
-            <el-radio :label="false">否</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="街道" prop="regionId">
-          <el-select v-model="ruleForm.regionId" placeholder="请选择">
-            <el-option
-              v-for="item in streetOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
+        <el-form-item label="所属点位" prop="parkingSpotId">
+          <el-select v-model="ruleForm.parkingSpotId" clearable placeholder="所属点位">
           </el-select>
         </el-form-item>
-        <!--        <el-form-item label="街道地址" prop="street">-->
-        <!--          <el-input v-model="ruleForm.street"></el-input>-->
-        <!--        </el-form-item>-->
-        <el-form-item label="最大容量" prop="maxCapacity">
-          <el-input v-model.number="ruleForm.maxCapacity" type="number" />
+<!--        <el-form-item label="有无摄像头" prop="hasCamera">-->
+<!--          <el-radio-group v-model="ruleForm.hasCamera">-->
+<!--            <el-radio :label="true">有摄像头</el-radio>-->
+<!--            <el-radio :label="false">无摄像头</el-radio>-->
+<!--          </el-radio-group>-->
+<!--        </el-form-item>-->
+        <el-form-item label="摄像头" prop="cameraId">
+          <el-select v-model="ruleForm.cameraId" clearable placeholder="摄像头">
+          </el-select>
+        </el-form-item>
+        <el-form-item label="有效期" prop="validStart">
+          <el-date-picker
+            v-model="valueTime"
+            value-format="yyyy-MM-DD HH:mm:ss"
+            :default-time="['00:00:00', '23:59:59']"
+            style="width: 260px;"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" style="width: 200px" @click="submitForm('ruleForm')">保 存</el-button>
@@ -45,57 +49,36 @@
       return {
         loading: false,
         ruleForm: {
+          type: 1,
           name: '',
-          focused: false,
-          regionId: '',
-          maxCapacity: '',
-          // street: '',
-          matrix: '', // 多边形经纬度json
-          matrixCrawler: '' // 爬虫用经纬度数组
+          parkingSpotId: '',
+          hasCamera: '',
+          cameraId: '',
+          validStart: '',
+          validEnd: '',
+          matrix: '',
+          pic: ''
         },
         rules: {
           name: [
             { required: true, message: '请输入', trigger: 'blur' }
             // { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
           ],
-          maxCapacity: [
-            { required: true, message: '请输入', trigger: 'blur' }
-          ],
-          focused: [
+          hasCamera: [
             { required: true, message: '请选择', trigger: 'change' }
           ],
-          street: [
-            { required: true, message: '请输入', trigger: 'blur' }
+          // cameraId: [
+          //   { required: true, message: '请选择', trigger: 'change' }
+          // ],
+          parkingSpotId: [
+            { required: true, message: '请选择', trigger: 'change' }
           ],
-          regionId: [
+          validStart: [
             { required: true, message: '请选择', trigger: 'change' }
           ]
         },
-        streetOptions: [
-          {
-            value: 1,
-            label: '芳草街道办事处'
-          }, {
-            value: 2,
-            label: '肖家河街道办事处'
-          }, {
-            value: 3,
-            label: '合作街道'
-          }, {
-            value: 4,
-            label: '西园街道'
-          }, {
-            value: 5,
-            label: '芳草街道办事处'
-          }, {
-            value: 6,
-            label: '石羊街道办事处'
-          }, {
-            value: 7,
-            label: '中和街道办事处'
-          }
-        ],
-        targetId: ''
+        targetId: '',
+        valueTime: null
       }
     },
     computed: {
@@ -104,7 +87,7 @@
     created() {
       this.targetId = this.$route.query.id
       if (this.targetId) {
-        this.$api.points.detail(this.targetId).then(res => {
+        this.$api.fence.detail(this.targetId).then(res => {
           if (res.code === 200) {
             this.ruleForm = res.data
           }
@@ -113,10 +96,12 @@
     },
     methods: {
       submitForm(formName) {
+        this.ruleForm.validStart = this.valueTime ? this.valueTime[0] : ''
+        this.ruleForm.validEnd = this.valueTime ? this.valueTime[1] : ''
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.loading = true
-            this.$api.points.add(this.ruleForm).then(res => {
+            this.$api.fence.add(this.ruleForm).then(res => {
               if (res.code === 200) {
                 if (this.targetId) {
                   this.$message.success('编辑成功')

@@ -1,37 +1,37 @@
 
 const defaultFormThead = [{
-  key: 't1',
-  name: '名称'
+  key: 'name',
+  name: '点位名称'
 }, {
-  key: 't2',
+  key: 'regionId',
   name: '所属街道'
 }, {
-  key: 't3',
+  key: 'focused',
   name: '是否重点点位',
   formatter: (row, column, cellValue, index) => {
-    if (row.t3 === 1) {
+    if (row.focused === true) {
       return '是'
     } else {
       return '否'
     }
   }
 }, {
-  key: 't4',
-  name: '任务',
+  key: 'taskNum',
+  name: '任务(点击数值查看)',
   className: 'com-el-talble-col-name',
   labelClassName: 'com-el-talble-col-title-name'
 }, {
-  key: 't5',
-  name: '预警',
+  key: 'alertNum',
+  name: '预警(点击数值查看)',
   className: 'com-el-talble-col-name',
   labelClassName: 'com-el-talble-col-title-name'
 }, {
-  key: 't6',
-  name: '容量',
+  key: 'maxCapacity',
+  name: '最大容量(查看容量)',
   className: 'com-el-talble-col-name',
   labelClassName: 'com-el-talble-col-title-name'
 }, {
-  key: 't7',
+  key: 'parkingNum',
   name: '已停数量',
   className: 'com-el-talble-col-name',
   labelClassName: 'com-el-talble-col-title-name'
