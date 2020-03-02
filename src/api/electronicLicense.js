@@ -1,6 +1,6 @@
 import request2 from '@/utils/request2'
 
-export default {
+const electronicLicense = {
   list(params) {
     return request2.get('supervisor/register', { params: params })
   },
@@ -23,3 +23,4 @@ export default {
     return request2.post('supervisor/register/batchRegistry', params)
   }
 }
+export default electronicLicense

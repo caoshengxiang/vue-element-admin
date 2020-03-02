@@ -17,8 +17,8 @@
             <span class="com-bar-item">
               <el-button icon="el-icon-search" type="primary" @click="search">查询</el-button>
               <el-button type="primary" plain @click="moreShow = !moreShow">更多
-                <i v-if="!moreShow" class="el-icon-arrow-right el-icon--right"/>
-                <i v-else class="el-icon-arrow-up el-icon--right"/>
+                <i v-if="!moreShow" class="el-icon-arrow-right el-icon--right" />
+                <i v-else class="el-icon-arrow-up el-icon--right" />
               </el-button>
             </span>
           </div>
@@ -29,23 +29,23 @@
               <el-col :xs="24" :sm="6">
                 <el-form-item label="摄像头" prop="hasCamera">
                   <el-select v-model="searchForm.hasCamera" clearable placeholder="是否有摄像头">
-                    <el-option label="有摄像头" :value="true"/>
-                    <el-option label="无摄像头" :value="false"/>
+                    <el-option label="有摄像头" :value="true" />
+                    <el-option label="无摄像头" :value="false" />
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="所属点位" prop="parkingSpotId">
-                  <el-select v-model="searchForm.parkingSpotId" clearable placeholder="所属点位">
-                  </el-select>
+                  <el-select v-model="searchForm.parkingSpotId" clearable placeholder="所属点位" />
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12">
                 <el-form-item label="有效期" prop="focused">
                   <el-date-picker
+                    v-model="valueTime"
                     value-format="yyyy-MM-DD HH:mm:ss"
                     :default-time="['00:00:00', '23:59:59']"
-                    v-model="valueTime"
+                    :unlink-panels="true"
                     style="width: 260px;"
                     type="daterange"
                     range-separator="至"
@@ -82,7 +82,7 @@
           <el-table-column
             fixed="right"
             label="操作"
-            width="160"
+            min-width="160"
           >
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="handleType(scope.row, 1)">编辑</el-button>

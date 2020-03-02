@@ -3,18 +3,18 @@
 props:
 1.colCanConfig 默认false 。是否能配置（提供用户选项字段的显示隐藏）el-table-column 单元格的显示隐藏
 
-1. tableData [] 表格数据 格式同element
+1. tableData []  必填项，表格数据 格式同element
 
 1. total 分页总数, undefined 或小于0 不显示分页
 
-1. defaultFormThead [] 表头数据
+1. defaultFormThead [] 表头数据，必填项
   item：
   {
     key: '', // 字段， 【必填】
     name: '', // 字段名称，【必填】
     disabled: Boolean, // 表头显示不可配置, 和colCanConfig同为true生效
     sortable:  Boolean, // 是否排序
-    width: '160px' // 默认160px，表格固定宽度，无则自动
+    width: '160px' // 默认160px 或 160，表格固定宽度，无则自动
     minWidth: '',
     formatter: Function // 用来格式化内容
     className: String, // 列的 className, 如果只改变单元格不该标题需要和labelClassName配合使用
@@ -28,7 +28,7 @@ event:
 1. pageQueryChange 分页参数改变
 
 slot:
-1. 默认 最后添加el-table-column ， 操作列
+1. 默认 最后添加el-table-column ， 一般用于操作列
 
 -->
 

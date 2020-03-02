@@ -24,6 +24,7 @@
             v-model="valueTime"
             value-format="yyyy-MM-DD HH:mm:ss"
             :default-time="['00:00:00', '23:59:59']"
+            :unlink-panels="true"
             style="width: 260px;"
             type="daterange"
             range-separator="至"

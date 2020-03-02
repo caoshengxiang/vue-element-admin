@@ -97,7 +97,8 @@
           state: [
             { required: true, message: '请选择', trigger: 'change' }
           ]
-        }
+        },
+        targetId: ''
       }
     },
     computed: {
@@ -106,6 +107,16 @@
         'electroLicence_state'
       ])
     },
+    created() {
+      this.targetId = this.$route.query.id
+      if (this.targetId) {
+        this.$api.electronicLicense.detail(this.targetId).then(res => {
+          if (res.code === 200) {
+            this.ruleForm = res.data
+          }
+        })
+      }
+    },
     methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -113,8 +124,12 @@
             this.loading = true
             this.$api.electronicLicense.add(this.ruleForm).then(res => {
               if (res.code === 200) {
-                this.$message.success('添加成功')
-                this.resetForm('ruleForm')
+                if (this.targetId) {
+                  this.$message.success('编辑成功')
+                } else {
+                  this.$message.success('添加成功')
+                  this.resetForm('ruleForm')
+                }
                 this.loading = false
               }
             }).catch(() => {

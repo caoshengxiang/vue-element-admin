@@ -40,8 +40,8 @@
             <span class="com-bar-item">
               <el-button icon="el-icon-search" type="primary" @click="search">查询</el-button>
               <el-button type="primary" plain @click="moreShow = !moreShow">更多
-                <i v-if="!moreShow" class="el-icon-arrow-right el-icon--right" />
-                <i v-else class="el-icon-arrow-up el-icon--right" />
+                <i v-if="!moreShow" class="el-icon-arrow-right el-icon--right"/>
+                <i v-else class="el-icon-arrow-up el-icon--right"/>
               </el-button>
             </span>
           </div>
@@ -51,27 +51,27 @@
             <el-row>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="单车编号" prop="bikeNo">
-                  <el-input v-model="searchForm.bikeNo" clearable />
+                  <el-input v-model="searchForm.bikeNo" clearable/>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="电子牌照" prop="electroLicence">
-                  <el-input v-model="searchForm.electroLicence" clearable />
+                  <el-input v-model="searchForm.electroLicence" clearable/>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="公司" prop="company">
-                  <el-input v-model="searchForm.company" clearable />
+                  <el-input v-model="searchForm.company" clearable/>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="型号" prop="model">
-                  <el-input v-model="searchForm.model" clearable />
+                  <el-input v-model="searchForm.model" clearable/>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="颜色" prop="color">
-                  <el-input v-model="searchForm.color" clearable />
+                  <el-input v-model="searchForm.color" clearable/>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
@@ -109,7 +109,8 @@
             </el-row>
             <el-row :gutter="20" style="padding-left: 90px;">
               <el-col :xs="24" :sm="6">
-                <el-button icon="el-icon-search" type="primary" style="width: 100%;margin-bottom: 14px" @click="search('searchForm')">查 询
+                <el-button icon="el-icon-search" type="primary" style="width: 100%;margin-bottom: 14px"
+                           @click="search('searchForm')">查 询
                 </el-button>
               </el-col>
               <el-col :xs="24" :sm="6">
@@ -124,14 +125,17 @@
           :total="total"
           :table-data="tableData"
           :default-form-thead="defaultFormThead"
+          @pageQueryChange="pageQueryChange"
         >
           <el-table-column
             fixed="right"
             label="操作"
-            min-width="100px"
+            min-width="140px"
           >
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="logout(scope.row)">注销</el-button>
+              <el-button type="text" size="small" @click="handleType(scope.row, 1)">编辑</el-button>
+              <el-button type="text" class="com-color-warning" size="small" @click="handleType(scope.row, 2)">注销</el-button>
+              <el-button type="text" class="com-color-danger" size="small" @click="handleType(scope.row, 3)">删除</el-button>
             </template>
           </el-table-column>
         </fixed-thead>
@@ -205,9 +209,51 @@
           this.loading = false
         }).catch(() => { this.loading = false })
       },
+      pageQueryChange(pageForm) {
+        this.pageForm = pageForm
+        this.getList()
+      },
       /**/
-      logout(row) {
-        console.log(row)
+      handleType(row, type) {
+        if (type === 1) {
+          this.$router.push({ name: 'electronic-license-add', query: { id: row.id } })
+        } else if (type === 2) {
+          this.$confirm('确认注销, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$api.electronicLicense.revoke(row.id).then(res => {
+              if (res.code === 200) {
+                this.$message.success('注销成功')
+                this.getList()
+              }
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            })
+          })
+        } else if (type === 3) {
+          this.$confirm('确认删除, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$api.electronicLicense.del(row.id).then(res => {
+              if (res.code === 200) {
+                this.$message.success('删除成功')
+                this.getList()
+              }
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            })
+          })
+        }
       },
       add() {
         this.$router.push({ name: 'electronic-license-add' })
@@ -234,7 +280,6 @@
             this.$message.success('批量注销成功')
           }
         })
-
         return false
       },
       excelExport2() { // 注销

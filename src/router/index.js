@@ -235,6 +235,12 @@ export const constantRoutes = [
       name: 'insLog-index',
       component: () => import('@/views/ingLog/index'),
       meta: { title: '巡查日志', icon: 'dashboard' }
+    }, {
+      path: 'detail',
+      name: 'insLog-detail',
+      component: () => import('@/views/ingLog/detail'),
+      meta: { title: '详情', icon: 'dashboard' },
+      hidden: true
     }]
   },
   {
@@ -242,7 +248,7 @@ export const constantRoutes = [
     name: 'statistics',
     component: Layout,
     redirect: '/statistics/record',
-    meta: { title: '统计分析', icon: 'dashboard' },
+    meta: { title: '统计分析', icon: 'example' },
     children: [{
       path: 'record',
       name: 'statistics-record',

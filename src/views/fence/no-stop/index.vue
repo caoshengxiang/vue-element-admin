@@ -44,8 +44,9 @@
                 <el-form-item label="有效期" prop="focused">
                   <el-date-picker
                     value-format="yyyy-MM-DD HH:mm:ss"
-                    :default-time="['00:00:00', '23:59:59']"
                     v-model="valueTime"
+                    :default-time="['00:00:00', '23:59:59']"
+                    :unlink-panels="true"
                     style="width: 260px;"
                     type="daterange"
                     range-separator="至"
@@ -82,7 +83,7 @@
           <el-table-column
             fixed="right"
             label="操作"
-            width="160"
+            min-width="160"
           >
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="handleType(scope.row, 1)">编辑</el-button>
