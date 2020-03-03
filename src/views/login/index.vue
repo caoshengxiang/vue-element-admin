@@ -15,7 +15,7 @@
 
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user"/>
+          <svg-icon icon-class="user" />
         </span>
         <el-input
           ref="username"
@@ -31,7 +31,7 @@
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
         <el-form-item prop="password">
           <span class="svg-container">
-            <svg-icon icon-class="password"/>
+            <svg-icon icon-class="password" />
           </span>
           <el-input
             :key="passwordType"
@@ -47,7 +47,7 @@
             @keyup.enter.native="handleLogin"
           />
           <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
+            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
           </span>
         </el-form-item>
       </el-tooltip>
@@ -83,12 +83,11 @@
 </template>
 
 <script>
-  import { validUsername } from '@/utils/validate'
-  import SocialSign from './components/SocialSignin'
+  // import { validUsername } from '@/utils/validate'
+  // import SocialSign from './components/SocialSignin'
 
   export default {
     name: 'Login',
-    components: { SocialSign },
     data() {
       const validateUsername = (rule, value, callback) => {
         if (!value) {
@@ -107,7 +106,7 @@
       return {
         loginForm: {
           username: 'admin',
-          password: '111111'
+          password: 'admin123'
         },
         loginRules: {
           username: [{ required: true, trigger: 'blur', validator: validateUsername }],
