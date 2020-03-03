@@ -2,6 +2,7 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getTokenValue } from '@/utils/auth'
+import $router from '@/router'
 
 // create an axios instance
 const service = axios.create({
@@ -81,10 +82,13 @@ service.interceptors.response.use(
       MessageBox.confirm('登录已过期，请重新登录', 'Confirm logout', {
         confirmButtonText: '重新登录',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
+        closeOnClickModal: false
       }).then(() => {
         store.dispatch('user/resetToken').then(() => {
-          location.reload()
+          // location.reload()
+          const href = location.href.split('#')
+          $router.push(`/login?redirect=${href[1]}`)
         })
       })
     }

@@ -1,7 +1,7 @@
-import moment from 'moment'
+// import moment from 'moment'
 import store from '@/store'
 
-console.log(store.state.const)
+// console.log(store.state.const)
 
 const defaultFormThead = [{
   key: 'bikeNo',
@@ -56,9 +56,9 @@ const defaultFormThead = [{
   name: '颜色'
 }, {
   key: 'registryTime',
-  name: '注册时间',
-  formatter: (row, column, cellValue, index) => {
-    return moment(row.registryTime).format('YYYY-MM-DD')
-  }
+  name: '注册时间'
+  // formatter: (row, column, cellValue, index) => {
+  //   return moment(row.registryTime).format('YYYY-MM-DD')
+  // }
 }]
 export default defaultFormThead

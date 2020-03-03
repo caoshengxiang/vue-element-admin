@@ -21,7 +21,6 @@
         <el-form-item label="巡查时间:" prop="eventTime">
           <span v-if="viewType == 'detail'">{{ ruleForm.eventTime }}</span>
           <el-input v-else v-model="ruleForm.eventTime" />
-
         </el-form-item>
         <el-form-item label="巡查地址:" prop="address">
           <span v-if="viewType == 'detail'">{{ ruleForm.address }}</span>
@@ -87,7 +86,7 @@
       return {
         loading: false,
         ruleForm: {},
-        rules: [],
+        rules: {},
         targetId: '',
         viewType: ''
       }
