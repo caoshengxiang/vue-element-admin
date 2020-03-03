@@ -139,6 +139,6 @@
 
 <style scoped lang="scss">
   .demo-ruleForm {
-    min-width: 600px;
+    width: 600px;
   }
 </style>

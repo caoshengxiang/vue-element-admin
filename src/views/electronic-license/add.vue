@@ -1,21 +1,21 @@
 <template>
-  <div class="com-container" v-loading="loading">
+  <div v-loading="loading" class="com-container">
     <div class="com-con-box">
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="160px" class="demo-ruleForm">
+      <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="160px" class="demo-ruleForm">
         <el-form-item label="单车编号" prop="bikeNo">
-          <el-input v-model="ruleForm.bikeNo"></el-input>
+          <el-input v-model="ruleForm.bikeNo" />
         </el-form-item>
         <el-form-item label="电子牌照" prop="electroLicence">
-          <el-input v-model="ruleForm.electroLicence"></el-input>
+          <el-input v-model="ruleForm.electroLicence" />
         </el-form-item>
         <el-form-item label="公司" prop="company">
-          <el-input v-model="ruleForm.company"></el-input>
+          <el-input v-model="ruleForm.company" />
         </el-form-item>
         <el-form-item label="型号" prop="model">
-          <el-input v-model="ruleForm.model"></el-input>
+          <el-input v-model="ruleForm.model" />
         </el-form-item>
         <el-form-item label="颜色" prop="color">
-          <el-input v-model="ruleForm.color"></el-input>
+          <el-input v-model="ruleForm.color" />
         </el-form-item>
         <el-form-item label="车况" prop="condition">
           <el-select v-model="ruleForm.condition" placeholder="请选择">
@@ -23,7 +23,8 @@
               v-for="item in electroLicence_condition"
               :key="item.value"
               :label="item.label"
-              :value="item.value"></el-option>
+              :value="item.value"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="状态" prop="state">
@@ -32,7 +33,8 @@
               v-for="item in electroLicence_state"
               :key="item.value"
               :label="item.label"
-              :value="item.value"></el-option>
+              :value="item.value"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="是否有蓝牙" prop="bluetooth">
@@ -42,7 +44,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="描述" prop="description">
-          <el-input type="textarea" v-model="ruleForm.description"></el-input>
+          <el-input v-model="ruleForm.description" type="textarea" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" style="width: 200px" @click="submitForm('ruleForm')">保 存</el-button>
@@ -150,6 +152,6 @@
 
 <style scoped lang="scss">
   .demo-ruleForm {
-    width: 500px;
+    width: 600px;
   }
 </style>

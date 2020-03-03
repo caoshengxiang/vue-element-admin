@@ -27,13 +27,13 @@
           <el-form ref="searchForm" :model="searchForm" label-width="90px" class="demo-ruleForm">
             <el-row>
               <el-col :xs="24" :sm="6">
-                <el-form-item label="点位名称" prop="name">
+                <el-form-item label="点位名称" prop="name" clearable>
                   <el-input v-model="searchForm.name" />
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="街道" prop="regionId">
-                  <el-select v-model="searchForm.regionId" placeholder="请选择">
+                  <el-select v-model="searchForm.regionId" placeholder="请选择" clearable>
                     <el-option
                       v-for="item in options"
                       :key="item.value"
@@ -218,14 +218,15 @@
           const row = obj.row
           this.$router.push({ name: 'point-capacity', query: { id: row.id }})
         }
-        if (obj.key === 't5') {
+        if (obj.key === 'taskNum') { // 任务
           alert(obj.name)
         }
-        if (obj.key === 't6') {
+        if (obj.key === 'alertNum') { // 预警
           alert(obj.name)
         }
-        if (obj.key === 't7') {
-          alert(obj.name)
+        if (obj.key === 'parkingNum') { // 停放量
+          const row = obj.row
+          this.$router.push({ name: 'statistics-park', query: { id: row.id }})
         }
       }
     }

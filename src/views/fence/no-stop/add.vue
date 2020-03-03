@@ -3,11 +3,10 @@
     <div class="com-con-box">
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="160px" class="demo-ruleForm">
         <el-form-item label="围栏名称" prop="name">
-          <el-input v-model="ruleForm.name"/>
+          <el-input v-model="ruleForm.name" />
         </el-form-item>
         <el-form-item label="所属点位" prop="parkingSpotId">
-          <el-select v-model="ruleForm.parkingSpotId" clearable placeholder="所属点位">
-          </el-select>
+          <el-select v-model="ruleForm.parkingSpotId" clearable placeholder="所属点位" />
         </el-form-item>
         <!--        <el-form-item label="有无摄像头" prop="hasCamera">-->
         <!--          <el-radio-group v-model="ruleForm.hasCamera">-->
@@ -16,8 +15,7 @@
         <!--          </el-radio-group>-->
         <!--        </el-form-item>-->
         <el-form-item label="摄像头" prop="cameraId">
-          <el-select v-model="ruleForm.cameraId" clearable placeholder="摄像头">
-          </el-select>
+          <el-select v-model="ruleForm.cameraId" clearable placeholder="摄像头" />
         </el-form-item>
         <el-form-item label="有效期" prop="validStart">
           <el-date-picker
@@ -130,6 +128,6 @@
 
 <style scoped lang="scss">
   .demo-ruleForm {
-    width: 500px;
+    width: 600px;
   }
 </style>

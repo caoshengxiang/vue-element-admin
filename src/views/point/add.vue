@@ -3,7 +3,7 @@
     <div class="com-con-box">
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="160px" class="demo-ruleForm">
         <el-form-item label="点位名称" prop="name">
-          <el-input v-model="ruleForm.name" />
+          <el-input v-model="ruleForm.name" style="width: 400px" />
         </el-form-item>
         <el-form-item label="重点点位" prop="focused">
           <el-radio-group v-model="ruleForm.focused">
@@ -12,7 +12,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="街道" prop="regionId">
-          <el-select v-model="ruleForm.regionId" placeholder="请选择">
+          <el-select v-model="ruleForm.regionId" placeholder="请选择" style="width: 400px">
             <el-option
               v-for="item in streetOptions"
               :key="item.value"
@@ -25,7 +25,13 @@
         <!--          <el-input v-model="ruleForm.street"></el-input>-->
         <!--        </el-form-item>-->
         <el-form-item label="最大容量" prop="maxCapacity">
-          <el-input v-model.number="ruleForm.maxCapacity" type="number" />
+          <el-input v-model.number="ruleForm.maxCapacity" type="number" style="width: 400px" />
+        </el-form-item>
+        <el-form-item label="边界" prop="">
+          <map-border
+            :border-data="borderData"
+            @borderDataChange="borderDataChange"
+          />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" style="width: 200px" @click="submitForm('ruleForm')">保 存</el-button>
@@ -38,9 +44,13 @@
 
 <script>
   import { mapState } from 'vuex'
+  import mapBorder from './mapBorder/mapBorder'
 
   export default {
     name: 'Add',
+    components: {
+      mapBorder
+    },
     data() {
       return {
         loading: false,
@@ -53,6 +63,7 @@
           matrix: '', // 多边形经纬度json
           matrixCrawler: '' // 爬虫用经纬度数组
         },
+        borderData: '',
         rules: {
           name: [
             { required: true, message: '请输入', trigger: 'blur' }
@@ -107,6 +118,7 @@
         this.$api.points.detail(this.targetId).then(res => {
           if (res.code === 200) {
             this.ruleForm = res.data
+            this.borderData = res.data.matrix
           }
         })
       }
@@ -137,6 +149,10 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields()
+      },
+      borderDataChange(data) {
+        this.ruleForm.matrix = data
+        console.log(data)
       }
     }
   }
@@ -144,6 +160,6 @@
 
 <style scoped lang="scss">
   .demo-ruleForm {
-    width: 500px;
+    min-width: 600px;
   }
 </style>
