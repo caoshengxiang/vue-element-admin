@@ -8,7 +8,17 @@ const defaultFormThead = [{
   name: '单车编号'
 }, {
   key: 'company',
-  name: '公司'
+  name: '公司',
+  formatter: (row, column, cellValue, index) => {
+    const options = store.state.const.bikeCompany
+    let value = ''
+    options.forEach(item => {
+      if (item.value === row.company) {
+        value = item.label
+      }
+    })
+    return value
+  }
 }, {
   key: 'electroLicence',
   name: '电子牌照'

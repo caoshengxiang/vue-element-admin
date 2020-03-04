@@ -33,12 +33,12 @@
               </el-col>
               <el-col :xs="24" :sm="6">
                 <el-form-item label="街道" prop="regionId">
-                  <el-select v-model="searchForm.regionId" placeholder="请选择" clearable>
+                  <el-select v-model="searchForm.regionId" filterable placeholder="请选择" clearable>
                     <el-option
-                      v-for="item in options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
+                      v-for="item in streetOptions"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
                     />
                   </el-select>
                 </el-form-item>
@@ -86,7 +86,7 @@
           >
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="handleType(scope.row, 2)">围栏</el-button>
-              <el-button type="text" size="small" @click="handleType(scope.row, 3)">边界</el-button>
+              <!--              <el-button type="text" size="small" @click="handleType(scope.row, 3)">边界</el-button>-->
               <el-button type="text" size="small" @click="handleType(scope.row, 4)">编辑</el-button>
               <el-button class="com-color-danger" type="text" size="small" @click="handleType(scope.row, 1)">删除</el-button>
             </template>
@@ -124,33 +124,11 @@
         tableData: [],
         defaultFormThead: defaultFormThead,
         /**/
-        options: [
-          {
-            value: 1,
-            label: '芳草街道办事处'
-          }, {
-            value: 2,
-            label: '肖家河街道办事处'
-          }, {
-            value: 3,
-            label: '合作街道'
-          }, {
-            value: 4,
-            label: '西园街道'
-          }, {
-            value: 5,
-            label: '芳草街道办事处'
-          }, {
-            value: 6,
-            label: '石羊街道办事处'
-          }, {
-            value: 7,
-            label: '中和街道办事处'
-          }
-        ]
+        streetOptions: []
       }
     },
     created() {
+      this.getStreet()
       this.getList()
     },
     methods: {
@@ -168,6 +146,11 @@
         this.searchForm.capacityEnd = ''
         this.$refs[formName].resetFields()
         this.getList()
+      },
+      getStreet() {
+        this.$api.common.street({ deep: 3 }).then(res => {
+          this.streetOptions = res.rows
+        })
       },
       getList() {
         this.loading = true

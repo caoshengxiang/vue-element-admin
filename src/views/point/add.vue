@@ -15,9 +15,9 @@
           <el-select v-model="ruleForm.regionId" placeholder="请选择" style="width: 400px">
             <el-option
               v-for="item in streetOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             />
           </el-select>
         </el-form-item>
@@ -59,7 +59,7 @@
           focused: false,
           regionId: '',
           maxCapacity: '',
-          // street: '',
+          street: '',
           matrix: '', // 多边形经纬度json
           matrixCrawler: '' // 爬虫用经纬度数组
         },
@@ -82,30 +82,7 @@
             { required: true, message: '请选择', trigger: 'change' }
           ]
         },
-        streetOptions: [
-          {
-            value: 1,
-            label: '芳草街道办事处'
-          }, {
-            value: 2,
-            label: '肖家河街道办事处'
-          }, {
-            value: 3,
-            label: '合作街道'
-          }, {
-            value: 4,
-            label: '西园街道'
-          }, {
-            value: 5,
-            label: '芳草街道办事处'
-          }, {
-            value: 6,
-            label: '石羊街道办事处'
-          }, {
-            value: 7,
-            label: '中和街道办事处'
-          }
-        ],
+        streetOptions: [],
         targetId: ''
       }
     },
@@ -113,6 +90,7 @@
       ...mapState('const', [])
     },
     created() {
+      this.getStreet()
       this.targetId = this.$route.query.id
       if (this.targetId) {
         this.$api.points.detail(this.targetId).then(res => {
@@ -124,10 +102,20 @@
       }
     },
     methods: {
+      getStreet() {
+        this.$api.common.street({ deep: 3 }).then(res => {
+          this.streetOptions = res.rows
+        })
+      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.loading = true
+            this.streetOptions.forEach(item => {
+              if (item.id === this.ruleForm.regionId) {
+                this.ruleForm.street = item.name
+              }
+            })
             this.$api.points.add(this.ruleForm).then(res => {
               if (res.code === 200) {
                 if (this.targetId) {
@@ -152,7 +140,7 @@
       },
       borderDataChange(data) {
         this.ruleForm.matrix = data
-        console.log(data)
+        // console.log(data)
       }
     }
   }

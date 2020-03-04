@@ -2,7 +2,7 @@ const defaultFormThead = [{
   key: 'name',
   name: '点位名称'
 }, {
-  key: 'regionId',
+  key: 'street',
   name: '所属街道'
 }, {
   key: 'focused',

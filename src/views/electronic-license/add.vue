@@ -5,11 +5,18 @@
         <el-form-item label="单车编号" prop="bikeNo">
           <el-input v-model="ruleForm.bikeNo" />
         </el-form-item>
-        <el-form-item label="电子牌照" prop="electroLicence">
-          <el-input v-model="ruleForm.electroLicence" />
-        </el-form-item>
+        <!--        <el-form-item label="电子牌照" prop="electroLicence">-->
+        <!--          <el-input v-model="ruleForm.electroLicence" />-->
+        <!--        </el-form-item>-->
         <el-form-item label="公司" prop="company">
-          <el-input v-model="ruleForm.company" />
+          <el-select v-model="ruleForm.company" placeholder="请选择">
+            <el-option
+              v-for="item in bikeCompany"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item label="型号" prop="model">
           <el-input v-model="ruleForm.model" />
@@ -106,7 +113,8 @@
     computed: {
       ...mapState('const', [
         'electroLicence_condition',
-        'electroLicence_state'
+        'electroLicence_state',
+        'bikeCompany'
       ])
     },
     created() {

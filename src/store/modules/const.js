@@ -15,6 +15,14 @@ const state = {
     { label: '注销', value: 2 },
     { label: '故障', value: 3 },
     { label: '非法', value: 4 }
+  ],
+  // 公司  1.美团 2.青桔 3.哈罗 4.摩拜 5.ofo
+  bikeCompany: [
+    { label: '美团', value: 1 },
+    { label: '青桔', value: 2 },
+    { label: '哈罗', value: 3 },
+    { label: '摩拜', value: 4 },
+    { label: 'ofo', value: 5 }
   ]
 }
 
