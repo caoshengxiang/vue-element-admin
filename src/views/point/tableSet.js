@@ -1,4 +1,3 @@
-
 const defaultFormThead = [{
   key: 'name',
   name: '点位名称'
@@ -36,6 +35,24 @@ const defaultFormThead = [{
 }, {
   key: 'parkingNum',
   name: '已停数量',
+  width: '100',
+  className: 'com-el-talble-col-name',
+  labelClassName: 'com-el-talble-col-title-name'
+}, {
+  key: 'mtNum',
+  name: '美团数量',
+  width: '100',
+  className: 'com-el-talble-col-name',
+  labelClassName: 'com-el-talble-col-title-name'
+}, {
+  key: 'qjNum',
+  name: '青桔数量',
+  width: '100',
+  className: 'com-el-talble-col-name',
+  labelClassName: 'com-el-talble-col-title-name'
+}, {
+  key: 'hlNum',
+  name: '哈罗数量',
   width: '100',
   className: 'com-el-talble-col-name',
   labelClassName: 'com-el-talble-col-title-name'
