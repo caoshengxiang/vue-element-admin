@@ -29,9 +29,28 @@
         </el-form-item>
         <el-form-item label="边界" prop="">
           <map-border
-            :border-data="borderData"
+            :border-data="ruleForm.matrix"
             @borderDataChange="borderDataChange"
           />
+        </el-form-item>
+        <el-form-item label="爬虫边界" prop="">
+          <div>
+            <el-button v-if="!spiderBorderEdit" type="primary" @click="spiderBorderEdit = true">展 开<i class="el-icon-arrow-down el-icon--right" /></el-button>
+            <el-button v-else type="primary" @click="spiderBorderEdit = false">收 起<i class="el-icon-arrow-up el-icon--right" /></el-button>
+          </div>
+          <div v-show="spiderBorderEdit">
+            <div style="margin-bottom: 5px">
+              <div>注意事项：</div>
+              <div style="line-height: 26px">1. 必须逆时针绘制多边形</div>
+              <div style="line-height: 26px">2. 绘制爬虫区域尽量大些</div>
+              <div style="line-height: 26px">3. <span style="color: blue">蓝色</span>边框代表爬虫区域，<span style="color: red;">红色</span>边框代表密集区域</div>
+              <div style="line-height: 26px">4. 绘制最后一个点不必连接起点，点击生成边界会自动将最后一个点和第一个点连接</div>
+            </div>
+            <spider-border
+              :border-data="ruleForm.matrixCrawler"
+              @borderDataChange="SpiderDataChange"
+            />
+          </div>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" style="width: 200px" @click="submitForm('ruleForm')">保 存</el-button>
@@ -44,12 +63,14 @@
 
 <script>
   import { mapState } from 'vuex'
-  import mapBorder from './mapBorder/mapBorder'
+  import mapBorder from '../components/mapBorder/mapBorder'
+  import spiderBorder from '../components/mapBorder/spiderBorder'
 
   export default {
     name: 'Add',
     components: {
-      mapBorder
+      mapBorder,
+      spiderBorder
     },
     data() {
       return {
@@ -63,7 +84,7 @@
           matrix: '', // 多边形经纬度json
           matrixCrawler: '' // 爬虫用经纬度数组
         },
-        borderData: '',
+        // testBox: '',
         rules: {
           name: [
             { required: true, message: '请输入', trigger: 'blur' }
@@ -83,7 +104,8 @@
           ]
         },
         streetOptions: [],
-        targetId: ''
+        targetId: '',
+        spiderBorderEdit: false
       }
     },
     computed: {
@@ -96,10 +118,13 @@
         this.$api.points.detail(this.targetId).then(res => {
           if (res.code === 200) {
             this.ruleForm = res.data
-            this.borderData = res.data.matrix
           }
         })
       }
+
+      // setTimeout(() => {
+      //   this.testBox = '[{"box":[[104.067138,30.60014],[104.067138,30.597342],[104.07012,30.597591],[104.070084,30.599767]],"center":[[104.068036,30.599301],[104.067964,30.598119],[104.06933,30.598119],[104.068935,30.599176]]}]'
+      // })
     },
     methods: {
       getStreet() {
@@ -140,6 +165,10 @@
       },
       borderDataChange(data) {
         this.ruleForm.matrix = data
+        // console.log(data)
+      },
+      SpiderDataChange(data) {
+        this.ruleForm.matrixCrawler = data
         // console.log(data)
       }
     }

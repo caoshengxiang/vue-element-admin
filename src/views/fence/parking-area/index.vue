@@ -87,7 +87,6 @@
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="handleType(scope.row, 1)">编辑</el-button>
               <el-button type="text" size="small" @click="handleType(scope.row, 2)">图片</el-button>
-              <el-button type="text" size="small" @click="handleType(scope.row, 3)">边界</el-button>
             </template>
           </el-table-column>
         </fixed-thead>

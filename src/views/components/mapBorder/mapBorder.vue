@@ -7,11 +7,11 @@
 <template>
   <div>
     <baidu-map
-      :style="{width:mapSet.width,height:mapSet.height}"
+      :style="{width:width,height:height}"
       class="map"
       ak="QESRXGTH3unGiZpCnns1bep6hOCH7erg"
-      :zoom="mapSet.zoom"
-      :center="{lng: mapSet.center.lng, lat: mapSet.center.lat}"
+      :zoom="zoom"
+      :center="{lng: center.lng, lat: center.lat}"
       :scroll-wheel-zoom="true"
       :map-click="false"
       @ready="handler"
@@ -121,19 +121,26 @@
         default: '',
         type: String
       },
-      mapSet: {
+      width: { // 地图宽
+        default: '100%',
+        type: String
+      },
+      height: { // 地图高度
+        default: '90vh',
+        type: String
+      },
+      center: { // 地图中心
         default() {
           return {
-            width: '100%',
-            height: '100vh',
-            center: {
-              lng: 104.070264,
-              lat: 30.600342
-            },
-            zoom: 16 // 范围 1-19
+            lng: 104.070264,
+            lat: 30.600342
           }
         },
         type: Object
+      },
+      zoom: { // 缩放
+        default: 16, // 范围 1-19
+        type: Number
       }
     },
     data() {
@@ -153,7 +160,8 @@
         /* 多边形*/
         polygonPaths: [], // 结构[{editing: false,paths: [{lng: 1, lat: 2}, center: {lng: '', lat: ''}]}]
         /* 多边形*/
-        point: {} // 当前点击的点经纬度
+        point: {}, // 当前点击的点经纬度
+        moveDrawLine: false // 鼠标移动绘制折线
       }
     },
     watch: {
@@ -177,11 +185,60 @@
         // map.setMapStyle(mapStyle)
       },
       /* 折线*/
+      // toggle(name) {
+      //   this[name].editing = !this[name].editing
+      // },
+      // syncPolyline(e) {
+      //   if (!this.polyline.editing) {
+      //     return
+      //   }
+      //   const { paths } = this.polyline
+      //   if (!paths.length) {
+      //     return
+      //   }
+      //   const path = paths[paths.length - 1]
+      //   if (!path.length) {
+      //     return
+      //   }
+      //   if (path.length === 1) {
+      //     path.push(e.point)
+      //   }
+      //   this.$set(path, path.length - 1, e.point)
+      // },
+      // newPolyline(e) { // 支持多条
+      //   if (!this.polyline.editing) {
+      //     return
+      //   }
+      //   const { paths } = this.polyline
+      //   if (!paths.length) {
+      //     paths.push([])
+      //   }
+      //   const path = paths[paths.length - 1]
+      //   path.pop()
+      //   if (path.length) {
+      //     paths.push([])
+      //   }
+      // },
+      // paintPolyline(e) { // 支持多条
+      //   // eslint-disable-next-line no-console
+      //   console.log(e.point)
+      //   this.point = e.point
+      //   if (!this.polyline.editing) {
+      //     return
+      //   }
+      //   const { paths } = this.polyline
+      //   !paths.length && paths.push([])
+      //   paths[paths.length - 1].push(e.point)
+      // },
       toggle(name) {
+        if (this.polygonPaths && this.polygonPaths.length) {
+          this.$message.warning('边界已存在，请先初始或删除后才能绘制')
+          return
+        }
         this[name].editing = !this[name].editing
       },
-      syncPolyline(e) {
-        if (!this.polyline.editing) {
+      syncPolyline(e) { // 支持一条
+        if (!this.polyline.editing || !this.moveDrawLine) {
           return
         }
         const { paths } = this.polyline
@@ -197,7 +254,8 @@
         }
         this.$set(path, path.length - 1, e.point)
       },
-      newPolyline(e) {
+      newPolyline(e) { // 支持一条
+        this.moveDrawLine = false
         if (!this.polyline.editing) {
           return
         }
@@ -207,13 +265,14 @@
         }
         const path = paths[paths.length - 1]
         path.pop()
-        if (path.length) {
-          paths.push([])
-        }
+        // if (path.length) {
+        //   paths.push([])
+        // }
       },
-      paintPolyline(e) {
+      paintPolyline(e) { // 支持一条
         // eslint-disable-next-line no-console
         console.log(e.point)
+        this.moveDrawLine = true
         this.point = e.point
         if (!this.polyline.editing) {
           return
@@ -232,7 +291,7 @@
         }
         this.$message.success('边界初始成功')
       },
-      getBorderData() { // 返回数据结构 [{editing: false,paths: [[lng, lat], [lng, lat]], center: {}}]}]
+      getBorderData() { // 返回数据结构
         const data = this.polygonPaths.map(item => {
           const paths = item.paths
           return {
@@ -266,7 +325,7 @@
         item.paths = e.target.getPath()
         // eslint-disable-next-line no-console
         // console.info(this.polygonPaths)
-        this.$emit('borderDataChange', this.getBorderData())
+        // this.$emit('borderDataChange', this.getBorderData())
       },
       editPolygonPath(e, item, index) {
         // eslint-disable-next-line no-console

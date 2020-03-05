@@ -1,8 +1,8 @@
+// eslint-disable-next-line no-unused-vars
 import { login, logout, getInfo } from '@/api_old/user'
 import API from '@/api'
 import { getToken, setToken, setTokenValue, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-import VueCookies from 'vue-cookies'
 
 const state = {
   token: getToken(),
@@ -73,6 +73,7 @@ const actions = {
         }
 
         commit('SET_ROLES', roles)
+        // commit('SET_ROLES', ['admin'])
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
         commit('SET_INTRODUCTION', introduction)

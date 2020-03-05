@@ -6,7 +6,14 @@
           <el-input v-model="ruleForm.name" />
         </el-form-item>
         <el-form-item label="所属点位" prop="parkingSpotId">
-          <el-select v-model="ruleForm.parkingSpotId" clearable placeholder="所属点位" />
+          <el-select v-model="ruleForm.parkingSpotId" placeholder="请选择">
+            <el-option
+              v-for="item in pointOptions"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
         </el-form-item>
         <!--        <el-form-item label="有无摄像头" prop="hasCamera">-->
         <!--          <el-radio-group v-model="ruleForm.hasCamera">-->
@@ -30,6 +37,12 @@
             end-placeholder="结束日期"
           />
         </el-form-item>
+        <el-form-item label="边界" prop="">
+          <map-border
+            :border-data="ruleForm.matrix"
+            @borderDataChange="borderDataChange"
+          />
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" style="width: 200px" @click="submitForm('ruleForm')">保 存</el-button>
           <el-button @click="resetForm('ruleForm')">重 置</el-button>
@@ -41,9 +54,13 @@
 
 <script>
   import { mapState } from 'vuex'
+  import mapBorder from '../../components/mapBorder/mapBorder'
 
   export default {
     name: 'Add',
+    components: {
+      mapBorder
+    },
     data() {
       return {
         loading: false,
@@ -77,7 +94,9 @@
           ]
         },
         targetId: '',
-        valueTime: null
+        valueTime: null,
+        borderData: '',
+        pointOptions: []
       }
     },
     computed: {
@@ -85,10 +104,16 @@
     },
     created() {
       this.targetId = this.$route.query.id
+      this.getPoint()
       if (this.targetId) {
         this.$api.fence.detail(this.targetId).then(res => {
           if (res.code === 200) {
             this.ruleForm = res.data
+            if (this.ruleForm.validStart) {
+              this.valueTime = [this.ruleForm.validStart, this.ruleForm.validEnd]
+            } else {
+              this.valueTime = null
+            }
           }
         })
       }
@@ -121,6 +146,19 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields()
+      },
+      borderDataChange(data) {
+        this.ruleForm.matrix = data
+        // console.log(data)
+      },
+      getPoint() {
+        this.$api.points.list({
+          size: 1000,
+          current: 1
+        }).then(res => {
+          const { data } = res
+          this.pointOptions = data.records
+        })
       }
     }
   }
@@ -128,6 +166,6 @@
 
 <style scoped lang="scss">
   .demo-ruleForm {
-    width: 600px;
+    min-width: 600px;
   }
 </style>
