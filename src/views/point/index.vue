@@ -207,9 +207,9 @@
         if (obj.key === 'alertNum') { // 预警
           alert(obj.name)
         }
-        if (obj.key === 'parkingNum') { // 停放量
+        if (obj.key === 'parkingNum' || obj.key === 'mtNum' || obj.key === 'qjNum' || obj.key === 'hlNum') { // 停放量
           const row = obj.row
-          this.$router.push({ name: 'statistics-park', query: { id: row.id }})
+          this.$router.push({ name: 'statistics-park', query: { parkId: row.id }})
         }
       }
     }

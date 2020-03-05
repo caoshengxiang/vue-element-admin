@@ -27,8 +27,8 @@
           <el-form ref="searchForm" :model="searchForm" label-width="90px" class="demo-ruleForm">
             <el-row>
               <el-col :xs="24" :sm="7">
-                <el-form-item label="停车点位" prop="v1">
-                  <el-select v-model="searchForm.v1" placeholder="请选择" style="width: 100%;">
+                <el-form-item label="停车点位" prop="parkId">
+                  <el-select v-model="searchForm.parkId" placeholder="请选择" style="width: 100%;">
                     <el-option
                       v-for="item in pointOptions"
                       :key="item.id"
@@ -39,10 +39,10 @@
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12">
-                <el-form-item label="时间" prop="v2">
+                <el-form-item label="时间" prop="timeStart">
                   <el-date-picker
                     v-model="valueTime"
-                    value-format="yyyy-MM-DD HH:mm:ss"
+                    value-format="yyyy-MM-dd HH:mm:ss"
                     :default-time="['00:00:00', '23:59:59']"
                     :unlink-panels="true"
                     type="datetimerange"
@@ -64,9 +64,9 @@
                 >查 询
                 </el-button>
               </el-col>
-              <el-col :xs="24" :sm="6">
-                <el-button style="width: 100%;margin-bottom: 14px;" @click="resetForm('searchForm')">重 置</el-button>
-              </el-col>
+              <!--              <el-col :xs="24" :sm="6">-->
+              <!--                <el-button style="width: 100%;margin-bottom: 14px;" @click="resetForm('searchForm')">重 置</el-button>-->
+              <!--              </el-col>-->
             </el-row>
           </el-form>
         </div>
@@ -86,11 +86,12 @@
         loading: false,
         moreShow: true,
         searchForm: {
-          v1: '',
-          v2: ''
+          parkId: '',
+          timeStart: this.$moment(new Date().getTime() - 3600 * 1000 * 24 * 7),
+          timeEnd: this.$moment(new Date())
         },
         pointOptions: [],
-        valueTime: '',
+        valueTime: [this.$moment(new Date().getTime() - 3600 * 1000 * 24 * 7), this.$moment(new Date())], // 最近七天
         chart: '',
         options: {
           title: {
@@ -115,7 +116,7 @@
                 htmlStr += '<span style="margin-right:5px;display:inline-block;width:10px;height:10px;border-radius:5px;background-color:' + color + ';"></span>'
 
                 // 圆点后面显示的文本
-                htmlStr += seriesName + '：' + value + 'h'
+                htmlStr += seriesName + '：' + value + ''
 
                 htmlStr += '</div>'
               }
@@ -144,11 +145,11 @@
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-            // data: []
+            // data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            data: []
           },
           yAxis: {
-            name: '时间(h)',
+            name: '数量',
             type: 'value',
             // 网格样式
             splitLine: {
@@ -156,52 +157,64 @@
             }
           },
           series: [
-            {
-              name: '哈罗',
-              type: 'line',
-              stack: '总量1',
-              data: [12, 13, 10, 13, 9, 23, 21],
-              symbol: 'none', // 去掉折线图中的节点
-              smooth: true // true 为平滑曲线，false为直线
-            },
-            {
-              name: '美团',
-              type: 'line',
-              stack: '总量2',
-              data: [22, 18, 19, 23, 29, 33, 31],
-              symbol: 'none', // 去掉折线图中的节点
-              smooth: true // true 为平滑曲线，false为直线
-            },
-            {
-              name: '青桔',
-              type: 'line',
-              stack: '总量3',
-              data: [15, 23, 20, 15, 19, 33, 41],
-              symbol: 'none', // 去掉折线图中的节点
-              smooth: true // true 为平滑曲线，false为直线
-            },
-            {
-              name: '摩拜',
-              type: 'line',
-              stack: '总量4',
-              data: [32, 33, 30, 33, 39, 33, 32],
-              symbol: 'none', // 去掉折线图中的节点
-              smooth: true // true 为平滑曲线，false为直线
-            }
+            // {
+            //   name: '哈罗',
+            //   type: 'line',
+            //   stack: '总量1',
+            //   data: [12, 13, 10, 13, 9, 23, 21],
+            //   symbol: 'none', // 去掉折线图中的节点
+            //   smooth: true // true 为平滑曲线，false为直线
+            // },
+            // {
+            //   name: '美团',
+            //   type: 'line',
+            //   stack: '总量2',
+            //   data: [22, 18, 19, 23, 29, 33, 31],
+            //   symbol: 'none', // 去掉折线图中的节点
+            //   smooth: true // true 为平滑曲线，false为直线
+            // },
+            // {
+            //   name: '青桔',
+            //   type: 'line',
+            //   stack: '总量3',
+            //   data: [15, 23, 20, 15, 19, 33, 41],
+            //   symbol: 'none', // 去掉折线图中的节点
+            //   smooth: true // true 为平滑曲线，false为直线
+            // },
+            // {
+            //   name: '摩拜',
+            //   type: 'line',
+            //   stack: '总量4',
+            //   data: [32, 33, 30, 33, 39, 33, 32],
+            //   symbol: 'none', // 去掉折线图中的节点
+            //   smooth: true // true 为平滑曲线，false为直线
+            // }
           ]
         }
       }
     },
+    watch: {
+      valueTime(val) {
+        if (val) {
+          this.searchForm.timeStart = val[0]
+          this.searchForm.timeEnd = val[1]
+        } else {
+          this.searchForm.timeStart = null
+          this.searchForm.timeEnd = null
+        }
+      }
+    },
     created() {
-      if (this.$route.query.id) {
-        this.searchForm.v1 = this.$route.query.id
+      if (this.$route.query.parkId) {
+        this.searchForm.parkId = parseInt(this.$route.query.parkId, 10)
       }
     },
     mounted() {
-      this.getPoint()
       this.chart = this.$echarts.init(document.getElementById('Chart'))
-      // this.getList()
-      this.chart.setOption(this.options) // todo test
+      this.getPoint(() => {
+        this.getList()
+      })
+      // this.chart.setOption(this.options)
     },
     methods: {
       /**/
@@ -213,35 +226,40 @@
         this.$refs[formName].resetFields()
       },
       getList() {
-        this.$api.v1.left2({
-          // time: this.$moment(new Date()),
-          // days: 7
-        }).then(da => {
-          this.options.xAxis.data = da.data.outData
-          this.options.series = da.data.value.map((item, index) => {
-            return {
-              name: item.name,
-              type: 'line',
-              stack: '总量' + index,
-              data: item.data,
-              symbol: 'none', // 去掉折线图中的节点
-              smooth: true // true 为平滑曲线，false为直线
-            }
-          })
+        this.$api.statistics.bikeCount(this.searchForm).then(da => {
+          if (da.data.outData) {
+            this.options.xAxis.data = da.data.outData
+            this.options.series = da.data.value.map((item, index) => {
+              return {
+                name: item.name,
+                type: 'line',
+                stack: '总量' + index,
+                data: item.data,
+                symbol: 'none', // 去掉折线图中的节点
+                smooth: true // true 为平滑曲线，false为直线
+              }
+            })
+          } else {
+            this.options.xAxis.data = []
+            this.options.series = []
+            this.$message.info('暂无数据')
+          }
+          this.chart.clear()
           this.chart.setOption(this.options)
         })
       },
       /**/
-      getPoint() {
+      getPoint(callback) {
         this.$api.points.list({
           size: 1000,
           current: 1
         }).then(res => {
           const { data } = res
           this.pointOptions = data.records
-          if (!this.searchForm.v1) {
-            this.searchForm.v1 = data.records[0].id
+          if (!this.searchForm.parkId) {
+            this.searchForm.parkId = data.records[0].id
           }
+          callback()
         })
       }
     }

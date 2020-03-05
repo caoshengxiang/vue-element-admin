@@ -20,7 +20,7 @@
               <el-time-picker
                 v-model="domain.time"
                 is-range
-                value-format="yyyy-MM-DD HH:mm:ss"
+                value-format="yyyy-MM-dd HH:mm:ss"
                 range-separator="至"
                 start-placeholder="开始时间"
                 end-placeholder="结束时间"
@@ -35,7 +35,7 @@
                 { required: true, message: '请输入容量', trigger: 'blur' }
               ]"
             >
-              <el-input v-model.number="domain.capacity" type="number"/>
+              <el-input v-model.number="domain.capacity" type="number" />
             </el-form-item>
 
             <el-form-item style="display: inline-block">

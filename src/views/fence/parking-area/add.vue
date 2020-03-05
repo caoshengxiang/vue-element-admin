@@ -20,7 +20,7 @@
         <el-form-item label="有效期" prop="validStart">
           <el-date-picker
             v-model="valueTime"
-            value-format="yyyy-MM-DD HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss"
             :default-time="['00:00:00', '23:59:59']"
             :unlink-panels="true"
             style="width: 260px;"
