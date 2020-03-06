@@ -1,10 +1,10 @@
-import { getTokenValue } from '@/utils/auth'
+import { getToken } from '@/utils/auth'
 import $qs from 'qs'
 
 export function fileDown(url, params = {}, name = '') { // 导出
   const link = document.createElement('a') // 创建事件对象
   const query = $qs.stringify(Object.assign({}, {
-    token: getTokenValue()
+    token: getToken()
   }, params))
 
   link.setAttribute('href', process.env.VUE_APP_BASE_API2 + '/' + url + '?' + query)
@@ -31,14 +31,14 @@ export function UploadImg(file) {
   }
 
   if (isImage && isLt2M) {
-    let param = new FormData()
+    const param = new FormData()
     param.append('file', file, file.name)
 
-    API.file.upload(param, (res) => {
-      if (res.status) {
-        this.ruleForm.demandHeadImg = res.data.url
-      }
-    })
+    // API.file.upload(param, (res) => {
+    //   if (res.status) {
+    //     this.ruleForm.demandHeadImg = res.data.url
+    //   }
+    // })
   }
 }
 

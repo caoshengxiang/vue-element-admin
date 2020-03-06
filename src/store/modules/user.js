@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { login, logout, getInfo } from '@/api_old/user'
 import API from '@/api'
-import { getToken, setToken, setTokenValue, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
@@ -24,10 +24,10 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
-  },
-  SET_ROLES: (state, roles) => {
-    state.roles = roles
   }
+  // SET_ROLES: (state, roles) => {
+  //   state.roles = roles
+  // }
 }
 
 const actions = {
@@ -45,9 +45,12 @@ const actions = {
       // })
       API.account.login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
-        commit('SET_TOKEN', 'admin-token')
-        setToken('admin-token')
-        setTokenValue(data.token)
+        // commit('SET_TOKEN', 'admin-token')
+        // setToken('admin-token')
+        // setTokenValue(data.token)
+
+        commit('SET_TOKEN', data.token)
+        setToken(data.token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -65,14 +68,16 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
 
-        const { roles, name, avatar, introduction } = data
+        const { name, avatar, introduction } = data
 
         // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
-        }
+        // if (!roles || roles.length <= 0) {
+        //     reject('getInfo: roles must be a non-null array!')
+        // }
+        // console.log('info 权限路由')
+        // console.log(data)
 
-        commit('SET_ROLES', roles)
+        // commit('SET_ROLES', roles)
         // commit('SET_ROLES', ['admin'])
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
@@ -89,7 +94,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
-        commit('SET_ROLES', [])
+        // commit('SET_ROLES', [])
         removeToken()
         resetRouter()
 
@@ -108,7 +113,7 @@ const actions = {
   resetToken({ commit }) {
     return new Promise(resolve => {
       commit('SET_TOKEN', '')
-      commit('SET_ROLES', [])
+      // commit('SET_ROLES', [])
       removeToken()
       resolve()
     })

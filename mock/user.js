@@ -8,20 +8,20 @@ const tokens = {
   }
 }
 
-const users = {
-  'admin-token': {
-    roles: ['admin'],
-    introduction: 'I am a super administrator',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Super Admin'
-  },
-  'editor-token': {
-    roles: ['editor'],
-    introduction: 'I am an editor',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Normal Editor'
-  }
-}
+// const users = {
+//   'admin-token': {
+//     roles: ['admin'],
+//     introduction: 'I am a super administrator',
+//     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+//     name: 'Super Admin'
+//   },
+//   'editor-token': {
+//     roles: ['editor'],
+//     introduction: 'I am an editor',
+//     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+//     name: 'Normal Editor'
+//   }
+// }
 
 export default [
   // user login
@@ -52,20 +52,28 @@ export default [
     url: '/vue-element-admin/user/info\.*',
     type: 'get',
     response: config => {
-      const { token } = config.query
-      const info = users[token]
-
-      // mock error
-      if (!info) {
-        return {
-          code: 50008,
-          message: 'Login failed, unable to get user details.'
-        }
-      }
-
       return {
         code: 20000,
-        data: info
+        data: {
+          roles: ['admin'],
+          introduction: 'I am a super administrator',
+          avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+          name: 'Super Admin',
+          accessedRoutes: [
+            {
+                path: '/user',
+                name: 'user',
+                component: 'Layout',
+                redirect: '/user/index',
+                children: [{
+                  path: 'index',
+                  name: 'user-index',
+                  component: 'ViewsUserIndex',
+                  meta: { title: '人员管理', icon: 'dashboard' }
+                }]
+              }
+          ]
+        }
       }
     }
   },
