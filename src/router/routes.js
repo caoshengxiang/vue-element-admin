@@ -157,17 +157,31 @@ export const constantRoutes = [
     name: 'cycle-record',
     component: Layout,
     redirect: '/cycle-record/index',
+    meta: { title: '骑行记录', icon: 'example' },
     children: [
       {
         path: 'index',
         name: 'cycle-record-index',
-        component: () => import('@/views/cycle-record/index'),
-        meta: { title: '骑行人违章记录', icon: 'dashboard' }
+        component: () => import('@/views/cycle-record/cycle-record/index'),
+        meta: { title: '骑行记录', icon: 'dashboard' }
       },
       {
         path: 'detail',
         name: 'cycle-record-detail',
-        component: () => import('@/views/cycle-record/index'),
+        component: () => import('@/views/cycle-record/cycle-record/detail'),
+        meta: { title: '详情', icon: 'dashboard' },
+        hidden: true
+      },
+      {
+        path: 'violate-index',
+        name: 'violate-record-index',
+        component: () => import('@/views/cycle-record/violate-record/index'),
+        meta: { title: '骑行人违章记录', icon: 'dashboard' }
+      },
+      {
+        path: 'violate-detail',
+        name: 'violate-record-detail',
+        component: () => import('@/views/cycle-record/cycle-record/detail'),
         meta: { title: '详情', icon: 'dashboard' },
         hidden: true
       }
@@ -185,6 +199,7 @@ export const constantRoutes = [
       meta: { title: '单车维保', icon: 'dashboard' }
     }]
   },
+  // 这里用于权限路由测试， 动态返回
   // {
   //   path: '/user',
   //   name: 'user',

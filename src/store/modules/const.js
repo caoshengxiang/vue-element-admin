@@ -23,6 +23,13 @@ const state = {
     { label: '哈罗', value: 3 },
     { label: '摩拜', value: 4 },
     { label: 'ofo', value: 5 }
+  ],
+  // 违章类型 1.界外停车 2.车辆倒地 3.人行道 4.路面停车
+  violationType: [
+    { label: '界外停车', value: 1 },
+    { label: '车辆倒地', value: 2 },
+    { label: '人行道', value: 3 },
+    { label: '路面停车', value: 4 }
   ]
 }
 

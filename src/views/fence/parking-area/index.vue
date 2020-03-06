@@ -139,6 +139,7 @@
       },
       resetForm(formName) {
         this.searchForm.keyword = ''
+        this.valueTime = ''
         this.$refs[formName].resetFields()
         this.getList()
       },

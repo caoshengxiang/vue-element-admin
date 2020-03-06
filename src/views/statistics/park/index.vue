@@ -224,6 +224,7 @@
       resetForm(formName) {
         this.searchForm.keyword = ''
         this.$refs[formName].resetFields()
+        this.getList()
       },
       getList() {
         this.$api.statistics.bikeCount(this.searchForm).then(da => {

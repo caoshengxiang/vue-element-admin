@@ -11,8 +11,8 @@
             <el-radio :label="false">否</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="街道" prop="regionId">
-          <el-select v-model="ruleForm.regionId" placeholder="请选择" style="width: 400px">
+        <el-form-item label="街道" prop="deptId">
+          <el-select v-model="ruleForm.deptId" placeholder="请选择" style="width: 400px">
             <el-option
               v-for="item in streetOptions"
               :key="item.id"
@@ -129,7 +129,7 @@
     methods: {
       getStreet() {
         this.$api.common.street({ deep: 3 }).then(res => {
-          this.streetOptions = res.rows
+          this.streetOptions = res.data
         })
       },
       submitForm(formName) {

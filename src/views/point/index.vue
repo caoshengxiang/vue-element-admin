@@ -142,8 +142,6 @@
       },
       resetForm(formName) {
         this.searchForm.keyword = ''
-        this.searchForm.capacityStart = ''
-        this.searchForm.capacityEnd = ''
         this.$refs[formName].resetFields()
         this.getList()
       },

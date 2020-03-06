@@ -105,6 +105,7 @@
       resetForm(formName) {
         this.searchForm.keyword = ''
         this.$refs[formName].resetFields()
+        this.getList()
       },
       getList() {
         this.loading = true

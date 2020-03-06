@@ -4,7 +4,6 @@
       <div class="com-bar">
         <div class="com-bar-show">
           <div class="com-bar-left">
-            <span class="com-bar-item"><el-button type="primary" @click="add">注册</el-button></span>
             <span class="com-bar-item">
               <el-upload
                 action=""
@@ -12,27 +11,16 @@
                 :show-file-list="false"
                 :before-upload="beforeUpload"
               >
-                <el-button type="primary">批量注册</el-button>
+                <el-button type="primary">上传骑行人违章记录</el-button>
               </el-upload>
             </span>
 
-            <span class="com-bar-item"><el-button type="text" @click="excelExport">下载注册模板</el-button></span>
-            <span class="com-bar-item">
-              <el-upload
-                action=""
-                class="upload-demo"
-                :show-file-list="false"
-                :before-upload="beforeUpload2"
-              >
-                <el-button type="primary">批量注销</el-button>
-              </el-upload>
-            </span>
-            <span class="com-bar-item"><el-button type="text" @click="excelExport2">下载注销模板</el-button></span>
+            <span class="com-bar-item"><el-button type="text" @click="excelExport">下载模板</el-button></span>
           </div>
           <div class="com-bar-right">
             <span class="com-search-item com-bar-item">
               <el-input
-                v-model="searchForm.keyword"
+                v-model="searchForm.name"
                 placeholder="请输入关键词"
                 clearable
               />
@@ -50,60 +38,48 @@
           <el-form ref="searchForm" :model="searchForm" label-width="90px" class="demo-ruleForm">
             <el-row>
               <el-col :xs="24" :sm="6">
-                <el-form-item label="单车编号" prop="bikeNo">
-                  <el-input v-model="searchForm.bikeNo" clearable />
+                <el-form-item label="名字" prop="name">
+                  <el-input v-model="searchForm.name" clearable />
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
-                <el-form-item label="电子牌照" prop="electroLicence">
-                  <el-input v-model="searchForm.electroLicence" clearable />
+                <el-form-item label="身份证" prop="idCard">
+                  <el-input v-model="searchForm.idCard" clearable />
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
-                <el-form-item label="公司" prop="company">
-                  <el-input v-model="searchForm.company" clearable />
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="6">
-                <el-form-item label="型号" prop="model">
-                  <el-input v-model="searchForm.model" clearable />
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="6">
-                <el-form-item label="颜色" prop="color">
-                  <el-input v-model="searchForm.color" clearable />
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="6">
-                <el-form-item label="车况" prop="condition">
-                  <el-select v-model="searchForm.condition" clearable placeholder="请选择">
-                    <el-option
-                      v-for="item in electroLicence_condition"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    />
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="6">
-                <el-form-item label="状态" prop="state">
-                  <el-select v-model="searchForm.state" clearable placeholder="请选择">
-                    <el-option
-                      v-for="item in electroLicence_state"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    />
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="6">
-                <el-form-item clearable label="是否有蓝牙" prop="bluetooth">
-                  <el-radio-group v-model="searchForm.bluetooth">
-                    <el-radio :label="true">是</el-radio>
-                    <el-radio :label="false">否</el-radio>
+                <el-form-item clearable label="是否违章" prop="valid">
+                  <el-radio-group v-model="searchForm.valid">
+                    <el-radio :label="1">是</el-radio>
+                    <el-radio :label="0">否</el-radio>
                   </el-radio-group>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="6">
+                <el-form-item label="违章类型" prop="violationType">
+                  <el-select v-model="searchForm.violationType" clearable placeholder="请选择">
+                    <el-option
+                      v-for="item in violationType"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item label="骑行时间" prop="">
+                  <el-date-picker
+                    v-model="valueTime"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    :default-time="['00:00:00', '23:59:59']"
+                    :unlink-panels="true"
+                    style="width: 260px;"
+                    type="daterange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                  />
                 </el-form-item>
               </el-col>
             </el-row>
@@ -134,12 +110,11 @@
           <el-table-column
             fixed="right"
             label="操作"
-            min-width="140px"
+            min-width="80px"
           >
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="handleType(scope.row, 1)">编辑</el-button>
-              <el-button type="text" class="com-color-warning" size="small" @click="handleType(scope.row, 2)">注销</el-button>
-              <el-button type="text" class="com-color-danger" size="small" @click="handleType(scope.row, 3)">删除</el-button>
+              <el-button type="text" class="com-color-danger" size="small" @click="handleType(scope.row, 3)">删除
+              </el-button>
             </template>
           </el-table-column>
         </fixed-thead>
@@ -149,14 +124,13 @@
 </template>
 
 <script>
-  import FixedThead from '../../components/BaseTable/FixedThead'
+  import FixedThead from '../../../components/BaseTable/FixedThead'
   import defaultFormThead from './tableSet'
-  // import API from '@/api'
   import { fileDown } from '@/utils/file'
   import { mapState } from 'vuex'
 
   export default {
-    name: 'ElectronicLicenseIndex',
+    name: 'ViolateRecordIndex',
     components: { FixedThead },
     data() {
       return {
@@ -164,14 +138,12 @@
         loading: false,
         moreShow: false,
         searchForm: {
-          keyword: '',
-          bikeNo: '',
-          electroLicence: '',
-          company: '',
-          model: '',
-          color: '',
-          condition: '',
-          bluetooth: ''
+          name: '',
+          idCard: '',
+          timeStart: '',
+          timeEnd: '',
+          valid: '',
+          violationType: ''
         },
         pageForm: {
           size: 20,
@@ -179,14 +151,14 @@
         },
         total: 0,
         tableData: [],
-        defaultFormThead: defaultFormThead
+        defaultFormThead: defaultFormThead,
         /**/
+        valueTime: ''
       }
     },
     computed: {
       ...mapState('const', [
-        'electroLicence_condition',
-        'electroLicence_state'
+        'violationType'
       ])
     },
     created() {
@@ -198,13 +170,16 @@
         this.getList()
       },
       resetForm(formName) {
-        this.searchForm.keyword = ''
+        // this.searchForm.keyword = ''
+        this.valueTime = ''
         this.$refs[formName].resetFields()
         this.getList()
       },
       getList() {
         this.loading = true
-        this.$api.electronicLicense.list(Object.assign({},
+        this.searchForm.timeStart = this.valueTime ? this.valueTime[0] : ''
+        this.searchForm.timeEnd = this.valueTime ? this.valueTime[1] : ''
+        this.$api.cycleRecord.list(Object.assign({},
           this.pageForm,
           this.searchForm
         )).then(res => {
@@ -221,32 +196,14 @@
       /**/
       handleType(row, type) {
         if (type === 1) {
-          this.$router.push({ name: 'electronic-license-add', query: { id: row.id }})
-        } else if (type === 2) {
-          this.$confirm('确认注销, 是否继续?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.$api.electronicLicense.revoke(row.id).then(res => {
-              if (res.code === 200) {
-                this.$message.success('注销成功')
-                this.getList()
-              }
-            })
-          }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: '已取消'
-            })
-          })
+          // this.$router.push({ name: 'electronic-license-add', query: { id: row.id }})
         } else if (type === 3) {
           this.$confirm('确认删除, 是否继续?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            this.$api.electronicLicense.del(row.id).then(res => {
+            this.$api.cycleRecord.del({ ids: row.id }).then(res => {
               if (res.code === 200) {
                 this.$message.success('删除成功')
                 this.getList()
@@ -260,40 +217,22 @@
           })
         }
       },
-      add() {
-        this.$router.push({ name: 'electronic-license-add' })
+      excelExport() { // 下载模板
+        fileDown('supervisor/ride_record/download/template')
       },
       beforeUpload(file) {
         const param = new FormData()
         param.append('file', file, file.name)
-        this.$api.electronicLicense.batchRegistry(param, (res) => {
+        this.$api.cycleRecord.reportRecord(param, (res) => {
           if (res.code === 200) {
-            this.$message.success('批量注册成功')
-          }
-        })
-
-        return false
-      },
-      excelExport() { // 注册模板
-        fileDown('supervisor/register/download/template')
-      },
-      beforeUpload2(file) {
-        const param = new FormData()
-        param.append('file', file, file.name)
-        this.$api.electronicLicense.batchRevoke(param, (res) => {
-          if (res.code === 200) {
-            this.$message.success('批量注销成功')
+            this.$message.success('上传成功')
           }
         })
         return false
-      },
-      excelExport2() { // 注销
-        fileDown('supervisor/register/revoke/template')
       }
     }
   }
 </script>
 
 <style scoped lang="scss">
-
 </style>
