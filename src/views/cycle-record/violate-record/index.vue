@@ -4,18 +4,18 @@
       <div class="com-bar">
         <div class="com-bar-show">
           <div class="com-bar-left">
-            <span class="com-bar-item">
-              <el-upload
-                action=""
-                class="upload-demo"
-                :show-file-list="false"
-                :before-upload="beforeUpload"
-              >
-                <el-button type="primary">上传骑行人违章记录</el-button>
-              </el-upload>
-            </span>
+            <!--            <span class="com-bar-item">-->
+            <!--              <el-upload-->
+            <!--                action=""-->
+            <!--                class="upload-demo"-->
+            <!--                :show-file-list="false"-->
+            <!--                :before-upload="beforeUpload"-->
+            <!--              >-->
+            <!--                <el-button type="primary">上传骑行人违章记录</el-button>-->
+            <!--              </el-upload>-->
+            <!--            </span>-->
 
-            <span class="com-bar-item"><el-button type="text" @click="excelExport">下载模板</el-button></span>
+            <!--            <span class="com-bar-item"><el-button type="text" @click="excelExport">下载模板</el-button></span>-->
           </div>
           <div class="com-bar-right">
             <span class="com-search-item com-bar-item">
@@ -179,7 +179,7 @@
         this.loading = true
         this.searchForm.timeStart = this.valueTime ? this.valueTime[0] : ''
         this.searchForm.timeEnd = this.valueTime ? this.valueTime[1] : ''
-        this.$api.cycleRecord.list(Object.assign({},
+        this.$api.cycleRecord.violateList(Object.assign({},
           this.pageForm,
           this.searchForm
         )).then(res => {

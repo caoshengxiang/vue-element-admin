@@ -7,6 +7,7 @@ const defaultFormThead = [{
 }, {
   key: 'focused',
   name: '是否重点点位',
+  width: '100',
   formatter: (row, column, cellValue, index) => {
     if (row.focused === true) {
       return '是'
@@ -17,43 +18,43 @@ const defaultFormThead = [{
 }, {
   key: 'taskNum',
   name: '任务数',
-  width: '100',
+  width: '80',
   className: 'com-el-talble-col-name',
   labelClassName: 'com-el-talble-col-title-name'
 }, {
   key: 'alertNum',
   name: '预警数',
-  width: '100',
+  width: '80',
   className: 'com-el-talble-col-name',
   labelClassName: 'com-el-talble-col-title-name'
 }, {
   key: 'maxCapacity',
   name: '最大容量',
-  width: '100',
+  width: '80',
   className: 'com-el-talble-col-name',
   labelClassName: 'com-el-talble-col-title-name'
 }, {
   key: 'parkingNum',
   name: '已停数量',
-  width: '100',
+  width: '80',
   className: 'com-el-talble-col-name',
   labelClassName: 'com-el-talble-col-title-name'
 }, {
   key: 'mtNum',
   name: '美团数量',
-  width: '100',
+  width: '80',
   className: 'com-el-talble-col-name',
   labelClassName: 'com-el-talble-col-title-name'
 }, {
   key: 'qjNum',
   name: '青桔数量',
-  width: '100',
+  width: '80',
   className: 'com-el-talble-col-name',
   labelClassName: 'com-el-talble-col-title-name'
 }, {
   key: 'hlNum',
   name: '哈罗数量',
-  width: '100',
+  width: '80',
   className: 'com-el-talble-col-name',
   labelClassName: 'com-el-talble-col-title-name'
 }]

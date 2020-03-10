@@ -19,7 +19,8 @@ props:
     formatter: Function // 用来格式化内容
     className: String, // 列的 className, 如果只改变单元格不该标题需要和labelClassName配合使用
     labelClassName: String, // 当前列标题的自定义类名
-    styleObject: {}, // 配置显示样式. 目前没有生效？
+    slot: true, // 是否使用<template slot-scope="scope">{{scope.row}}</template> 方式显示数据
+    styleObject: { color: 'red' } // 设置显示文本style 对象， 必选设置slot 为true
     showOverflowTooltip, 默认true, 显示超出提示
   }
 
@@ -59,21 +60,40 @@ slot:
       header-cell-class-name="header-row-bg"
       @cell-click="cellClickHandler"
     >
-      <el-table-column
+      <div
         v-for="(item,index) in formThead"
         :key="index"
-        :label="item.name"
-        :sortable="item.sortable"
-        :prop="item.key"
-        :width="item.width || '160px'"
-        :min-width="item.minWidth || '160px'"
-        :formatter="item.formatter"
-        :class-name="item.className"
-        :label-class-name="item.labelClassName"
-        :style="item.styleObject"
-        :show-overflow-tooltip="item.showOverflowTooltip === undefined ? true : item.showOverflowTooltip"
-      />
-      <slot />
+      >
+        <el-table-column
+          v-if="item.slot"
+          :label="item.name"
+          :sortable="item.sortable"
+          :prop="item.key"
+          :width="item.width || 'auto'"
+          :min-width="item.minWidth || '140px'"
+          :formatter="item.formatter"
+          :class-name="item.className"
+          :label-class-name="item.labelClassName"
+          :show-overflow-tooltip="item.showOverflowTooltip === undefined ? true : item.showOverflowTooltip"
+        >
+          <template slot-scope="scope">
+            <span :style="item.styleObject">{{ scope.row[item.key] }} </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          v-else
+          :label="item.name"
+          :sortable="item.sortable"
+          :prop="item.key"
+          :width="item.width || 'auto'"
+          :min-width="item.minWidth || '140px'"
+          :formatter="item.formatter"
+          :class-name="item.className"
+          :label-class-name="item.labelClassName"
+          :show-overflow-tooltip="item.showOverflowTooltip === undefined ? true : item.showOverflowTooltip"
+        />
+      </div>
+
     </el-table>
     <!--分页-->
     <div v-if="total !== undefined && total >= 0" class="pages-box">

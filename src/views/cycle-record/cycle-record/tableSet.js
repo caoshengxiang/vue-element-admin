@@ -25,12 +25,14 @@ const defaultFormThead = [{
   name: '骑行时间'
 }, {
   key: 'rideMintues',
-  name: '骑行分钟数'
+  name: '骑行分钟数',
+  width: '90'
 }, {
   key: 'valid',
   name: '是否违章',
+  width: '90',
   formatter: (row, column, cellValue, index) => {
-    return row.valid === 1 ? '是' : '否'
+    return row.valid === true ? '是' : '否'
   }
 }, {
   key: 'violationType',

@@ -2,11 +2,11 @@
   <div v-loading="loading" class="com-container">
     <div class="com-con-box">
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="160px" class="demo-ruleForm">
-        <el-form-item label="围栏名称" prop="name">
+        <el-form-item label="围栏名称:" prop="name">
           <el-input v-model="ruleForm.name" />
         </el-form-item>
-        <el-form-item label="所属点位" prop="parkingSpotId">
-          <el-select v-model="ruleForm.parkingSpotId" placeholder="请选择">
+        <el-form-item label="所属点位:" prop="parkingSpotId">
+          <el-select v-model="ruleForm.parkingSpotId" placeholder="请选择" filterable>
             <el-option
               v-for="item in pointOptions"
               :key="item.id"
@@ -21,10 +21,17 @@
         <!--            <el-radio :label="false">无摄像头</el-radio>-->
         <!--          </el-radio-group>-->
         <!--        </el-form-item>-->
-        <el-form-item label="摄像头" prop="cameraId">
-          <el-select v-model="ruleForm.cameraId" clearable placeholder="摄像头" />
+        <el-form-item label="摄像头:" prop="cameraId">
+          <el-select v-model="ruleForm.cameraId" clearable placeholder="摄像头" filterable>
+            <el-option
+              v-for="item in cameraList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
         </el-form-item>
-        <el-form-item label="有效期" prop="validStart">
+        <el-form-item label="有效期:" prop="validStart">
           <el-date-picker
             v-model="valueTime"
             value-format="yyyy-MM-dd HH:mm:ss"
@@ -37,7 +44,7 @@
             end-placeholder="结束日期"
           />
         </el-form-item>
-        <el-form-item label="边界" prop="">
+        <el-form-item label="边界:" prop="">
           <map-border
             :border-data="ruleForm.matrix"
             @borderDataChange="borderDataChange"
@@ -96,7 +103,8 @@
         targetId: '',
         valueTime: null,
         borderData: '',
-        pointOptions: []
+        pointOptions: [],
+        cameraList: []
       }
     },
     computed: {
@@ -105,6 +113,7 @@
     created() {
       this.targetId = this.$route.query.id
       this.getPoint()
+      this.getCameraList()
       if (this.targetId) {
         this.$api.fence.detail(this.targetId).then(res => {
           if (res.code === 200) {
@@ -119,6 +128,16 @@
       }
     },
     methods: {
+      getCameraList() {
+        this.$api.camera.list(Object.assign({}, {
+            current: 1,
+            size: 10000
+          }
+        )).then(res => {
+          const { data } = res
+          this.cameraList = data.records
+        })
+      },
       submitForm(formName) {
         this.ruleForm.validStart = this.valueTime ? this.valueTime[0] : ''
         this.ruleForm.validEnd = this.valueTime ? this.valueTime[1] : ''

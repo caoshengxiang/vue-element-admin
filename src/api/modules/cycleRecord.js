@@ -18,5 +18,9 @@ export default {
   // },
   reportRecord(params) {
     return request2.post('supervisor/ride_record/reportRecord', params)
+  },
+/* 违章 */
+  violateList(params) {
+    return request2.get('supervisor/violation', { params: params })
   }
 }

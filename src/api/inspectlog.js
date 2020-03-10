@@ -7,9 +7,9 @@ const inspectlog = {
   // add(params) {
   //   return request2.post('supervisor', params)
   // },
-  // del(params) {
-  //   return request2.delete(`supervisor/${params}`)
-  // },
+  del(params) {
+    return request2.delete(`supervisor/inspectlog`, { params: params })
+  },
   detail(params) {
     return request2.get(`supervisor/inspectlog/detail/${params}`)
   }

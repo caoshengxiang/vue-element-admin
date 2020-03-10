@@ -78,6 +78,7 @@
           :table-data="tableData"
           :default-form-thead="defaultFormThead"
           @pageQueryChange="pageQueryChange"
+          @cell-click="cellClickHandle"
         >
           <el-table-column
             fixed="right"
@@ -164,6 +165,14 @@
       handleType(row, type) {
         if (type === 1) {
           this.$router.push({ name: 'fence-no-add', query: { id: row.id }})
+        }
+      },
+      cellClickHandle(obj) {
+        if (obj.key === 'taskNum') { // 任务
+          alert(obj.name)
+        }
+        if (obj.key === 'alertNum') { // 预警
+          alert(obj.name)
         }
       }
     }

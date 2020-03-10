@@ -2,48 +2,55 @@
   <div v-loading="loading" class="com-container">
     <div class="com-con-box">
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="160px" class="demo-ruleForm">
-        <el-form-item label="点位名称" prop="name">
+        <el-form-item label="点位名称:" prop="name">
           <el-input v-model="ruleForm.name" style="width: 400px" />
         </el-form-item>
-        <el-form-item label="重点点位" prop="focused">
+        <el-form-item label="重点点位:" prop="focused">
           <el-radio-group v-model="ruleForm.focused">
             <el-radio :label="true">是</el-radio>
             <el-radio :label="false">否</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="街道" prop="deptId">
+        <el-form-item label="组织街道:" prop="deptId">
           <el-select v-model="ruleForm.deptId" placeholder="请选择" style="width: 400px">
             <el-option
               v-for="item in streetOptions"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
+              :key="item.deptId"
+              :label="item.deptName"
+              :value="item.deptId"
             />
           </el-select>
         </el-form-item>
         <!--        <el-form-item label="街道地址" prop="street">-->
         <!--          <el-input v-model="ruleForm.street"></el-input>-->
         <!--        </el-form-item>-->
-        <el-form-item label="最大容量" prop="maxCapacity">
+        <el-form-item label="最大容量:" prop="maxCapacity">
           <el-input v-model.number="ruleForm.maxCapacity" type="number" style="width: 400px" />
         </el-form-item>
-        <el-form-item label="边界" prop="">
+        <el-form-item label="边界:" prop="">
           <map-border
             :border-data="ruleForm.matrix"
             @borderDataChange="borderDataChange"
           />
         </el-form-item>
-        <el-form-item label="爬虫边界" prop="">
+        <el-form-item label="爬虫边界:" prop="">
           <div>
-            <el-button v-if="!spiderBorderEdit" type="primary" @click="spiderBorderEdit = true">展 开<i class="el-icon-arrow-down el-icon--right" /></el-button>
-            <el-button v-else type="primary" @click="spiderBorderEdit = false">收 起<i class="el-icon-arrow-up el-icon--right" /></el-button>
+            <el-button v-if="!spiderBorderEdit" type="primary" @click="spiderBorderEdit = true">展 开<i
+              class="el-icon-arrow-down el-icon--right"
+            /></el-button>
+            <el-button v-else type="primary" @click="spiderBorderEdit = false">收 起<i
+              class="el-icon-arrow-up el-icon--right"
+            /></el-button>
           </div>
           <div v-show="spiderBorderEdit">
             <div style="margin-bottom: 5px">
               <div>注意事项：</div>
               <div style="line-height: 26px">1. 必须逆时针绘制多边形</div>
               <div style="line-height: 26px">2. 绘制爬虫区域尽量大些</div>
-              <div style="line-height: 26px">3. <span style="color: blue">蓝色</span>边框代表爬虫区域，<span style="color: red;">红色</span>边框代表密集区域</div>
+              <div style="line-height: 26px">3. <span style="color: blue">蓝色</span>边框代表爬虫区域，<span
+                style="color: red;"
+              >红色</span>边框代表密集区域
+              </div>
               <div style="line-height: 26px">4. 绘制最后一个点不必连接起点，点击生成边界会自动将最后一个点和第一个点连接</div>
             </div>
             <spider-border
@@ -96,8 +103,8 @@
           focused: [
             { required: true, message: '请选择', trigger: 'change' }
           ],
-          street: [
-            { required: true, message: '请输入', trigger: 'blur' }
+          deptId: [
+            { required: true, message: '请选择', trigger: 'change' }
           ],
           regionId: [
             { required: true, message: '请选择', trigger: 'change' }
@@ -128,7 +135,7 @@
     },
     methods: {
       getStreet() {
-        this.$api.common.street({ deep: 3 }).then(res => {
+        this.$api.common.street({ extType: 0 }).then(res => {
           this.streetOptions = res.data
         })
       },

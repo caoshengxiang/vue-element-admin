@@ -36,9 +36,9 @@
                   <el-select v-model="searchForm.regionId" filterable placeholder="请选择" clearable>
                     <el-option
                       v-for="item in streetOptions"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
+                      :key="item.deptId"
+                      :label="item.deptName"
+                      :value="item.deptId"
                     />
                   </el-select>
                 </el-form-item>
@@ -146,8 +146,8 @@
         this.getList()
       },
       getStreet() {
-        this.$api.common.street({ deep: 3 }).then(res => {
-          this.streetOptions = res.rows
+        this.$api.common.street({ extType: 0 }).then(res => {
+          this.streetOptions = res.data
         })
       },
       getList() {

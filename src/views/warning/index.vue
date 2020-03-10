@@ -1,65 +1,106 @@
 <template>
-  <div class="com-container">
-    <div class="com-con">
-      <div class="com-search-bar">
-        <div class="com-search-box">
-          <div class="com-search-item">
-            <el-input
-              placeholder="请输入单车公司"
-              v-model="form.num"
-              clearable>
-            </el-input>
+  <div v-loading="loading" class="com-container">
+    <div class="com-con-box">
+      <div class="com-bar">
+        <div class="com-bar-show">
+          <div class="com-bar-left">
+            <!--            <span class="com-bar-item"><el-button type="primary" @click="add">下发</el-button></span>-->
           </div>
-          <div class="com-search-item">
-            <el-input
-              placeholder="请输入停车点"
-              v-model="form.num"
-              clearable>
-            </el-input>
-          </div>
-          <div class="com-search-item">
-            <el-select v-model="form.value" clearable placeholder="请选择事件类型">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </div>
-          <div class="com-search-item">
-            <el-button type="primary">查询</el-button>
-            <el-button>重置</el-button>
+          <div class="com-bar-right">
+            <span class="com-search-item com-bar-item">
+              <el-input
+                v-model="searchForm.fenceName"
+                placeholder="请输入关键词"
+                clearable
+              />
+            </span>
+            <span class="com-bar-item">
+              <el-button icon="el-icon-search" type="primary" @click="search">查询</el-button>
+              <el-button type="primary" plain @click="moreShow = !moreShow">更多
+                <i v-if="!moreShow" class="el-icon-arrow-right el-icon--right" />
+                <i v-else class="el-icon-arrow-up el-icon--right" />
+              </el-button>
+            </span>
           </div>
         </div>
-        <div class="com-btns-box">
+        <div v-show="moreShow" class="com-more-search">
+          <el-form ref="searchForm" :model="searchForm" label-width="90px" class="demo-ruleForm">
+            <el-row>
+              <el-col :xs="24" :sm="6">
+                <el-form-item label="围栏名称" prop="fenceName">
+                  <el-input v-model="searchForm.fenceName" clearable />
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="6">
+                <el-form-item label="预警状态" prop="state">
+                  <el-select v-model="searchForm.state" clearable placeholder="请选择">
+                    <el-option
+                      v-for="item in warnState"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="6">
+                <el-form-item label="事件类型" prop="eventType">
+                  <el-select v-model="searchForm.eventType" clearable placeholder="请选择">
+                    <el-option
+                      v-for="item in warnType"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="6">
+                <el-form-item label="单车公司" prop="company">
+                  <el-select v-model="searchForm.company" clearable placeholder="请选择">
+                    <el-option
+                      v-for="item in bikeCompany"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20" style="padding-left: 90px;">
+              <el-col :xs="24" :sm="6">
+                <el-button
+                  icon="el-icon-search"
+                  type="primary"
+                  style="width: 100%;margin-bottom: 14px"
+                  @click="search('searchForm')"
+                >查 询
+                </el-button>
+              </el-col>
+              <el-col :xs="24" :sm="6">
+                <el-button style="width: 100%;margin-bottom: 14px;" @click="resetForm('searchForm')">重 置</el-button>
+              </el-col>
+            </el-row>
+          </el-form>
         </div>
       </div>
-      <div class="con">
-        <fixed-thead :table-data="tableData" :default-form-thead="defaultFormThead">
-          <el-table-column
-            label="存证图片"
-            width="100"
-          >
-            <template slot-scope="scope">
-              <el-button type="text" size="small" @click="logout(scope.row)">查看</el-button>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="实时画面"
-            width="100"
-          >
-            <template slot-scope="scope">
-              <el-button type="text" size="small" @click="logout(scope.row)">查看</el-button>
-            </template>
-          </el-table-column>
+      <div class="com-con-bom">
+        <fixed-thead
+          :total="total"
+          :table-data="tableData"
+          :default-form-thead="defaultFormThead"
+          @pageQueryChange="pageQueryChange"
+        >
           <el-table-column
             fixed="right"
             label="操作"
-            width="100"
+            min-width="100px"
           >
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="logout(scope.row)">注销</el-button>
+              <el-button type="text" size="small" @click="handleType(scope.row, 1)">详情</el-button>
+              <!--              <el-button type="text" class="com-color-danger" size="small" @click="handleType(scope.row, 2)">删除-->
+              <!--              </el-button>-->
             </template>
           </el-table-column>
         </fixed-thead>
@@ -71,87 +112,75 @@
 <script>
   import FixedThead from '../../components/BaseTable/FixedThead'
   import defaultFormThead from './tableSet'
+  import { mapState } from 'vuex'
 
   export default {
     name: 'ElectronicLicenseIndex',
     components: { FixedThead },
     data() {
       return {
-        form: {
-          num: '',
-          value: ''
+        /**/
+        loading: false,
+        moreShow: false,
+        searchForm: {
+          company: '',
+          state: '',
+          eventType: '',
+          fenceName: ''
         },
-        options: [{
-          value: '1',
-          label: '车辆爆仓'
-        }, {
-          value: '2',
-          label: '车辆不足'
-        }, {
-          value: '3',
-          label: '围栏界外停车'
-        }, {
-          value: '4',
-          label: '禁停区停车'
-        }, {
-          value: '5',
-          label: '机动车道停车'
-        }],
-        tableData: [
-          {
-            id: 1,
-            t1: '100001',
-            t2: '罗阳小区',
-            t3: '天府五街车辆不足请查看',
-            t4: '美团',
-            t5: 6,
-            t6: '2020-01-11 12:00:00',
-            t7: '车辆不足'
-          }, {
-            id: 1,
-            t1: '100002',
-            t2: '天府三街南侧',
-            t3: '天府三街南侧车辆不足请查看',
-            t4: '美团',
-            t5: 6,
-            t6: '2020-01-11 12:00:00',
-            t7: '车辆不足'
-          }, {
-            id: 1,
-            t1: '100003',
-            t2: '世纪城地铁A口',
-            t3: '世纪城地铁A口车辆不足',
-            t4: '美团',
-            t5: 6,
-            t6: '2020-01-11 12:00:00',
-            t7: '车辆不足'
-          }, {
-            id: 1,
-            t1: '100004',
-            t2: '天府五街',
-            t3: '天府五街车辆爆仓请查看',
-            t4: '美团',
-            t5: 3,
-            t6: '2020-01-11 12:00:00',
-            t7: '车辆爆仓'
-          }, {
-            id: 1,
-            t1: '100005',
-            t2: '天府五街',
-            t3: '天府五街摄像头违章请查看',
-            t4: '摩拜',
-            t5: 6,
-            t6: '2020-01-11 12:00:00',
-            t7: '摄像头违章'
-          }
-        ],
+        pageForm: {
+          size: 20,
+          current: 1
+        },
+        total: 0,
+        tableData: [],
         defaultFormThead: defaultFormThead
+        /**/
       }
     },
+    computed: {
+      ...mapState('const', [
+        'warnState',
+        'warnType',
+        'bikeCompany'
+      ])
+    },
+    created() {
+      this.getList()
+    },
     methods: {
-      logout(row) {
-        console.log(row)
-      }
+      /**/
+      search() {
+        this.getList()
+      },
+      resetForm(formName) {
+        this.searchForm.keyword = ''
+        this.$refs[formName].resetFields()
+        this.getList()
+      },
+      getList() {
+        this.loading = true
+        this.$api.warning.list(Object.assign({},
+          this.pageForm,
+          this.searchForm
+        )).then(res => {
+          const { data } = res
+          this.total = data.total
+          this.tableData = data.records
+          this.loading = false
+        }).catch(() => { this.loading = false })
+      },
+      pageQueryChange(pageForm) {
+        this.pageForm = pageForm
+        this.getList()
+      },
+      /**/
+      handleType(row, type) {
+        if (type === 1) {
+          this.$router.push({ name: 'warning-add', query: { id: row.id, viewType: 'detail' }})
+        }
+      },
+      add() {}
     }
   }
 </script>

@@ -9,6 +9,7 @@ const defaultFormThead = [{
 }, {
   key: 'company',
   name: '公司',
+  width: '100',
   formatter: (row, column, cellValue, index) => {
     const options = store.state.const.bikeCompany
     let value = ''
@@ -25,6 +26,7 @@ const defaultFormThead = [{
 }, {
   key: 'bluetooth',
   name: '蓝牙标识',
+  width: '90',
   formatter: (row, column, cellValue, index) => {
     if (row.bluetooth === true) {
       return '是'
@@ -35,6 +37,7 @@ const defaultFormThead = [{
 }, {
   key: 'condition',
   name: '车况',
+  width: '90',
   formatter: (row, column, cellValue, index) => {
     const options = store.state.const.electroLicence_condition
     let value = ''
@@ -48,6 +51,7 @@ const defaultFormThead = [{
 }, {
   key: 'state',
   name: '状态',
+  width: '90',
   formatter: (row, column, cellValue, index) => {
     const options = store.state.const.electroLicence_state
     let value = ''
@@ -63,7 +67,8 @@ const defaultFormThead = [{
   name: '车辆型号'
 }, {
   key: 'color',
-  name: '颜色'
+  name: '颜色',
+  width: '90'
 }, {
   key: 'registryTime',
   name: '注册时间'

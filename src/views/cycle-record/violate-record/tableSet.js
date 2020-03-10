@@ -21,19 +21,19 @@ const defaultFormThead = [{
     return value
   }
 }, {
-  key: 't3',
+  key: 'eventTime',
   name: '违章骑行时间'
 }, {
-  key: 'spot',
+  key: 'eventAddr',
   name: '违章地点'
 }, {
-  key: 'violationType',
+  key: 'eventType',
   name: '违章类型',
   formatter: (row, column, cellValue, index) => {
     const options = store.state.const.violationType
     let value = ''
     options.forEach(item => {
-      if (item.value === row.violationType) {
+      if (item.value === row.eventType) {
         value = item.label
       }
     })

@@ -1,4 +1,3 @@
-
 import Layout from '@/layout/index'
 
 export const constantRoutes = [
@@ -44,6 +43,39 @@ export const constantRoutes = [
       component: () => import('@/views/home/index'),
       meta: { title: '首页', icon: 'dashboard', affix: true }
     }]
+  },
+  {
+    path: '/event',
+    name: 'event',
+    component: Layout,
+    redirect: '/event/warning-index',
+    meta: { title: '智慧检测', icon: 'example' },
+    children: [
+      {
+        path: 'warning-index',
+        name: 'warning-index',
+        component: () => import('@/views/warning/index'),
+        meta: { title: '预警事件', icon: 'dashboard' }
+      }, {
+        path: 'add',
+        name: 'warning-add',
+        component: () => import('@/views/warning/add'),
+        meta: { title: '预警详情', icon: 'dashboard' },
+        hidden: true
+      },
+      {
+        path: 'task-index',
+        name: 'task-index',
+        component: () => import('@/views/task/index'),
+        meta: { title: '任务调度', icon: 'dashboard' }
+      }, {
+        path: 'add',
+        name: 'task-add',
+        component: () => import('@/views/task/add'),
+        meta: { title: '任务详情', icon: 'dashboard' },
+        hidden: true
+      }
+    ]
   },
   {
     path: '/electronic-license',
@@ -128,28 +160,36 @@ export const constantRoutes = [
       // }
     ]
   },
+  // {
+  //   path: '/warning',
+  //   name: 'warning',
+  //   component: Layout,
+  //   redirect: '/warning/index',
+  //   children: []
+  // },
+  // {
+  //   path: '/task',
+  //   name: 'task',
+  //   component: Layout,
+  //   redirect: '/task/index',
+  //   children: []
+  // },
   {
-    path: '/warning',
-    name: 'warning',
+    path: '/camera',
+    name: 'camera',
     component: Layout,
-    redirect: '/warning/index',
+    redirect: '/camera/index',
     children: [{
       path: 'index',
-      name: 'warning-index',
-      component: () => import('@/views/warning/index'),
-      meta: { title: '预警事件', icon: 'dashboard' }
-    }]
-  },
-  {
-    path: '/task',
-    name: 'task',
-    component: Layout,
-    redirect: '/task/index',
-    children: [{
-      path: 'index',
-      name: 'task-index',
-      component: () => import('@/views/task/index'),
-      meta: { title: '任务调度', icon: 'dashboard' }
+      name: 'camera-index',
+      component: () => import('@/views/camera/index'),
+      meta: { title: '摄像头管理', icon: 'dashboard' }
+    }, {
+      path: 'add',
+      name: 'camera-add',
+      component: () => import('@/views/camera/add'),
+      meta: { title: '摄像头添加/编辑', icon: 'dashboard' },
+      hidden: true
     }]
   },
   {

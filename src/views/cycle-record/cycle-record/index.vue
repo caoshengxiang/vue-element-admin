@@ -223,9 +223,11 @@
       beforeUpload(file) {
         const param = new FormData()
         param.append('file', file, file.name)
-        this.$api.cycleRecord.reportRecord(param, (res) => {
+        this.$api.cycleRecord.reportRecord(param).then((res) => {
+          console.log(res)
           if (res.code === 200) {
             this.$message.success('上传成功')
+            this.getList()
           }
         })
         return false

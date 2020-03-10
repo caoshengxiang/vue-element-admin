@@ -8,7 +8,7 @@ const defaultFormThead = [{
   key: 'content',
   name: '内容'
 }, {
-  key: 'inspectorOrgId',
+  key: 'deptName',
   name: '巡查人组织'
 }, {
   key: 'inspectorName',
@@ -17,7 +17,7 @@ const defaultFormThead = [{
   key: 'valid',
   name: '是否非法',
   formatter: (row, column, cellValue, index) => {
-    if (row.valid === true) {
+    if (row.valid) {
       return '是'
     } else {
       return '否'
@@ -27,7 +27,7 @@ const defaultFormThead = [{
   key: 'eventTime',
   name: '巡查时间'
 }, {
-  key: 'replyUserId',
+  key: 'replyUserName',
   name: '回复人'
 }, {
   key: 'replyContent',

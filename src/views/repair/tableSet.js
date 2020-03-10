@@ -1,29 +1,70 @@
-import moment from 'moment'
+import store from '@/store'
 
 const defaultFormThead = [{
-  key: 't1',
+  key: 'bikeNo',
+  name: '单车编号'
+}, {
+  key: 'electroLicence',
+  name: '电子牌照'
+}, {
+  key: 'company',
+  name: '公司',
+  formatter: (row, column, cellValue, index) => {
+    const options = store.state.const.bikeCompany
+    let value = ''
+    options.forEach(item => {
+      if (item.value === row.company) {
+        value = item.label
+      }
+    })
+    return value
+  }
+}, {
+  key: 'eventTime',
+  name: '上报时间'
+  // formatter: (row, column, cellValue, index) => {
+  //   return moment(row.t3).format('YYYY-MM-DD HH:mm:ss')
+  // }
+}, {
+  key: 'spot',
   name: '点位名称'
 }, {
-  key: 't2',
-  name: '地理描述'
+  key: 'eventAddr',
+  name: '地址'
 }, {
-  key: 't3',
-  name: '时间',
+  key: 'category',
+  name: '维修分类',
   formatter: (row, column, cellValue, index) => {
-    return moment(row.t3).format('YYYY-MM-DD HH:mm:ss')
+    const options = store.state.const.repairType
+    let value = ''
+    options.forEach(item => {
+      if (item.value === row.category) {
+        value = item.label
+      }
+    })
+    return value
   }
 }, {
-  key: 't4',
-  name: '类型'
-}, {
-  key: 't5',
-  name: '处理状态',
+  key: 'state',
+  name: '维修分类',
   formatter: (row, column, cellValue, index) => {
-    if (row.t5 === 1) {
-      return '待处理'
-    } else {
-      return '已处理'
-    }
+    const options = store.state.const.repairState
+    let value = ''
+    options.forEach(item => {
+      if (item.value === row.state) {
+        value = item.label
+      }
+    })
+    return value
   }
+}, {
+  key: 'reporterName',
+  name: '上报人'
+}, {
+  key: 'deptName',
+  name: '部门'
+}, {
+  key: 'content',
+  name: '描述'
 }]
 export default defaultFormThead

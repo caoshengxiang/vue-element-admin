@@ -200,57 +200,77 @@ aside {
     background: #ffffff;
     padding: 10px;
     min-height: 600px;
+
     .com-bar {
       position: relative;
       border-bottom: 5px solid #f0f2f5;
+
       .com-bar-show {
         display: flex;
         justify-content: space-between;
+
         .com-bar-item {
           margin-bottom: 10px;
           display: inline-block;
         }
+
         .com-bar-left {
           //margin-top: 10px;
         }
+
         .com-bar-right {
           .com-search-item {
             min-width: 180px;
+
             &.com-search-item-time {
               width: 320px;
             }
+
             .com-search-item-label {
               color: #8c939d;
             }
           }
         }
       }
+
       .com-more-search {
         //min-height: 80px;
         background: #fafafa;
         border: 1px dashed #CCCCCC;
-        padding-top: 10px
+        padding-top: 10px;
+
+        .demo-ruleForm {
+          .el-form-item__label {
+            font-weight: normal !important;
+            font-size: 12px;
+          }
+        }
       }
     }
 
   }
+
   .com-color-warning {
     color: #e6972e;
   }
+
   .com-color-danger {
     color: $red;
   }
 }
+
 .com-el-talble-col-name {
   color: #0a76a4;
   cursor: pointer;
+
   .cell {
-    &:hover{
+    &:hover {
       text-decoration: underline;
     }
 
   }
 }
+
 .com-el-talble-col-title-name {
   color: #333333;
   cursor: auto;
