@@ -46,6 +46,7 @@
         </el-form-item>
         <el-form-item label="边界:" prop="">
           <map-border
+            :center="mapCenter"
             :border-data="ruleForm.matrix"
             @borderDataChange="borderDataChange"
           />
@@ -104,7 +105,11 @@
         valueTime: null,
         borderData: '',
         pointOptions: [],
-        cameraList: []
+        cameraList: [],
+        mapCenter: {
+          lng: 104.070264,
+          lat: 30.600342
+        }
       }
     },
     computed: {
@@ -122,6 +127,13 @@
               this.valueTime = [this.ruleForm.validStart, this.ruleForm.validEnd]
             } else {
               this.valueTime = null
+            }
+            try {
+              const borders = JSON.parse(res.data.matrix)
+              // console.log(borders[0].center)
+              this.mapCenter = borders[0].center
+            } catch (e) {
+              console.error('边界格式有误')
             }
           }
         })

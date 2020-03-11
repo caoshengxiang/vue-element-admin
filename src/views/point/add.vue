@@ -29,6 +29,7 @@
         </el-form-item>
         <el-form-item label="边界:" prop="">
           <map-border
+            :center="mapCenter"
             :border-data="ruleForm.matrix"
             @borderDataChange="borderDataChange"
           />
@@ -54,6 +55,7 @@
               <div style="line-height: 26px">4. 绘制最后一个点不必连接起点，点击生成边界会自动将最后一个点和第一个点连接</div>
             </div>
             <spider-border
+              :center="mapCenter"
               :border-data="ruleForm.matrixCrawler"
               @borderDataChange="SpiderDataChange"
             />
@@ -112,7 +114,11 @@
         },
         streetOptions: [],
         targetId: '',
-        spiderBorderEdit: false
+        spiderBorderEdit: false,
+        mapCenter: {
+          lng: 104.070264,
+          lat: 30.600342
+        }
       }
     },
     computed: {
@@ -125,6 +131,13 @@
         this.$api.points.detail(this.targetId).then(res => {
           if (res.code === 200) {
             this.ruleForm = res.data
+            try {
+              const borders = JSON.parse(res.data.matrix)
+              // console.log(borders[0].center)
+              this.mapCenter = borders[0].center
+            } catch (e) {
+              console.error('边界格式有误')
+            }
           }
         })
       }

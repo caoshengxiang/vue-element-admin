@@ -93,6 +93,8 @@ slot:
           :show-overflow-tooltip="item.showOverflowTooltip === undefined ? true : item.showOverflowTooltip"
         />
       </div>
+      <!--slot 最后添加 一般用于操作列-->
+      <slot />
 
     </el-table>
     <!--分页-->

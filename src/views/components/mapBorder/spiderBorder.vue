@@ -7,11 +7,11 @@
 <template>
   <div>
     <baidu-map
-      :style="{width:mapSet.width,height:mapSet.height}"
+      :style="{width:width,height:height}"
       class="map"
       ak="QESRXGTH3unGiZpCnns1bep6hOCH7erg"
-      :zoom="mapSet.zoom"
-      :center="{lng: mapSet.center.lng, lat: mapSet.center.lat}"
+      :zoom="zoom"
+      :center="{lng: center.lng, lat: center.lat}"
       :scroll-wheel-zoom="true"
       :map-click="false"
       @ready="handler"
@@ -128,19 +128,26 @@
         default: '',
         type: String
       },
-      mapSet: {
+      width: { // 地图宽
+        default: '100%',
+        type: String
+      },
+      height: { // 地图高度
+        default: '90vh',
+        type: String
+      },
+      center: { // 地图中心
         default() {
           return {
-            width: '100%',
-            height: '90vh',
-            center: {
-              lng: 104.070264,
-              lat: 30.600342
-            },
-            zoom: 16 // 范围 1-19
+            lng: 104.070264,
+            lat: 30.600342
           }
         },
         type: Object
+      },
+      zoom: { // 缩放
+        default: 16, // 范围 1-19
+        type: Number
       }
     },
     data() {
