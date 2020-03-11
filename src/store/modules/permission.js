@@ -38,6 +38,7 @@ import componentFileMap from '@/router/componentFileMap'
 
 export function importRoutesFile(routes) { // 接口返回得组件映射，需要和接口定义一直
   const res = []
+  routes = routes || []
   routes.forEach(route => {
     const tmp = { ...route }
     if (typeof (tmp.component) === 'string') {

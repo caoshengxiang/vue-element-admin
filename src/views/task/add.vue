@@ -66,6 +66,21 @@
           <span v-if="viewType === 'detail'">{{ ruleForm.taskDesc }}</span>
           <el-input v-else v-model="ruleForm.taskDesc" type="textarea" />
         </el-form-item>
+        <el-form-item label="图片:" prop="pic">
+          <div v-if="viewType == 'detail'">
+            <span
+              v-for="(item, index) in ruleForm.pics"
+              :key="index"
+            >
+              <el-image
+                style="width: 200px; height: 300px;margin-right: 5px;"
+                :src="item"
+                :preview-src-list="ruleForm.pics"
+              />
+            </span>
+          </div>
+          <el-input v-else v-model="ruleForm.pic" />
+        </el-form-item>
         <el-form-item v-if="viewType !== 'detail'">
           <el-button type="primary" style="width: 200px" @click="submitForm('ruleForm')">保 存</el-button>
           <el-button @click="resetForm('ruleForm')">重 置</el-button>
@@ -116,6 +131,9 @@
         this.$api.task.detail(this.targetId).then(res => {
           if (res.code === 200) {
             this.ruleForm = res.data
+            if (res.data.pic) {
+              this.ruleForm.pics = res.data.pic.split(',')
+            }
           }
         })
       }

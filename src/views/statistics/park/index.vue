@@ -128,7 +128,8 @@
               // fontSize: 14, // 字体大小
               // color: '#ffffff' // 字体颜色
             },
-            data: ['哈罗', '美团', '青桔', '摩拜']
+            // data: ['哈罗', '美团', '青桔', '摩拜']
+            data: []
           },
           grid: {
             top: '30px',
@@ -229,8 +230,10 @@
       getList() {
         this.$api.statistics.bikeCount(this.searchForm).then(da => {
           if (da.data.outData) {
+            const names = []
             this.options.xAxis.data = da.data.outData
             this.options.series = da.data.value.map((item, index) => {
+              names.push(item.name)
               return {
                 name: item.name,
                 type: 'line',
@@ -240,6 +243,7 @@
                 smooth: true // true 为平滑曲线，false为直线
               }
             })
+            this.options.legend.data = names
           } else {
             this.options.xAxis.data = []
             this.options.series = []

@@ -1,4 +1,3 @@
-
 // https://webpack.js.org/guides/dependency-management/#requirecontext
 // require.context('./prototype', true, /\.js$/)
 // 添加prototype
@@ -7,3 +6,6 @@ import './prototype/api'
 import './prototype/vueCookies'
 import './prototype/qs'
 import './prototype/echarts'
+
+// styles
+import './styles'

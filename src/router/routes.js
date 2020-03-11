@@ -51,6 +51,18 @@ export const constantRoutes = [
     }]
   },
   {
+    path: '/profile',
+    component: Layout,
+    redirect: '/profile/index',
+    children: [{
+      path: 'index',
+      name: 'profile-index',
+      component: () => import('@/views/profile/index'),
+      meta: { title: '个人中心' },
+      hidden: true
+    }]
+  },
+  {
     path: '/event',
     name: 'event',
     component: Layout,
@@ -139,7 +151,7 @@ export const constantRoutes = [
         meta: { title: '停放区', icon: 'example' }
       },
       {
-        path: 'add',
+        path: 'fence-area-add',
         name: 'fence-area-add',
         component: () => import('@/views/fence/parking-area/add'),
         meta: { title: '停放区（添加/编辑）', icon: 'example' },
@@ -152,7 +164,7 @@ export const constantRoutes = [
         meta: { title: '禁停区', icon: 'example' }
       },
       {
-        path: 'add',
+        path: 'fence-no-add',
         name: 'fence-no-add',
         component: () => import('@/views/fence/no-stop/add'),
         meta: { title: '禁停区（添加/编辑）', icon: 'example' },
@@ -309,17 +321,27 @@ export const constantRoutes = [
       meta: { title: '调度任务统计', icon: 'example' }
     }
     ]
+  },
+  {
+    path: 'external-link',
+    component: Layout,
+    children: [
+      {
+        path: 'http://49.235.131.71:9512/#/data/v',
+        meta: { title: '大屏', icon: 'link' }
+      }
+    ]
+  },
+  {
+    path: 'external-link2',
+    component: Layout,
+    children: [
+      {
+        path: 'http://49.235.131.71:9512/#/data/map',
+        meta: { title: 'GIS大屏', icon: 'link' }
+      }
+    ]
   }
-  // {
-  //   path: 'external-link',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-  //       meta: { title: 'External Link', icon: 'link' }
-  //     }
-  //   ]
-  // },
 
   // 404 page must be placed at the end !!!
   // 使用了addRoutes

@@ -3,31 +3,28 @@ import { login, logout, getInfo } from '@/api_old/user'
 import API from '@/api'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
+import avatarDefault from '@/assets/avatar.svg'
 
 const state = {
   token: getToken(),
   name: '',
   avatar: '',
-  introduction: '',
-  roles: []
+  userInfo: ''
 }
 
 const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_INTRODUCTION: (state, introduction) => {
-    state.introduction = introduction
+  SET_USERINFO: (state, userInfo) => {
+    state.userInfo = userInfo
   },
   SET_NAME: (state, name) => {
     state.name = name
   },
   SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
+    state.avatar = avatar || avatarDefault // 默认头像
   }
-  // SET_ROLES: (state, roles) => {
-  //   state.roles = roles
-  // }
 }
 
 const actions = {
@@ -61,31 +58,36 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
+      API.account.userInfo().then(response => {
         const { data } = response
 
         if (!data) {
           reject('Verification failed, please Login again.')
         }
 
-        const { name, avatar, introduction } = data
-
-        // roles must be a non-empty array
-        // if (!roles || roles.length <= 0) {
-        //     reject('getInfo: roles must be a non-null array!')
-        // }
-        // console.log('info 权限路由')
-        // console.log(data)
-
-        // commit('SET_ROLES', roles)
-        // commit('SET_ROLES', ['admin'])
-        commit('SET_NAME', name)
+        const { userName, avatar } = data
+        commit('SET_NAME', userName)
         commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
+        commit('SET_USERINFO', data)
         resolve(data)
       }).catch(error => {
         reject(error)
       })
+      // getInfo(state.token).then(response => {
+      //   const { data } = response
+      //
+      //   if (!data) {
+      //     reject('Verification failed, please Login again.')
+      //   }
+      //
+      //   const { name, avatar } = data
+      //   commit('SET_NAME', name)
+      //   commit('SET_AVATAR', avatar)
+      //   commit('SET_USERINFO', data)
+      //   resolve(data)
+      // }).catch(error => {
+      //   reject(error)
+      // })
     })
   },
 

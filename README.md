@@ -208,6 +208,7 @@ Modern browsers and Internet Explorer 10+.
 
 ## 修改项
 
+1. 添加VueConfig 目录作为统一vue 三方引入入口
 1. 图标查看地址 /icons
 1. 权限做了修改调整
 1. 表格进行了粉装

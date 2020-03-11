@@ -44,6 +44,20 @@
             end-placeholder="结束日期"
           />
         </el-form-item>
+        <el-form-item label="图片:" prop="pic">
+          <div>
+            <span
+              v-for="(item, index) in ruleForm.pics"
+              :key="index"
+            >
+              <el-image
+                style="width: 200px; height: 300px;margin-right: 5px;"
+                :src="item"
+                :preview-src-list="ruleForm.pics"
+              />
+            </span>
+          </div>
+        </el-form-item>
         <el-form-item label="边界:" prop="">
           <map-border
             :center="mapCenter"
@@ -127,6 +141,9 @@
               this.valueTime = [this.ruleForm.validStart, this.ruleForm.validEnd]
             } else {
               this.valueTime = null
+            }
+            if (res.data.pic) {
+              this.ruleForm.pics = res.data.pic.split(',')
             }
             try {
               const borders = JSON.parse(res.data.matrix)

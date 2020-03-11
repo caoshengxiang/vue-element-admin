@@ -65,7 +65,7 @@ slot:
         :key="index"
       >
         <el-table-column
-          v-if="item.slot"
+          v-if="item.key && item.slot"
           :label="item.name"
           :sortable="item.sortable"
           :prop="item.key"
@@ -81,7 +81,7 @@ slot:
           </template>
         </el-table-column>
         <el-table-column
-          v-else
+          v-if="item.key && !item.slot"
           :label="item.name"
           :sortable="item.sortable"
           :prop="item.key"

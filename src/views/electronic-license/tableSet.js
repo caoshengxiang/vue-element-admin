@@ -3,7 +3,9 @@ import store from '@/store'
 
 // console.log(store.state.const)
 
-const defaultFormThead = [{
+const defaultFormThead = [
+  {},
+  {
   key: 'bikeNo',
   name: '单车编号'
 }, {

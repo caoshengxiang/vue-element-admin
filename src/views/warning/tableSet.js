@@ -1,9 +1,11 @@
 import store from '@/store'
 
-const defaultFormThead = [{
-  key: 'fenceName',
-  name: '停车点'
-},
+const defaultFormThead = [
+  {
+    key: 'fenceName',
+    name: '停车点'
+    // styleObject: { color: 'red' }
+  },
 //   {
 //   key: 'eventDesc',
 //   name: '事件描述'
