@@ -34,6 +34,12 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/icons',
+    component: () => import('@/views/icons/index'),
+    meta: { title: '项目图标' },
+    hidden: true
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/home',

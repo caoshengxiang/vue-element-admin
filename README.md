@@ -196,12 +196,6 @@ Detailed changes for each release are documented in the [release notes](https://
 
 If you find this project useful, you can buy author a glass of juice :tropical_drink:
 
-![donate](https://wpimg.wallstcn.com/bd273f0d-83a0-4ef2-92e1-9ac8ed3746b9.png)
-
-[Paypal Me](https://www.paypal.me/panfree23)
-
-[Buy me a coffee](https://www.buymeacoffee.com/Pan)
-
 ## Browsers support
 
 Modern browsers and Internet Explorer 10+.
@@ -212,6 +206,9 @@ Modern browsers and Internet Explorer 10+.
 
 ## License
 
-[MIT](https://github.com/PanJiaChen/vue-element-admin/blob/master/LICENSE)
+## 修改项
 
-Copyright (c) 2017-present PanJiaChen
+1. 图标查看地址 /icons
+1. 权限做了修改调整
+1. 表格进行了粉装
+1. 菜单图标名支持element 图标名，最好使用其中一种否者很难对齐
