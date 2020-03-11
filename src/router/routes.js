@@ -47,7 +47,7 @@ export const constantRoutes = [
       path: 'home',
       name: 'home',
       component: () => import('@/views/home/index'),
-      meta: { title: '首页', icon: 'dashboard', affix: true }
+      meta: { title: '首页', icon: 'example', affix: true }
     }]
   },
   {
@@ -55,30 +55,30 @@ export const constantRoutes = [
     name: 'event',
     component: Layout,
     redirect: '/event/warning-index',
-    meta: { title: '智慧检测', icon: 'example' },
+    meta: { title: '智慧检测', icon: 'tree-table' },
     children: [
       {
         path: 'warning-index',
         name: 'warning-index',
         component: () => import('@/views/warning/index'),
-        meta: { title: '预警事件', icon: 'dashboard' }
+        meta: { title: '预警事件', icon: 'example' }
       }, {
         path: 'add',
         name: 'warning-add',
         component: () => import('@/views/warning/add'),
-        meta: { title: '预警详情', icon: 'dashboard' },
+        meta: { title: '预警详情', icon: 'example' },
         hidden: true
       },
       {
         path: 'task-index',
         name: 'task-index',
         component: () => import('@/views/task/index'),
-        meta: { title: '任务调度', icon: 'dashboard' }
+        meta: { title: '任务调度', icon: 'example' }
       }, {
         path: 'add',
         name: 'task-add',
         component: () => import('@/views/task/add'),
-        meta: { title: '任务详情', icon: 'dashboard' },
+        meta: { title: '任务详情', icon: 'example' },
         hidden: true
       }
     ]
@@ -92,12 +92,12 @@ export const constantRoutes = [
       path: 'index',
       name: 'electronic-license-index',
       component: () => import('@/views/electronic-license/index'),
-      meta: { title: '电子牌照', icon: 'dashboard' }
+      meta: { title: '电子牌照', icon: 'example' }
     }, {
       path: 'add',
       name: 'electronic-license-add',
       component: () => import('@/views/electronic-license/add'),
-      meta: { title: '电子牌照（添加/编辑）', icon: 'dashboard' },
+      meta: { title: '电子牌照（添加/编辑）', icon: 'example' },
       hidden: true
     }]
   },
@@ -110,18 +110,18 @@ export const constantRoutes = [
       path: 'index',
       name: 'point-index',
       component: () => import('@/views/point/index'),
-      meta: { title: '点位查看', icon: 'dashboard' }
+      meta: { title: '点位查看', icon: 'example' }
     }, {
       path: 'add',
       name: 'point-add',
       component: () => import('@/views/point/add'),
-      meta: { title: '点位（添加/编辑）', icon: 'dashboard' },
+      meta: { title: '点位（添加/编辑）', icon: 'example' },
       hidden: true
     }, {
       path: 'capacity',
       name: 'point-capacity',
       component: () => import('@/views/point/capacity'),
-      meta: { title: '潮汐容量', icon: 'dashboard' },
+      meta: { title: '潮汐容量', icon: 'example' },
       hidden: true
     }]
   },
@@ -130,39 +130,39 @@ export const constantRoutes = [
     name: 'fence',
     component: Layout,
     redirect: '/fence/parking-area',
-    meta: { title: '电子围栏', icon: 'example' },
+    meta: { title: '电子围栏', icon: 'tree-table' },
     children: [
       {
         path: 'parking-area',
         name: 'parking-area',
         component: () => import('@/views/fence/parking-area/index'),
-        meta: { title: '停放区', icon: 'dashboard' }
+        meta: { title: '停放区', icon: 'example' }
       },
       {
         path: 'add',
         name: 'fence-area-add',
         component: () => import('@/views/fence/parking-area/add'),
-        meta: { title: '停放区（添加/编辑）', icon: 'dashboard' },
+        meta: { title: '停放区（添加/编辑）', icon: 'example' },
         hidden: true
       },
       {
         path: 'no-stop',
         name: 'no-stop',
         component: () => import('@/views/fence/no-stop/index'),
-        meta: { title: '禁停区', icon: 'dashboard' }
+        meta: { title: '禁停区', icon: 'example' }
       },
       {
         path: 'add',
         name: 'fence-no-add',
         component: () => import('@/views/fence/no-stop/add'),
-        meta: { title: '禁停区（添加/编辑）', icon: 'dashboard' },
+        meta: { title: '禁停区（添加/编辑）', icon: 'example' },
         hidden: true
       }
       // {
       //   path: 'fence-map',
       //   name: 'fence-map',
       //   component: () => import('@/views/fence/map/index'),
-      //   meta: { title: '围栏地图', icon: 'dashboard' }
+      //   meta: { title: '围栏地图', icon: 'example' }
       // }
     ]
   },
@@ -189,12 +189,12 @@ export const constantRoutes = [
       path: 'index',
       name: 'camera-index',
       component: () => import('@/views/camera/index'),
-      meta: { title: '摄像头管理', icon: 'dashboard' }
+      meta: { title: '摄像头管理', icon: 'example' }
     }, {
       path: 'add',
       name: 'camera-add',
       component: () => import('@/views/camera/add'),
-      meta: { title: '摄像头添加/编辑', icon: 'dashboard' },
+      meta: { title: '摄像头添加/编辑', icon: 'example' },
       hidden: true
     }]
   },
@@ -203,32 +203,32 @@ export const constantRoutes = [
     name: 'cycle-record',
     component: Layout,
     redirect: '/cycle-record/index',
-    meta: { title: '骑行记录', icon: 'example' },
+    meta: { title: '骑行记录', icon: 'tree-table' },
     children: [
       {
         path: 'index',
         name: 'cycle-record-index',
         component: () => import('@/views/cycle-record/cycle-record/index'),
-        meta: { title: '骑行记录', icon: 'dashboard' }
+        meta: { title: '骑行记录', icon: 'example' }
       },
       {
         path: 'detail',
         name: 'cycle-record-detail',
         component: () => import('@/views/cycle-record/cycle-record/detail'),
-        meta: { title: '详情', icon: 'dashboard' },
+        meta: { title: '详情', icon: 'example' },
         hidden: true
       },
       {
         path: 'violate-index',
         name: 'violate-record-index',
         component: () => import('@/views/cycle-record/violate-record/index'),
-        meta: { title: '骑行人违章记录', icon: 'dashboard' }
+        meta: { title: '骑行人违章记录', icon: 'example' }
       },
       {
         path: 'violate-detail',
         name: 'violate-record-detail',
         component: () => import('@/views/cycle-record/cycle-record/detail'),
-        meta: { title: '详情', icon: 'dashboard' },
+        meta: { title: '详情', icon: 'example' },
         hidden: true
       }
     ]
@@ -242,7 +242,7 @@ export const constantRoutes = [
       path: 'index',
       name: 'repair-index',
       component: () => import('@/views/repair/index'),
-      meta: { title: '单车维保', icon: 'dashboard' }
+      meta: { title: '单车维保', icon: 'example' }
     }]
   },
   // 这里用于权限路由测试， 动态返回
@@ -255,7 +255,7 @@ export const constantRoutes = [
   //     path: 'index',
   //     name: 'user-index',
   //     component: () => import('@/views/user/index'),
-  //     meta: { title: '人员管理', icon: 'dashboard' }
+  //     meta: { title: '人员管理', icon: 'example' }
   //   }]
   // },
   {
@@ -267,12 +267,12 @@ export const constantRoutes = [
       path: 'index',
       name: 'insLog-index',
       component: () => import('@/views/ingLog/index'),
-      meta: { title: '巡查日志', icon: 'dashboard' }
+      meta: { title: '巡查日志', icon: 'example' }
     }, {
       path: 'detail',
       name: 'insLog-detail',
       component: () => import('@/views/ingLog/detail'),
-      meta: { title: '详情', icon: 'dashboard' },
+      meta: { title: '详情', icon: 'example' },
       hidden: true
     }]
   },
@@ -281,32 +281,32 @@ export const constantRoutes = [
     name: 'statistics',
     component: Layout,
     redirect: '/statistics/record',
-    meta: { title: '统计分析', icon: 'example' },
+    meta: { title: '统计分析', icon: 'tree-table' },
     children: [{
       path: 'record',
       name: 'statistics-record',
       component: () => import('@/views/statistics/record/index'),
-      meta: { title: '车辆备案统计', icon: 'dashboard' }
+      meta: { title: '车辆备案统计', icon: 'example' }
     }, {
       path: 'park',
       name: 'statistics-park',
       component: () => import('@/views/statistics/park/index'),
-      meta: { title: '单车停放量统计', icon: 'dashboard' }
+      meta: { title: '单车停放量统计', icon: 'example' }
     }, {
       path: 'violation',
       name: 'violation-record',
       component: () => import('@/views/statistics/violation/index'),
-      meta: { title: '违章停放统计', icon: 'dashboard' }
+      meta: { title: '违章停放统计', icon: 'example' }
     }, {
       path: 'illegal',
       name: 'statistics-illegal',
       component: () => import('@/views/statistics/illegal/index'),
-      meta: { title: '非法投放统计', icon: 'dashboard' }
+      meta: { title: '非法投放统计', icon: 'example' }
     }, {
       path: 'task',
       name: 'statistics-task',
       component: () => import('@/views/statistics/task/index'),
-      meta: { title: '调度任务统计', icon: 'dashboard' }
+      meta: { title: '调度任务统计', icon: 'example' }
     }
     ]
   }

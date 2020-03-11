@@ -69,7 +69,7 @@ export default [
                   path: 'index',
                   name: 'user-index',
                   component: 'ViewsUserIndex',
-                  meta: { title: '人员管理', icon: 'dashboard' }
+                  meta: { title: '人员管理', icon: 'example' }
                 }]
               }
           ]

@@ -212,3 +212,6 @@ Modern browsers and Internet Explorer 10+.
 1. 权限做了修改调整
 1. 表格进行了粉装
 1. 菜单图标名支持element 图标名，最好使用其中一种否者很难对齐
+1. api 使用
+    如：this.$api.md.list()  md 代表api/modules/目录下得 js文件名
+    添加一个模块，只需要在api/modules/目录下 添加一个js 文件即可工程化引入
