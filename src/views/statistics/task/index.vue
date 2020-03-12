@@ -268,7 +268,7 @@
             data: []
           },
           yAxis: {
-            name: '数量',
+            name: '%',
             type: 'value',
             // 网格样式
             splitLine: {
@@ -367,7 +367,7 @@
             data: []
           },
           yAxis: {
-            name: '数量',
+            name: '时长(H)',
             type: 'value',
             // 网格样式
             splitLine: {
@@ -447,11 +447,15 @@
       /**/
       search() {
         this.getList()
+        this.getList2()
+        this.getList3()
       },
       resetForm(formName) {
         // this.searchForm.keyword = ''
         this.$refs[formName].resetFields()
         this.getList()
+        this.getList2()
+        this.getList3()
       },
       getList() {
         this.$api.statistics.taskStatics(Object.assign({}, this.searchForm, { interfaceType: 1 })).then(da => {

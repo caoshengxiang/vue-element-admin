@@ -1,6 +1,9 @@
 import store from '@/store'
 
 const defaultFormThead = [{
+  key: 'content',
+  name: '描述'
+}, {
   key: 'bikeNo',
   name: '单车编号'
 }, {
@@ -63,8 +66,5 @@ const defaultFormThead = [{
 }, {
   key: 'deptName',
   name: '部门'
-}, {
-  key: 'content',
-  name: '描述'
 }]
 export default defaultFormThead

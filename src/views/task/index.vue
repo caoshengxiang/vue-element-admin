@@ -206,9 +206,29 @@
       handleType(row, type) {
         if (type === 1) {
           this.$router.push({ name: 'task-add', query: { id: row.id, viewType: 'detail' }})
+        } else if (type === 2) {
+          this.$confirm('确认删除, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$api.task.del(row.id).then(res => {
+              if (res.code === 200) {
+                this.$message.success('删除成功')
+                this.getList()
+              }
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            })
+          })
         }
       },
-      add() {}
+      add() {
+        this.$router.push({ name: 'task-add', query: { viewType: 'add' }})
+      }
     }
   }
 </script>

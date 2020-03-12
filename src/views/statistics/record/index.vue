@@ -21,9 +21,11 @@
             <!--              &lt;!&ndash;                <i v-else class="el-icon-arrow-up el-icon&#45;&#45;right" />&ndash;&gt;-->
             <!--              &lt;!&ndash;              </el-button>&ndash;&gt;-->
             <!--            </span>-->
-            <span>注册总数：{{ bikeRegistrationTotal.registerTotal }}</span>
-            <span>无牌照：{{ bikeRegistrationTotal.unlicensTotal }}</span>
-            <span>注销：{{ bikeRegistrationTotal.destoryTotal }}</span>
+            <div style="margin-bottom: 14px">
+              <span style="margin-right: 10px;font-size: 13px;">注册总数：<span style="color: #40c9c6;font-size: 20px;">{{ bikeRegistrationTotal.registerTotal }}</span></span>
+              <span style="margin-right: 10px;font-size: 13px;">无牌照数：<span style="color: #c9311c;font-size: 20px;">{{ bikeRegistrationTotal.unlicensTotal }}</span></span>
+              <span style="margin-right: 10px;font-size: 13px;">注销数：<span style="color: #40c9c6;font-size: 20px;">{{ bikeRegistrationTotal.destoryTotal }}</span></span>
+            </div>
           </div>
         </div>
         <div v-show="moreShow" class="com-more-search" style="border: 0;">

@@ -2,6 +2,9 @@
 import store from '@/store'
 
 const defaultFormThead = [{
+  key: 'violationDesc',
+  name: '违章描述'
+}, {
   key: 'name',
   name: '名字'
 }, {
@@ -47,8 +50,5 @@ const defaultFormThead = [{
     })
     return value
   }
-}, {
-  key: 'violationDesc',
-  name: '违章描述'
 }]
 export default defaultFormThead

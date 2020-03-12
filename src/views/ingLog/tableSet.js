@@ -2,6 +2,9 @@
 // import store from '@/store'
 
 const defaultFormThead = [{
+  key: 'address',
+  name: '巡查地址'
+}, {
   key: 'title',
   name: '标题'
 }, {
@@ -35,8 +38,5 @@ const defaultFormThead = [{
 }, {
   key: 'replyTime',
   name: '回复时间'
-}, {
-  key: 'address',
-  name: '巡查地址'
 }]
 export default defaultFormThead

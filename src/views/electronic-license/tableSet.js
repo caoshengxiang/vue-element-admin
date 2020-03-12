@@ -5,6 +5,12 @@ import store from '@/store'
 
 const defaultFormThead = [
   {
+    key: 'registryTime',
+    name: '注册时间'
+    // formatter: (row, column, cellValue, index) => {
+    //   return moment(row.registryTime).format('YYYY-MM-DD')
+    // }
+  }, {
   key: 'bikeNo',
   name: '单车编号'
 }, {
@@ -70,11 +76,5 @@ const defaultFormThead = [
   key: 'color',
   name: '颜色',
   width: '90'
-}, {
-  key: 'registryTime',
-  name: '注册时间'
-  // formatter: (row, column, cellValue, index) => {
-  //   return moment(row.registryTime).format('YYYY-MM-DD')
-  // }
 }]
 export default defaultFormThead

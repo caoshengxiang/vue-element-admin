@@ -20,7 +20,7 @@
                 <account :user="user" />
               </el-tab-pane>
               <el-tab-pane label="修改密码" name="pass">
-                <account :user="user" />
+                <Pass :user="user" />
               </el-tab-pane>
             </el-tabs>
           </el-card>
@@ -37,10 +37,11 @@
   import Activity from './components/Activity'
   import Timeline from './components/Timeline'
   import Account from './components/Account'
+  import Pass from './components/Pass'
 
   export default {
     name: 'Profile',
-    components: { UserCard, Activity, Timeline, Account },
+    components: { UserCard, Activity, Timeline, Account, Pass },
     data() {
       return {
         user: {},

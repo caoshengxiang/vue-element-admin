@@ -1,8 +1,11 @@
 const defaultFormThead = [
-  /* {
-  key: 'id',
-  name: 'ID'
-}, */
+  {
+    key: 'alertNum',
+    name: '预警数',
+    width: '80',
+    className: 'com-el-talble-col-name',
+    labelClassName: 'com-el-talble-col-title-name'
+  },
   {
     key: 'name',
     name: '围栏名称'
@@ -29,12 +32,6 @@ const defaultFormThead = [
   }, {
     key: 'taskNum',
     name: '任务数',
-    width: '80',
-    className: 'com-el-talble-col-name',
-    labelClassName: 'com-el-talble-col-title-name'
-  }, {
-    key: 'alertNum',
-    name: '预警数',
     width: '80',
     className: 'com-el-talble-col-name',
     labelClassName: 'com-el-talble-col-title-name'

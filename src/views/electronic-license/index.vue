@@ -134,12 +134,13 @@
           <el-table-column
             fixed="right"
             label="操作"
-            min-width="140px"
+            min-width="170px"
           >
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="handleType(scope.row, 1)">编辑</el-button>
               <el-button type="text" class="com-color-warning" size="small" @click="handleType(scope.row, 2)">注销</el-button>
               <el-button type="text" class="com-color-danger" size="small" @click="handleType(scope.row, 3)">删除</el-button>
+              <el-button type="text" size="small" @click="handleType(scope.row, 4)">维保</el-button>
             </template>
           </el-table-column>
         </fixed-thead>
@@ -258,6 +259,8 @@
               message: '已取消'
             })
           })
+        } else if (type === 4) {
+          this.$router.push({ name: 'repair-index', query: { electroLicence: row.electroLicence }})
         }
       },
       add() {

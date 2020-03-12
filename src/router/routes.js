@@ -67,7 +67,7 @@ export const constantRoutes = [
     name: 'event',
     component: Layout,
     redirect: '/event/warning-index',
-    meta: { title: '智慧检测', icon: 'tree-table' },
+    meta: { title: '智慧监测', icon: 'tree-table' },
     children: [
       {
         path: 'warning-index',
@@ -75,7 +75,7 @@ export const constantRoutes = [
         component: () => import('@/views/warning/index'),
         meta: { title: '预警事件', icon: 'example' }
       }, {
-        path: 'add',
+        path: 'warning-add',
         name: 'warning-add',
         component: () => import('@/views/warning/add'),
         meta: { title: '预警详情', icon: 'example' },
@@ -87,7 +87,7 @@ export const constantRoutes = [
         component: () => import('@/views/task/index'),
         meta: { title: '任务调度', icon: 'example' }
       }, {
-        path: 'add',
+        path: 'task-add',
         name: 'task-add',
         component: () => import('@/views/task/add'),
         meta: { title: '任务详情', icon: 'example' },
@@ -100,17 +100,28 @@ export const constantRoutes = [
     name: 'electronic-license',
     component: Layout,
     redirect: '/electronic-license/index',
+    meta: { title: '电子牌照', icon: 'tree-table' },
     children: [{
       path: 'index',
       name: 'electronic-license-index',
       component: () => import('@/views/electronic-license/index'),
-      meta: { title: '电子牌照', icon: 'example' }
+      meta: { title: '车辆备案', icon: 'example' }
     }, {
       path: 'add',
       name: 'electronic-license-add',
       component: () => import('@/views/electronic-license/add'),
       meta: { title: '电子牌照（添加/编辑）', icon: 'example' },
       hidden: true
+    }, {
+      path: 'check-index',
+      name: 'check-index',
+      component: () => import('@/views/check/index'),
+      meta: { title: '绩效考核', icon: 'example' }
+    }, {
+      path: 'quota-index',
+      name: 'quota-index',
+      component: () => import('@/views/quota/index'),
+      meta: { title: '配额管理', icon: 'example' }
     }]
   },
   {

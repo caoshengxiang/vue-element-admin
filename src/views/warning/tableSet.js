@@ -1,6 +1,9 @@
 import store from '@/store'
 
-const defaultFormThead = [
+const defaultFormThead = [{
+  key: 'stopTime',
+  name: '消除时间'
+},
   {
     key: 'fenceName',
     name: '停车点'
@@ -60,8 +63,5 @@ const defaultFormThead = [
       })
       return value
     }
-  }, {
-    key: 'stopTime',
-    name: '消除时间'
   }]
 export default defaultFormThead

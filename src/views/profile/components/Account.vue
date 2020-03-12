@@ -105,9 +105,11 @@
 
         if (!isJPG && !isPNG) {
           this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!')
+          return false
         }
         if (!isLt2M) {
           this.$message.error('上传头像图片大小不能超过 2MB!')
+          return false
         }
 
         const param = new FormData()
@@ -140,6 +142,8 @@
     height: 178px;
     line-height: 178px;
     text-align: center;
+    border: 1px solid #e2e2e2;
+    border-radius: 5px;
   }
 
   .avatar {

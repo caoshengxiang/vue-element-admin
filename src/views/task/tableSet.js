@@ -1,6 +1,9 @@
 import store from '@/store'
 
 const defaultFormThead = [{
+  key: 'taskDesc',
+  name: '任务描述'
+}, {
   key: 'parkingSpotName',
   name: '点位名称'
 }, {
@@ -59,8 +62,5 @@ const defaultFormThead = [{
 }, {
   key: 'taskTrace',
   name: '任务转移记录'
-}, {
-  key: 'taskDesc',
-  name: '任务描述'
 }]
 export default defaultFormThead

@@ -192,6 +192,7 @@
       ])
     },
     created() {
+      this.searchForm.electroLicence = this.$route.query.electroLicence || ''
       this.getList()
     },
     methods: {
