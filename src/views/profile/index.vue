@@ -19,6 +19,9 @@
               <el-tab-pane label="修改个人资料" name="account">
                 <account :user="user" />
               </el-tab-pane>
+              <el-tab-pane label="修改密码" name="pass">
+                <account :user="user" />
+              </el-tab-pane>
             </el-tabs>
           </el-card>
         </el-col>
