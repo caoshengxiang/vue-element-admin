@@ -7,7 +7,7 @@ props:
 
 1. total 分页总数, undefined 或小于0 不显示分页
 
-1. defaultFormThead [] 表头数据，必填项
+1. defaultFormThead [{}] 表头数据，必填项， todo bug解决第一项自动跳到最后一项问题,零时解决目前只能最后一项放在第一项
   item：
   {
     key: '', // 字段， 【必填】
@@ -19,7 +19,7 @@ props:
     formatter: Function // 用来格式化内容
     className: String, // 列的 className, 如果只改变单元格不该标题需要和labelClassName配合使用
     labelClassName: String, // 当前列标题的自定义类名
-    slot: true, // 是否使用<template slot-scope="scope">{{scope.row}}</template> 方式显示数据
+    slot: true, // 是否使用<template slot-scope="scope">{{scope.row}}</template> 方式显示数据, slot为true formatter将失效
     styleObject: { color: 'red' } // 设置显示文本style 对象， 必选设置slot 为true
     showOverflowTooltip, 默认true, 显示超出提示
   }
@@ -60,12 +60,14 @@ slot:
       header-cell-class-name="header-row-bg"
       @cell-click="cellClickHandler"
     >
-      <div
+      <!--使用slot判断兼容formatter-->
+      <span
         v-for="(item,index) in formThead"
         :key="index"
+        class="test"
       >
         <el-table-column
-          v-if="item.key && item.slot"
+          v-if="item.slot"
           :label="item.name"
           :sortable="item.sortable"
           :prop="item.key"
@@ -81,7 +83,7 @@ slot:
           </template>
         </el-table-column>
         <el-table-column
-          v-if="item.key && !item.slot"
+          v-else
           :label="item.name"
           :sortable="item.sortable"
           :prop="item.key"
@@ -92,7 +94,7 @@ slot:
           :label-class-name="item.labelClassName"
           :show-overflow-tooltip="item.showOverflowTooltip === undefined ? true : item.showOverflowTooltip"
         />
-      </div>
+      </span>
       <!--slot 最后添加 一般用于操作列-->
       <slot />
 
