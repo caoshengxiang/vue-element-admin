@@ -3,16 +3,21 @@
     <div class="com-con-box">
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="160px" class="demo-ruleForm">
         <el-form-item label="点位名称:" prop="name">
-          <el-input v-model="ruleForm.name" style="width: 400px" />
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.name }}</span>
+          <el-input v-else v-model="ruleForm.name" style="width: 400px" />
         </el-form-item>
         <el-form-item label="重点点位:" prop="focused">
-          <el-radio-group v-model="ruleForm.focused">
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">
+            {{ ruleForm.focused ? '是' : '否' }}
+          </span>
+          <el-radio-group v-else v-model="ruleForm.focused">
             <el-radio :label="true">是</el-radio>
             <el-radio :label="false">否</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="组织街道:" prop="deptId">
-          <el-select v-model="ruleForm.deptId" placeholder="请选择" style="width: 400px">
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.street }}</span>
+          <el-select v-else v-model="ruleForm.deptId" placeholder="请选择" style="width: 400px">
             <el-option
               v-for="item in streetOptions"
               :key="item.deptId"
@@ -25,10 +30,12 @@
         <!--          <el-input v-model="ruleForm.street"></el-input>-->
         <!--        </el-form-item>-->
         <el-form-item label="最大容量:" prop="maxCapacity">
-          <el-input v-model.number="ruleForm.maxCapacity" type="number" style="width: 400px" />
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.maxCapacity }}</span>
+          <el-input v-else v-model.number="ruleForm.maxCapacity" type="number" style="width: 400px" />
         </el-form-item>
         <el-form-item label="边界:" prop="">
           <map-border
+            :is-edit="viewType !== 'detail'"
             :center="mapCenter"
             :border-data="ruleForm.matrix"
             @borderDataChange="borderDataChange"
@@ -55,6 +62,7 @@
               <div style="line-height: 26px">4. 绘制最后一个点不必连接起点，点击生成边界会自动将最后一个点和第一个点连接</div>
             </div>
             <spider-border
+              :is-edit="viewType !== 'detail'"
               :center="mapCenter"
               :border-data="ruleForm.matrixCrawler"
               @borderDataChange="SpiderDataChange"
@@ -114,6 +122,7 @@
         },
         streetOptions: [],
         targetId: '',
+        viewType: '',
         spiderBorderEdit: false,
         mapCenter: {
           lng: 104.070264,
@@ -127,6 +136,7 @@
     created() {
       this.getStreet()
       this.targetId = this.$route.query.id
+      this.viewType = this.$route.query.viewType
       if (this.targetId) {
         this.$api.points.detail(this.targetId).then(res => {
           if (res.code === 200) {

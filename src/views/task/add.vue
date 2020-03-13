@@ -19,7 +19,13 @@
         </el-form-item>
         <el-form-item label="执行人名称:" prop="executorId">
           <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.executorName }}</span>
-          <el-select v-else v-model="ruleForm.executorId" placeholder="请选择" style="width: 100%;" @change="executorChange">
+          <el-select
+            v-else
+            v-model="ruleForm.executorId"
+            placeholder="请选择"
+            style="width: 100%;"
+            @change="executorChange"
+          >
             <el-option
               v-for="item in orgList"
               :key="item.userId"
@@ -184,6 +190,9 @@
             this.ruleForm = res.data
             if (res.data.pic) {
               this.ruleForm.pics = res.data.pic.split(',')
+              this.fileList = this.ruleForm.pics.map(item => {
+                return { url: item }
+              })
             }
           }
         })

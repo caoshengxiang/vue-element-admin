@@ -23,7 +23,7 @@
       <!--缩放-->
       <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT" />
 
-      <bm-control offset="20">
+      <bm-control v-if="isEdit" offset="20">
         <div class="ctrl">
           <button class="btn-3 btn" @click.stop="initBorder">初始边界</button>
           <button v-if="polyline.editing" class="btn-1 btn" @click.stop="toggle('polyline')">结束绘制(先鼠标右键完成当前区域,
@@ -124,6 +124,12 @@
       BmNavigation
     },
     props: {
+      isEdit: {
+        default() {
+          return true
+        },
+        type: Boolean
+      },
       borderData: {
         default: '',
         type: String
@@ -301,8 +307,9 @@
         item.center = e.target.getPath()
       },
       editPolygonPath(e, item, index) {
-        // eslint-disable-next-line no-console
-        // console.log(JSON.stringify(this.polygonPaths))
+        if (!this.isEdit) {
+          return
+        }
         this.dialogVisible = true
         this.editPolygItem = item
         this.editPolygIndex = index

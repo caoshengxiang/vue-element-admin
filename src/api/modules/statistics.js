@@ -23,5 +23,21 @@ export default {
   // 非法投放统计
   taskStatics(params) {
     return request2.get('supervisor/statistic/taskStatics', { params: params })
+  },
+  // 首页折线统计 第二行
+  home_line(params) {
+    return request2.get('supervisor/statistic/usedRatesTrends', { params: params })
+  },
+  home_line31(params) {
+    return request2.get('supervisor/statistic/putInCounts', { params: params })
+  },
+  home_line32(params) {
+    return request2.get('supervisor/statistic/illegalAmount', { params: params })
+  },
+  home_line33(params) {
+    return request2.get('supervisor/statistic/taskCompleted', { params: params })
+  },
+  bikeAndillegalTotal(params) {
+    return request2.get('supervisor/statistic/bikeAndillegalTotal', { params: params })
   }
 }

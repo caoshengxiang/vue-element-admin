@@ -85,8 +85,7 @@
             min-width="180px"
           >
             <template slot-scope="scope">
-              <!--              <el-button type="text" size="small" @click="handleType(scope.row, 2)">围栏</el-button>-->
-              <!--              <el-button type="text" size="small" @click="handleType(scope.row, 3)">边界</el-button>-->
+              <el-button type="text" size="small" @click="handleType(scope.row, 2)">详情</el-button>
               <el-button type="text" size="small" @click="handleType(scope.row, 4)">编辑</el-button>
               <el-button class="com-color-danger" type="text" size="small" @click="handleType(scope.row, 1)">删除</el-button>
             </template>
@@ -196,6 +195,9 @@
             break
           case 4: // 编辑
             this.$router.push({ name: 'point-add', query: { id: row.id }})
+            break
+          case 2: // 详情
+            this.$router.push({ name: 'point-add', query: { id: row.id, viewType: 'detail' }})
             break
         }
       },
