@@ -43,9 +43,9 @@
                   <el-select v-model="searchForm.regionId" placeholder="请选择" style="width: 100%;" clearable>
                     <el-option
                       v-for="item in streetOptions"
-                      :key="item.deptId"
-                      :label="item.deptName"
-                      :value="item.deptId"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
                     />
                   </el-select>
                 </el-form-item>
@@ -539,7 +539,7 @@
       },
       /**/
       getStreet() {
-        this.$api.common.street({ extType: 0 }).then(res => {
+        this.$api.common.street2({ deep: 3 }).then(res => {
           this.streetOptions = res.data
         })
       }

@@ -37,7 +37,7 @@
                     <el-option
                       v-for="item in streetOptions"
                       :key="item.deptId"
-                      :label="item.deptName"
+                      :label="item.sName"
                       :value="item.deptId"
                     />
                   </el-select>
@@ -148,6 +148,10 @@
       getStreet() {
         this.$api.common.street({ extType: 0 }).then(res => {
           this.streetOptions = res.data
+          this.streetOptions.forEach(item => {
+            const sFullNames = item.extRegionFullName.split('/')
+            item.sName = sFullNames[sFullNames.length - 1]
+          })
         })
       },
       getList() {

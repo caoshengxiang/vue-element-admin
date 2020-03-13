@@ -11,10 +11,10 @@
           <el-card>
             <el-tabs v-model="activeTab">
               <el-tab-pane label="消息" name="activity">
-                <activity />
+                <!--                <activity/>-->
               </el-tab-pane>
               <el-tab-pane label="日志" name="timeline">
-                <timeline />
+                <!--                <timeline/>-->
               </el-tab-pane>
               <el-tab-pane label="修改个人资料" name="account">
                 <account :user="user" />
@@ -34,14 +34,15 @@
 <script>
   import { mapGetters } from 'vuex'
   import UserCard from './components/UserCard'
-  import Activity from './components/Activity'
-  import Timeline from './components/Timeline'
+  // import Activity from './components/Activity'
+  // import Timeline from './components/Timeline'
   import Account from './components/Account'
   import Pass from './components/Pass'
 
   export default {
     name: 'Profile',
-    components: { UserCard, Activity, Timeline, Account, Pass },
+    // components: { UserCard, Activity, Timeline, Account, Pass },
+    components: { UserCard, Account, Pass },
     data() {
       return {
         user: {},
