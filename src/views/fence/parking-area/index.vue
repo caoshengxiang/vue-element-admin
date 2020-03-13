@@ -35,8 +35,15 @@
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
-                <el-form-item label="所属点位" prop="parkingSpotId">
-                  <el-select v-model="searchForm.parkingSpotId" clearable placeholder="所属点位" />
+                <el-form-item label="所属点位" prop="spotId">
+                  <el-select v-model="searchForm.spotId" clearable placeholder="所属点位">
+                    <el-option
+                      v-for="item in pointOptions"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
+                    />
+                  </el-select>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12">
@@ -79,6 +86,7 @@
           :default-form-thead="defaultFormThead"
           @pageQueryChange="pageQueryChange"
           @cell-click="cellClickHandle"
+          @row-dblclick="(row) => {handleType(row, 3)}"
         >
           <el-table-column
             fixed="right"
@@ -124,10 +132,12 @@
         tableData: [],
         defaultFormThead: defaultFormThead,
         /**/
-        valueTime: null
+        valueTime: null,
+        pointOptions: []
       }
     },
     created() {
+      this.getPoint()
       this.getList()
     },
     methods: {
@@ -198,6 +208,15 @@
         if (obj.key === 'alertNum') { // 预警
           alert(obj.name)
         }
+      },
+      getPoint() {
+        this.$api.points.list({
+          size: 1000,
+          current: 1
+        }).then(res => {
+          const { data } = res
+          this.pointOptions = data.records
+        })
       }
     }
   }

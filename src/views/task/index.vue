@@ -58,12 +58,12 @@
               <el-col :xs="24" :sm="6">
                 <el-form-item label="点位" prop="parkingSpotId">
                   <el-select v-model="searchForm.parkingSpotId" clearable placeholder="请选择">
-                    <!--                    <el-option-->
-                    <!--                      v-for="item in electroLicence_state"-->
-                    <!--                      :key="item.value"-->
-                    <!--                      :label="item.label"-->
-                    <!--                      :value="item.value"-->
-                    <!--                    />-->
+                    <el-option
+                      v-for="item in pointOptions"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
+                    />
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -114,6 +114,7 @@
           :table-data="tableData"
           :default-form-thead="defaultFormThead"
           @pageQueryChange="pageQueryChange"
+          @row-dblclick="(row) => {handleType(row, 1)}"
         >
           <el-table-column
             fixed="right"
@@ -161,7 +162,8 @@
         tableData: [],
         defaultFormThead: defaultFormThead,
         /**/
-        valueTime: ''
+        valueTime: '',
+        pointOptions: []
       }
     },
     computed: {
@@ -171,6 +173,7 @@
       ])
     },
     created() {
+      this.getPoint()
       this.getList()
     },
     methods: {
@@ -228,6 +231,15 @@
       },
       add() {
         this.$router.push({ name: 'task-add', query: { viewType: 'add' }})
+      },
+      getPoint() {
+        this.$api.points.list({
+          size: 1000,
+          current: 1
+        }).then(res => {
+          const { data } = res
+          this.pointOptions = data.records
+        })
       }
     }
   }

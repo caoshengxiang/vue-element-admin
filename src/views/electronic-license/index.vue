@@ -59,21 +59,21 @@
                   <el-input v-model="searchForm.electroLicence" clearable />
                 </el-form-item>
               </el-col>
-              <el-col :xs="24" :sm="6">
-                <el-form-item label="公司" prop="company">
-                  <el-input v-model="searchForm.company" clearable />
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="6">
-                <el-form-item label="型号" prop="model">
-                  <el-input v-model="searchForm.model" clearable />
-                </el-form-item>
-              </el-col>
-              <el-col :xs="24" :sm="6">
-                <el-form-item label="颜色" prop="color">
-                  <el-input v-model="searchForm.color" clearable />
-                </el-form-item>
-              </el-col>
+              <!--              <el-col :xs="24" :sm="6">-->
+              <!--                <el-form-item label="公司" prop="company">-->
+              <!--                  <el-input v-model="searchForm.company" clearable />-->
+              <!--                </el-form-item>-->
+              <!--              </el-col>-->
+              <!--              <el-col :xs="24" :sm="6">-->
+              <!--                <el-form-item label="型号" prop="model">-->
+              <!--                  <el-input v-model="searchForm.model" clearable />-->
+              <!--                </el-form-item>-->
+              <!--              </el-col>-->
+              <!--              <el-col :xs="24" :sm="6">-->
+              <!--                <el-form-item label="颜色" prop="color">-->
+              <!--                  <el-input v-model="searchForm.color" clearable />-->
+              <!--                </el-form-item>-->
+              <!--              </el-col>-->
               <el-col :xs="24" :sm="6">
                 <el-form-item label="车况" prop="condition">
                   <el-select v-model="searchForm.condition" clearable placeholder="请选择">
@@ -98,12 +98,27 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :xs="24" :sm="6">
-                <el-form-item clearable label="是否有蓝牙" prop="bluetooth">
-                  <el-radio-group v-model="searchForm.bluetooth">
-                    <el-radio :label="true">是</el-radio>
-                    <el-radio :label="false">否</el-radio>
-                  </el-radio-group>
+              <!--              <el-col :xs="24" :sm="6">-->
+              <!--                <el-form-item clearable label="是否有蓝牙" prop="bluetooth">-->
+              <!--                  <el-radio-group v-model="searchForm.bluetooth">-->
+              <!--                    <el-radio :label="true">是</el-radio>-->
+              <!--                    <el-radio :label="false">否</el-radio>-->
+              <!--                  </el-radio-group>-->
+              <!--                </el-form-item>-->
+              <!--              </el-col>-->
+              <el-col :xs="24" :sm="12">
+                <el-form-item label="骑行时间" prop="">
+                  <el-date-picker
+                    v-model="valueTime"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    :default-time="['00:00:00', '23:59:59']"
+                    :unlink-panels="true"
+                    style="width: 260px;"
+                    type="daterange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                  />
                 </el-form-item>
               </el-col>
             </el-row>
@@ -180,8 +195,9 @@
         },
         total: 0,
         tableData: [],
-        defaultFormThead: defaultFormThead
+        defaultFormThead: defaultFormThead,
         /**/
+        valueTime: ''
       }
     },
     computed: {
@@ -200,11 +216,14 @@
       },
       resetForm(formName) {
         this.searchForm.keyword = ''
+        this.valueTime = ''
         this.$refs[formName].resetFields()
         this.getList()
       },
       getList() {
         this.loading = true
+        this.searchForm.registryStart = this.valueTime ? this.valueTime[0] : ''
+        this.searchForm.registryEnd = this.valueTime ? this.valueTime[1] : ''
         this.$api.electronicLicense.list(Object.assign({},
           this.pageForm,
           this.searchForm

@@ -19,6 +19,6 @@ export default {
     return request2.post('system/user/updateBySelf', params)
   },
   resetPwd(params) {
-    return request2.post('system/user/resetPwd', params)
+    return request2.post('system/user/resetSelfPwd', params)
   }
 }

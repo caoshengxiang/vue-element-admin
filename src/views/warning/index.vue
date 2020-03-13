@@ -91,6 +91,7 @@
           :table-data="tableData"
           :default-form-thead="defaultFormThead"
           @pageQueryChange="pageQueryChange"
+          @row-dblclick="(row) => {handleType(row, 1)}"
         >
           <el-table-column
             fixed="right"

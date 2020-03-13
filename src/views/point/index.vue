@@ -27,22 +27,22 @@
           <el-form ref="searchForm" :model="searchForm" label-width="90px" class="demo-ruleForm">
             <el-row>
               <el-col :xs="24" :sm="6">
-                <el-form-item label="点位名称" prop="name" clearable>
-                  <el-input v-model="searchForm.name" />
+                <el-form-item label="点位名称" prop="keyword" clearable>
+                  <el-input v-model="searchForm.keyword" />
                 </el-form-item>
               </el-col>
-              <el-col :xs="24" :sm="6">
-                <el-form-item label="街道" prop="regionId">
-                  <el-select v-model="searchForm.regionId" filterable placeholder="请选择" clearable>
-                    <el-option
-                      v-for="item in streetOptions"
-                      :key="item.deptId"
-                      :label="item.sName"
-                      :value="item.deptId"
-                    />
-                  </el-select>
-                </el-form-item>
-              </el-col>
+              <!--              <el-col :xs="24" :sm="6">-->
+              <!--                <el-form-item label="街道" prop="regionId">-->
+              <!--                  <el-select v-model="searchForm.regionId" filterable placeholder="请选择" clearable>-->
+              <!--                    <el-option-->
+              <!--                      v-for="item in streetOptions"-->
+              <!--                      :key="item.deptId"-->
+              <!--                      :label="item.sName"-->
+              <!--                      :value="item.deptId"-->
+              <!--                    />-->
+              <!--                  </el-select>-->
+              <!--                </el-form-item>-->
+              <!--              </el-col>-->
               <el-col :xs="24" :sm="12">
                 <el-form-item label="容量范围">
                   <el-input v-model.number="searchForm.capacityStart" style="width: 40%" type="number" />
@@ -78,6 +78,7 @@
           :default-form-thead="defaultFormThead"
           @cell-click="cellClickHandle"
           @pageQueryChange="pageQueryChange"
+          @row-dblclick="(row) => {handleType(row, 2)}"
         >
           <el-table-column
             fixed="right"
@@ -141,6 +142,8 @@
       },
       resetForm(formName) {
         this.searchForm.keyword = ''
+        this.searchForm.capacityStart = ''
+        this.searchForm.capacityEnd = ''
         this.$refs[formName].resetFields()
         this.getList()
       },

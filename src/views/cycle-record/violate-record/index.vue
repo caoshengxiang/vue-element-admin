@@ -38,26 +38,23 @@
           <el-form ref="searchForm" :model="searchForm" label-width="90px" class="demo-ruleForm">
             <el-row>
               <el-col :xs="24" :sm="6">
-                <el-form-item label="名字" prop="name">
-                  <el-input v-model="searchForm.name" clearable />
+                <el-form-item label="手机号" prop="mobile">
+                  <el-input v-model="searchForm.mobile" clearable />
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
-                <el-form-item label="身份证" prop="idCard">
-                  <el-input v-model="searchForm.idCard" clearable />
+                <el-form-item label="违章地点" prop="addr">
+                  <el-input v-model="searchForm.addr" clearable />
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
-                <el-form-item clearable label="是否违章" prop="valid">
-                  <el-radio-group v-model="searchForm.valid">
-                    <el-radio :label="1">是</el-radio>
-                    <el-radio :label="0">否</el-radio>
-                  </el-radio-group>
+                <el-form-item label="单车编号" prop="bikeNo">
+                  <el-input v-model="searchForm.bikeNo" clearable />
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="6">
-                <el-form-item label="违章类型" prop="violationType">
-                  <el-select v-model="searchForm.violationType" clearable placeholder="请选择">
+                <el-form-item label="违章类型" prop="eventType">
+                  <el-select v-model="searchForm.eventType" clearable placeholder="请选择">
                     <el-option
                       v-for="item in violationType"
                       :key="item.value"
@@ -67,8 +64,20 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+              <el-col :xs="24" :sm="6">
+                <el-form-item label="单车公司" prop="company">
+                  <el-select v-model="searchForm.company" clearable placeholder="请选择">
+                    <el-option
+                      v-for="item in bikeCompany"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
               <el-col :xs="24" :sm="12">
-                <el-form-item label="骑行时间" prop="">
+                <el-form-item label="违章时间" prop="">
                   <el-date-picker
                     v-model="valueTime"
                     value-format="yyyy-MM-dd HH:mm:ss"
@@ -138,12 +147,6 @@
         loading: false,
         moreShow: false,
         searchForm: {
-          name: '',
-          idCard: '',
-          timeStart: '',
-          timeEnd: '',
-          valid: '',
-          violationType: ''
         },
         pageForm: {
           size: 20,
@@ -158,7 +161,8 @@
     },
     computed: {
       ...mapState('const', [
-        'violationType'
+        'violationType',
+        'bikeCompany'
       ])
     },
     created() {
@@ -177,8 +181,8 @@
       },
       getList() {
         this.loading = true
-        this.searchForm.timeStart = this.valueTime ? this.valueTime[0] : ''
-        this.searchForm.timeEnd = this.valueTime ? this.valueTime[1] : ''
+        this.searchForm.eventTimeStart = this.valueTime ? this.valueTime[0] : ''
+        this.searchForm.eventTimeEnd = this.valueTime ? this.valueTime[1] : ''
         this.$api.cycleRecord.violateList(Object.assign({},
           this.pageForm,
           this.searchForm

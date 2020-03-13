@@ -26,6 +26,7 @@ props:
 
 event:
 1.cell-click 单元格的点击事件
+1.row-dblclick 行 双击事件
 1. pageQueryChange 分页参数改变
 
 slot:
@@ -59,6 +60,7 @@ slot:
       style="width: 100%"
       header-cell-class-name="header-row-bg"
       @cell-click="cellClickHandler"
+      @row-dblclick="rowDblclick"
     >
       <!--使用slot判断兼容formatter-->
       <span
@@ -169,12 +171,17 @@ slot:
     methods: {
       cellClickHandler(row, column, cell, event) {
         // column.property 是key
-        console.log(row, column, cell, event)
+        // console.log(row, column, cell, event)
         this.$emit('cell-click', {
           row: row,
           key: column.property,
           name: column.label
         })
+      },
+      rowDblclick(row, column, event) {
+        // column.property 是key
+        // console.log(row, column, event)
+        this.$emit('row-dblclick', row)
       },
       handleSizeChange(val) {
         // console.log(`每页 ${val} 条`)
