@@ -16,7 +16,8 @@ const defaultFormThead = [{
   {
     key: 'company',
     name: '单车公司',
-    width: '80',
+    sortable: 'custom',
+    width: '95',
     formatter: (row, column, cellValue, index) => {
       const options = store.state.const.bikeCompany
       let value = ''

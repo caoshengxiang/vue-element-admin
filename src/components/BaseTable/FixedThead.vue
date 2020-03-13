@@ -13,7 +13,7 @@ props:
     key: '', // 字段， 【必填】
     name: '', // 字段名称，【必填】
     disabled: Boolean, // 表头显示不可配置, 和colCanConfig同为true生效
-    sortable:  Boolean, // 是否排序
+    sortable:  Boolean, // 是否排序，这个是前端排序，如果需要后端排序，需将sortable设置为custom，同时在 Table 上监听sort-change事件，在事件回调中可以获取当前排序的字段名和排序顺序，从而向接口请求排序后的表格数据
     width: '160px' // 默认160px 或 160，表格固定宽度，无则自动
     minWidth: '',
     formatter: Function // 用来格式化内容
@@ -61,6 +61,7 @@ slot:
       header-cell-class-name="header-row-bg"
       @cell-click="cellClickHandler"
       @row-dblclick="rowDblclick"
+      @sort-change="sortChange"
     >
       <!--使用slot判断兼容formatter-->
       <span
@@ -193,6 +194,9 @@ slot:
         // console.log(`当前页: ${val}`)
         this.pagesOptions.current = val
         this.$emit('pageQueryChange', this.pagesOptions)
+      },
+      sortChange(column, prop, order) {
+        console.log(column, prop, order)
       }
     }
   }
