@@ -138,7 +138,7 @@
             min-width="90px"
           >
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="handleType(scope.row, 1)">处理</el-button>
+              <el-button v-if="scope.row.state === 1" type="text" size="small" @click="handleType(scope.row, 1)">处理</el-button>
               <el-button type="text" class="com-color-danger" size="small" @click="handleType(scope.row, 2)">删除</el-button>
             </template>
           </el-table-column>
@@ -227,7 +227,23 @@
       /**/
       handleType(row, type) {
         if (type === 1) {
-          // this.$router.push({ name: 'electronic-license-add', query: { id: row.id } })
+          this.$confirm('确认已处理, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$api.repair.addOrUpdate({ id: row.id, state: 2 }).then(res => {
+              if (res.code === 200) {
+                this.$message.success('处理成功')
+                this.getList()
+              }
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            })
+          })
         } else if (type === 2) {
           this.$confirm('确认删除, 是否继续?', '提示', {
             confirmButtonText: '确定',

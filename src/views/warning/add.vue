@@ -3,11 +3,11 @@
     <div class="com-con-box">
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="160px" class="demo-ruleForm">
         <el-form-item label="预警:" prop="eventDesc">
-          <span v-if="viewType === 'detail'">{{ ruleForm.eventDesc }}</span>
-          <el-input v-else v-model="ruleForm.eventDesc" />
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.eventDesc }}</span>
+          <!--          <el-input v-else v-model="ruleForm.eventDesc" />-->
         </el-form-item>
         <el-form-item label="单车公司:" prop="ip">
-          <span v-if="viewType === 'detail'">
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">
             <span
               v-for="item in bikeCompany"
               :key="item.value"
@@ -23,19 +23,19 @@
           </el-select>
         </el-form-item>
         <el-form-item label="预警次数:" prop="alertTimes">
-          <span v-if="viewType === 'detail'">{{ ruleForm.alertTimes }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.alertTimes }}</span>
           <el-input v-else v-model="ruleForm.alertTimes" />
         </el-form-item>
         <el-form-item label="预警时间:" prop="eventTime">
-          <span v-if="viewType === 'detail'">{{ ruleForm.eventTime }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.eventTime }}</span>
           <el-input v-else v-model="ruleForm.eventTime" />
         </el-form-item>
         <el-form-item label="消除时间:" prop="stopTime">
-          <span v-if="viewType === 'detail'">{{ ruleForm.stopTime }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.stopTime }}</span>
           <el-input v-else v-model="ruleForm.stopTime" />
         </el-form-item>
         <el-form-item label="预警状态:" prop="state">
-          <span v-if="viewType === 'detail'">
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">
             <span
               v-for="item in warnState"
               :key="item.value"
@@ -51,7 +51,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="事件类型:" prop="eventType">
-          <span v-if="viewType === 'detail'">
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">
             <span
               v-for="item in warnType"
               :key="item.value"
@@ -67,7 +67,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="围栏名称:" prop="fenceName">
-          <span v-if="viewType === 'detail'">{{ ruleForm.fenceName }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.fenceName }}</span>
           <el-input v-else v-model="ruleForm.fenceName" />
         </el-form-item>
         <el-form-item label="是否生成任务:" prop="hasTask">
@@ -75,7 +75,7 @@
           <span v-if="ruleForm.hasTask === false">否</span>
         </el-form-item>
         <el-form-item label="图片:" prop="pic">
-          <div v-if="viewType == 'detail'">
+          <div v-if="viewType === 'detail'">
             <span
               v-for="(item, index) in ruleForm.pics"
               :key="index"

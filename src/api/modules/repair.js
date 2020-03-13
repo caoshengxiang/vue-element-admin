@@ -5,9 +5,9 @@ export default {
   list(params) {
     return request2.get('supervisor/maintenance-record/page', { params: params })
   },
-  // add(params) {
-  //   return request2.post('supervisor/camera', params)
-  // },
+  addOrUpdate(params) {
+    return request2.post('supervisor/maintenance-record/addOrUpdate', params)
+  },
   del(params) {
     return request2.delete(`supervisor/maintenance-record`, { params: params })
   }

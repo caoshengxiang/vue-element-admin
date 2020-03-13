@@ -87,7 +87,7 @@
           >
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="handleType(scope.row, 1)">编辑</el-button>
-              <!--              <el-button type="text" size="small" @click="handleType(scope.row, 2)">图片</el-button>-->
+              <el-button class="com-color-danger" type="text" size="small" @click="handleType(scope.row, 2)">删除</el-button>
             </template>
           </el-table-column>
         </fixed-thead>
@@ -165,6 +165,27 @@
       handleType(row, type) {
         if (type === 1) {
           this.$router.push({ name: 'fence-area-add', query: { id: row.id }})
+        } else if (type === 2) {
+          this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$api.del.del(row.id).then(res => {
+              if (res.code === 200) {
+                this.$message({
+                  type: 'success',
+                  message: '删除成功!'
+                })
+                this.getList()
+              }
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
+          })
         }
       },
       cellClickHandle(obj) {

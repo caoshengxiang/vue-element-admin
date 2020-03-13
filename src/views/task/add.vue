@@ -3,7 +3,7 @@
     <div class="com-con-box">
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="160px" class="demo-ruleForm">
         <el-form-item label="点位名称:" prop="parkingSpotId">
-          <span v-if="viewType === 'detail'">{{ ruleForm.parkingSpotName }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.parkingSpotName }}</span>
           <el-select v-else v-model="ruleForm.parkingSpotId" placeholder="请选择" style="width: 100%;">
             <el-option
               v-for="item in pointOptions"
@@ -14,11 +14,11 @@
           </el-select>
         </el-form-item>
         <el-form-item v-if="viewType === 'detail'" label="创建人名称:" prop="creatorName">
-          <span v-if="viewType === 'detail'">{{ ruleForm.creatorName }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.creatorName }}</span>
           <!--          <el-input v-else v-model="ruleForm.creatorName"/>-->
         </el-form-item>
         <el-form-item label="执行人名称:" prop="executorId">
-          <span v-if="viewType === 'detail'">{{ ruleForm.executorName }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.executorName }}</span>
           <el-select v-else v-model="ruleForm.executorId" placeholder="请选择" style="width: 100%;" @change="executorChange">
             <el-option
               v-for="item in orgList"
@@ -29,7 +29,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="执行人所属组织:" prop="">
-          <span>{{ ruleForm.deptName }}</span>
+          <span class="com-detail-item-value">{{ ruleForm.deptName }}</span>
           <!--          <el-select v-else v-model="ruleForm.deptId" placeholder="请选择" style="width: 100%;">-->
           <!--            <el-option-->
           <!--              v-for="item in pointOptions"-->
@@ -40,7 +40,7 @@
           <!--          </el-select>-->
         </el-form-item>
         <el-form-item label="调度类型:" prop="taskType">
-          <span v-if="viewType === 'detail'">
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">
             <span
               v-for="item in taskType"
               :key="item.value"
@@ -56,7 +56,7 @@
           </el-select>
         </el-form-item>
         <el-form-item v-if="viewType === 'detail'" label="任务状态:" prop="state">
-          <span v-if="viewType === 'detail'">
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">
             <span
               v-for="item in taskType"
               :key="item.value"
@@ -72,19 +72,19 @@
           </el-select>
         </el-form-item>
         <el-form-item v-if="viewType === 'detail'" label="任务调度时间:" prop="taskTime">
-          <span v-if="viewType === 'detail'">{{ ruleForm.taskTime }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.taskTime }}</span>
           <el-input v-else v-model="ruleForm.taskTime" />
         </el-form-item>
         <el-form-item v-if="viewType === 'detail'" label="任务完成时间:" prop="fishTime">
-          <span v-if="viewType === 'detail'">{{ ruleForm.fishTime }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.fishTime }}</span>
           <el-input v-else v-model="ruleForm.fishTime" />
         </el-form-item>
         <el-form-item v-if="viewType === 'detail'" label="任务转移记录:" prop="taskTrace">
-          <span v-if="viewType === 'detail'">{{ ruleForm.taskTrace }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.taskTrace }}</span>
           <el-input v-else v-model="ruleForm.taskTrace" type="textarea" />
         </el-form-item>
         <el-form-item label="任务描述:" prop="taskDesc">
-          <span v-if="viewType === 'detail'">{{ ruleForm.taskDesc }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.taskDesc }}</span>
           <el-input v-else v-model="ruleForm.taskDesc" type="textarea" />
         </el-form-item>
         <el-form-item label="图片:" prop="pic">

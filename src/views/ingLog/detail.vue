@@ -3,27 +3,27 @@
     <div class="com-con-box">
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="160px" class="demo-ruleForm">
         <el-form-item label="标题:" prop="title">
-          <span v-if="viewType == 'detail'">{{ ruleForm.title }}</span>
+          <span v-if="viewType == 'detail'" class="com-detail-item-value">{{ ruleForm.title }}</span>
           <el-input v-else v-model="ruleForm.title" />
         </el-form-item>
         <el-form-item label="内容:" prop="content">
-          <span v-if="viewType == 'detail'">{{ ruleForm.content }}</span>
+          <span v-if="viewType == 'detail'" class="com-detail-item-value">{{ ruleForm.content }}</span>
           <el-input v-else v-model="ruleForm.content" type="textarea" />
         </el-form-item>
         <el-form-item label="巡查人名字:" prop="inspectorName">
-          <span v-if="viewType == 'detail'">{{ ruleForm.inspectorName }}</span>
+          <span v-if="viewType == 'detail'" class="com-detail-item-value">{{ ruleForm.inspectorName }}</span>
           <el-input v-else v-model="ruleForm.inspectorName" />
         </el-form-item>
         <el-form-item label="巡查人组织:" prop="inspectorOrgId">
-          <span v-if="viewType == 'detail'">{{ ruleForm.inspectorOrgId }}</span>
+          <span v-if="viewType == 'detail'" class="com-detail-item-value">{{ ruleForm.inspectorOrgId }}</span>
           <el-input v-else v-model="ruleForm.inspectorOrgId" />
         </el-form-item>
         <el-form-item label="巡查时间:" prop="eventTime">
-          <span v-if="viewType == 'detail'">{{ ruleForm.eventTime }}</span>
+          <span v-if="viewType == 'detail'" class="com-detail-item-value">{{ ruleForm.eventTime }}</span>
           <el-input v-else v-model="ruleForm.eventTime" />
         </el-form-item>
         <el-form-item label="巡查地址:" prop="address">
-          <span v-if="viewType == 'detail'">{{ ruleForm.address }}</span>
+          <span v-if="viewType == 'detail'" class="com-detail-item-value">{{ ruleForm.address }}</span>
           <el-input v-else v-model="ruleForm.address" />
         </el-form-item>
         <el-form-item label="图片:" prop="pic">
@@ -50,22 +50,22 @@
           <el-input v-else v-model="ruleForm.video" />
         </el-form-item>
         <el-form-item label="是否非法:" prop="valid">
-          <span v-if="viewType == 'detail'">{{ ruleForm.valid?'是':'否' }}</span>
+          <span v-if="viewType == 'detail'" class="com-detail-item-value">{{ ruleForm.valid?'是':'否' }}</span>
           <el-radio-group v-else v-model="ruleForm.valid">
             <el-radio :label="true">是</el-radio>
             <el-radio :label="false">否</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="回复人:" prop="replyUserId">
-          <span v-if="viewType == 'detail'">{{ ruleForm.replyUserId }}</span>
+          <span v-if="viewType == 'detail'" class="com-detail-item-value">{{ ruleForm.replyUserId }}</span>
           <el-input v-else v-model="ruleForm.replyUserId" />
         </el-form-item>
         <el-form-item label="回复内容:" prop="replyContent">
-          <span v-if="viewType == 'detail'">{{ ruleForm.replyContent }}</span>
+          <span v-if="viewType == 'detail'" class="com-detail-item-value">{{ ruleForm.replyContent }}</span>
           <el-input v-else v-model="ruleForm.replyContent" type="textarea" />
         </el-form-item>
         <el-form-item label="回复时间:" prop="replyTime">
-          <span v-if="viewType == 'detail'">{{ ruleForm.replyTime }}</span>
+          <span v-if="viewType == 'detail'" class="com-detail-item-value">{{ ruleForm.replyTime }}</span>
           <el-input v-else v-model="ruleForm.replyTime" />
         </el-form-item>
         <el-form-item v-if="viewType !== 'detail'">

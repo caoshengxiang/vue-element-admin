@@ -3,19 +3,19 @@
     <div class="com-con-box">
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="160px" class="demo-ruleForm">
         <el-form-item label="摄像头名称:" prop="name">
-          <span v-if="viewType === 'detail'">{{ ruleForm.name }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.name }}</span>
           <el-input v-else v-model="ruleForm.name" />
         </el-form-item>
         <el-form-item label="ip地址:" prop="ip">
-          <span v-if="viewType === 'detail'">{{ ruleForm.ip }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.ip }}</span>
           <el-input v-else v-model="ruleForm.ip" />
         </el-form-item>
         <el-form-item label="厂商:" prop="vendor">
-          <span v-if="viewType === 'detail'">{{ ruleForm.vendor }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.vendor }}</span>
           <el-input v-else v-model="ruleForm.vendor" />
         </el-form-item>
         <el-form-item label="状态:" prop="state">
-          <span v-if="viewType === 'detail'">
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">
             <span
               v-for="item in cameraState"
               :key="item.value"
@@ -31,11 +31,11 @@
           </el-select>
         </el-form-item>
         <el-form-item label="备注:" prop="remark">
-          <span v-if="viewType === 'detail'">{{ ruleForm.remark }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.remark }}</span>
           <el-input v-else v-model="ruleForm.remark" type="textarea" />
         </el-form-item>
         <el-form-item label="扩展参数:" prop="ext">
-          <span v-if="viewType === 'detail'">{{ ruleForm.ext }}</span>
+          <span v-if="viewType === 'detail'" class="com-detail-item-value">{{ ruleForm.ext }}</span>
           <el-input v-else v-model="ruleForm.ext" type="textarea" />
         </el-form-item>
         <el-form-item v-if="viewType !== 'detail'">
