@@ -74,10 +74,19 @@ export default {
               center: ['50%', '38%'],
               data: data,
               animationEasing: 'cubicInOut',
-              animationDuration: 2600
+              animationDuration: 2600,
+              itemStyle: {
+                normal: {
+                  // 这里是重点
+                  color: function(params) {
+                    // 注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                    const colorList = ['#0082FF', '#67f6f4', '#ec3716', '#f4c20b']
+                    return colorList[params.dataIndex]
+                  }
+                }
+              }
             }
           ]
-          // colors: ['#0082FF', '#ED6130', '#A50BFF', '#1ed9fc']
         })
       })
     }

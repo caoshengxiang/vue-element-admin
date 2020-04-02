@@ -118,7 +118,8 @@
         },
         pageForm: {
           size: 20,
-          current: 1
+          current: 1,
+          desc: 'id'
         },
         total: 0,
         tableData: [],

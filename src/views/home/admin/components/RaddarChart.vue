@@ -80,10 +80,20 @@
             ],
             series: [
               {
-                name: '直接访问',
+                name: '违章数',
                 type: 'bar',
                 barWidth: '60%',
-                data: res.data.map(item => { return item.value })
+                data: res.data.map(item => { return item.value }),
+                itemStyle: {
+                  normal: {
+                    // 这里是重点
+                    color: function(params) {
+                      // 注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                      const colorList = ['#0082FF', '#67f6f4', '#ec3716', '#f4c20b']
+                      return colorList[params.dataIndex]
+                    }
+                  }
+                }
               }
             ]
           })

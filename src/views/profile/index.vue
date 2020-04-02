@@ -56,6 +56,11 @@
         'userInfo'
       ])
     },
+    watch: {
+      userInfo(val) {
+        this.getUser()
+      }
+    },
     created() {
       this.getUser()
     },

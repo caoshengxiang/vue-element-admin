@@ -87,11 +87,11 @@
         moreShow: true,
         searchForm: {
           parkId: '',
-          timeStart: this.$moment(new Date().getTime() - 3600 * 1000 * 24 * 7),
+          timeStart: this.$moment(new Date().getTime() - 3600 * 1000 * 24 * 30),
           timeEnd: this.$moment(new Date())
         },
         pointOptions: [],
-        valueTime: [this.$moment(new Date().getTime() - 3600 * 1000 * 24 * 7), this.$moment(new Date())], // 最近七天
+        valueTime: [this.$moment(new Date().getTime() - 3600 * 1000 * 24 * 30), this.$moment(new Date())], // 最近七天
         chart: '',
         options: {
           title: {

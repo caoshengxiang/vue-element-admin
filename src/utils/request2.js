@@ -56,7 +56,7 @@ service.interceptors.response.use(
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 401) {
         // to re-login
-        MessageBox.confirm('登录已过期，请重新登录', 'Confirm logout', {
+        MessageBox.confirm('登录已过期，请重新登录', '登录验证', {
           confirmButtonText: '重新登录',
           cancelButtonText: '取消',
           type: 'warning',
@@ -82,7 +82,7 @@ service.interceptors.response.use(
       duration: 5 * 1000
     })
     if (error.message.indexOf('401') > -1) {
-      MessageBox.confirm('登录已过期，请重新登录', 'Confirm logout', {
+      MessageBox.confirm('登录已过期，请重新登录', '登录验证', {
         confirmButtonText: '重新登录',
         cancelButtonText: '取消',
         type: 'warning',

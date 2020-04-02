@@ -15,7 +15,7 @@
           <el-input v-else v-model="ruleForm.inspectorName" />
         </el-form-item>
         <el-form-item label="巡查人组织:" prop="inspectorOrgId">
-          <span v-if="viewType == 'detail'" class="com-detail-item-value">{{ ruleForm.inspectorOrgId }}</span>
+          <span v-if="viewType == 'detail'" class="com-detail-item-value">{{ ruleForm.inspectorOrgName }}</span>
           <el-input v-else v-model="ruleForm.inspectorOrgId" />
         </el-form-item>
         <el-form-item label="巡查时间:" prop="eventTime">
@@ -57,7 +57,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="回复人:" prop="replyUserId">
-          <span v-if="viewType == 'detail'" class="com-detail-item-value">{{ ruleForm.replyUserId }}</span>
+          <span v-if="viewType == 'detail'" class="com-detail-item-value">{{ ruleForm.replyUserName }}</span>
           <el-input v-else v-model="ruleForm.replyUserId" />
         </el-form-item>
         <el-form-item label="回复内容:" prop="replyContent">

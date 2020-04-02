@@ -6,7 +6,7 @@ const defaultFormThead = [{
 },
   {
     key: 'fenceName',
-    name: '停车点'
+    name: '围栏名称'
     // styleObject: { color: 'red' }
   },
 //   {
@@ -33,7 +33,7 @@ const defaultFormThead = [{
     name: '预警次数',
     width: '80'
   }, {
-    key: 'created',
+    key: 'earlyTime',
     name: '最早预警时间'
   }, {
     key: 'eventTime',
