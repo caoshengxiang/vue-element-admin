@@ -16,7 +16,6 @@ const defaultFormThead = [{
   {
     key: 'company',
     name: '单车公司',
-    sortable: 'custom',
     width: '95',
     formatter: (row, column, cellValue, index) => {
       const options = store.state.const.bikeCompany
@@ -34,10 +33,12 @@ const defaultFormThead = [{
     width: '80'
   }, {
     key: 'earlyTime',
-    name: '最早预警时间'
+    name: '最早预警时间',
+    sortable: 'custom'
   }, {
     key: 'eventTime',
-    name: '最新事件时间'
+    name: '最新事件时间',
+    sortable: 'custom'
   }, {
     key: 'state',
     name: '预警状态',

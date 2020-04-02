@@ -132,7 +132,7 @@
         pageForm: {
           size: 20,
           current: 1,
-          desc: 'id'
+          descs: 'id'
         },
         total: 0,
         tableData: [],
@@ -173,6 +173,7 @@
         }).catch(() => { this.loading = false })
       },
       pageQueryChange(pageForm) {
+        console.log(pageForm)
         this.pageForm = pageForm
         this.getList()
       },

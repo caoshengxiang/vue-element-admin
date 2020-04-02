@@ -96,7 +96,7 @@
         pageForm: {
           size: 20,
           current: 1,
-          desc: 'id'
+          descs: 'id'
         },
         total: 0,
         tableData: [],

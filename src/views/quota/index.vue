@@ -108,7 +108,7 @@
         pageForm: {
           size: 20,
           current: 1,
-          desc: 'id'
+          descs: 'id'
         },
         tableData: [],
         defaultFormThead: defaultFormThead,

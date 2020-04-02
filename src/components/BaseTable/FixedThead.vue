@@ -7,15 +7,15 @@ props:
 
 1. total 分页总数, undefined 或小于0 不显示分页
 
-1. defaultFormThead [{}] 表头数据，必填项， todo bug解决第一项自动跳到最后一项问题,零时解决目前只能最后一项放在第一项
+1. defaultFormThead [{}] 表头数据，必填项， todo bug解决第一项自动跳到最后一项问题,零时解决目前只能最后一项放在第一项,引起原因是引入template 逻辑，使用template formater 会失效
   item：
   {
     key: '', // 字段， 【必填】
     name: '', // 字段名称，【必填】
     disabled: Boolean, // 表头显示不可配置, 和colCanConfig同为true生效
-    sortable:  Boolean, // 是否排序，这个是前端排序，如果需要后端排序，需将sortable设置为custom，同时在 Table 上监听sort-change事件，在事件回调中可以获取当前排序的字段名和排序顺序，从而向接口请求排序后的表格数据
-    width: '160px' // 默认160px 或 160，表格固定宽度，无则自动
-    minWidth: '',
+    sortable:  Boolean, // 是否排序，这个是前端排序，如果需要后端排序，需将sortable设置为'custom'，同时在 Table 上监听sort-change事件，在事件回调中可以获取当前排序的字段名和排序顺序，从而向接口请求排序后的表格数据
+    width: 'auto' // 默认auto， 设置如160px 或 160，表格固定宽度，无则自动
+    minWidth: '', // 默认140px
     formatter: Function // 用来格式化内容
     className: String, // 列的 className, 如果只改变单元格不该标题需要和labelClassName配合使用
     labelClassName: String, // 当前列标题的自定义类名
@@ -80,6 +80,7 @@ slot:
           :class-name="item.className"
           :label-class-name="item.labelClassName"
           :show-overflow-tooltip="item.showOverflowTooltip === undefined ? true : item.showOverflowTooltip"
+          @sort-change="sortChange"
         >
           <template slot-scope="scope">
             <span :style="item.styleObject">{{ scope.row[item.key] }} </span>
@@ -195,8 +196,19 @@ slot:
         this.pagesOptions.current = val
         this.$emit('pageQueryChange', this.pagesOptions)
       },
-      sortChange(column, prop, order) {
+      sortChange({ column, prop, order }) { // 该方法需要根据实际后端排序字段规则进行修改
         console.log(column, prop, order)
+        if (order === 'ascending') {
+          this.pagesOptions.ascs = prop
+          this.pagesOptions.descs = null
+        } else if (order === 'descending') {
+          this.pagesOptions.ascs = null
+          this.pagesOptions.descs = prop
+        } else {
+          this.pagesOptions.ascs = null
+          this.pagesOptions.descs = null
+        }
+        this.$emit('pageQueryChange', this.pagesOptions)
       }
     }
   }
