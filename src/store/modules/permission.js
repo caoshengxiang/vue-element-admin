@@ -36,7 +36,7 @@ import componentFileMap from '@/router/componentFileMap'
 //   return res
 // }
 
-export function importRoutesFile(routes) { // 接口返回得组件映射，需要和接口定义一直
+export function importRoutesFile(routes) { // 接口返回得组件映射，需要和接口定义一致，最好以全路径命名
   const res = []
   routes = routes || []
   routes.forEach(route => {

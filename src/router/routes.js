@@ -1,3 +1,9 @@
+/*
+* 路由定义规范说明：
+* path尽量为文件路径
+* component 接口返回做文件映射时，已尽量为文件路径，所有首字母大写 如： component: () => import('@/views/redirect/index') // ViewsRedirectIndex
+* */
+
 import Layout from '@/layout/index'
 
 export const constantRoutes = [
@@ -8,7 +14,7 @@ export const constantRoutes = [
     children: [
       {
         path: '/redirect/:path(.*)',
-        component: () => import('@/views/redirect/index')
+        component: () => import('@/views/redirect/index') // ViewsRedirectIndex
       }
     ]
   },
