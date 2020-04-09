@@ -1,0 +1,60 @@
+
+<html>
+<title>Web播放Rtsp流 </title>
+<meta charset="utf-8">
+
+<body>
+
+<object  type='application/x-vlc-plugin' id='Object1' width="500" height="400" events='True' pluginspage="http://www.videolan.org" codebase="http://downloads.videolan.org/pub/videolan/vlc-webplugins/2.0.6/npapi-vlc-2.0.6.tar.xz" >
+  <param name='mrl' value='rtsp://admin:admin123@192.168.0.108:55' />
+  <param name='volume' value='50' />
+  <param name='autoplay' value='true' />
+  <param name='loop' value='false' />
+  <param value="transparent" name="wmode">
+
+</object >
+
+<br />
+
+<object  type='application/x-vlc-plugin' id='Object2' width="500" height="400" events='True' pluginspage="http://www.videolan.org" codebase="http://downloads.videolan.org/pub/videolan/vlc-webplugins/2.0.6/npapi-vlc-2.0.6.tar.xz" >
+  <param name='mrl' value='rtsp://admin:admin123@192.168.0.108:55' />
+  <param name='volume' value='50' />
+  <param name='autoplay' value='true' />
+  <param name='loop' value='false' />
+  <param value="transparent" name="wmode">
+</object >
+
+<script>
+
+  //获取 VLC js 队形
+  function getVLC(name) {
+    if (window.document[name]) {
+      return window.document[name];
+    }
+    if (navigator.appName.indexOf("Microsoft Internet") == -1) {
+      if (document.embeds && document.embeds[name])
+        return document.embeds[name];
+    } else {
+      return document.getElementById(name);
+    }
+  }
+
+  // 根据地址切换视频
+  function doGo(mrl) {
+    try {
+      var vlc = getVLC("vlc"),
+        itemId = vlc.playlist.add(mrl);
+      vlc.playlist.playItem(itemId);
+
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  //调用
+  doGo(mrl)
+
+</script>
+</body>
+
+</html>

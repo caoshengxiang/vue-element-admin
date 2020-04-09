@@ -345,6 +345,7 @@
         this.editPolygItem.editing = !this.editPolygItem.editing
         this.dialogVisible = false
         this.setBorderCenter()
+        console.log(this.getBorderData())
         this.$emit('borderDataChange', this.getBorderData())
       },
       del() {
@@ -379,6 +380,7 @@
             })
           }
         })
+        console.log(this.getBorderData())
         this.$emit('borderDataChange', this.getBorderData())
         // eslint-disable-next-line no-console
         // console.log(this.polygonPaths)

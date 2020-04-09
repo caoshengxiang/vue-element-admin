@@ -46,6 +46,12 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/test',
+    component: () => import('@/views/error-page/test'),
+    meta: { title: '项目图标' },
+    hidden: true
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/home',
@@ -354,10 +360,18 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'http://49.235.131.71:9512/#/data/map',
-        meta: { title: 'GIS大屏', icon: 'link' }
+        // path: 'http://49.235.131.71:9512/#/data/map',
+        path: '/data',
+        meta: { title: 'GIS大屏', icon: 'link' },
+        redirect: '/data/map'
       }
     ]
+  },
+  {
+    path: '/data/map',
+    name: 'dataMap',
+    component: () => import('@/views/data-map/map-v'),
+    hidden: true
   }
 
   // 404 page must be placed at the end !!!
