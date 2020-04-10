@@ -9,3 +9,6 @@ import './prototype/echarts'
 
 // styles
 import './styles'
+
+// globalComponents
+import './globalComponents/video'

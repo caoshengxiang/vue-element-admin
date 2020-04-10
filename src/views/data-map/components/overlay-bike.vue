@@ -31,6 +31,7 @@
       BmOverlay,
       BmlMarkerClusterer
     },
+    // eslint-disable-next-line vue/require-prop-types
     props: ['data', 'position'],
     data() {
       return {
@@ -70,8 +71,6 @@
   }
 
   .item {
-    width: 37px;
-    height: 53px;
     position: relative;
 
     img.icon {

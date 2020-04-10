@@ -25,6 +25,7 @@
     components: {
       BmOverlay
     },
+    // eslint-disable-next-line vue/require-prop-types
     props: ['data', 'position'],
     data() {
       return {
@@ -65,18 +66,11 @@
   }
 
   .item {
-    width: 37px;
-    height: 53px;
-    background-image: url("../img/1.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
     position: relative;
 
     img.icon {
       position: absolute;
-      top: 7px;
-      left: 10px;
-      width: 18px;
+      width: 34px;
     }
   }
 </style>

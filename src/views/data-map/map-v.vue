@@ -24,31 +24,19 @@
       </div>
       <!--围栏-->
       <div v-if="isCheck(2)">
-        <bm-polygon
+        <polygon-fence
           v-for="(item, index) in border2_Data"
           :key="'10000'+index"
-          :path="item.paths"
-          stroke-color="#FF5E5E"
-          :stroke-opacity="0.8"
-          :stroke-weight="1"
-          fill-color="#FF5E5E"
-          :fill-opacity="0.3"
-          :editing="false"
+          :item="item"
         />
       </div>
       <!--点位-->
       <div v-if="isCheck(3)">
         <!--多边形，地图边界-->
-        <bm-polygon
+        <polygon-point
           v-for="(item, index) in border1_Data"
           :key="'100'+index"
-          :path="item.paths"
-          stroke-color="#91DF74"
-          :stroke-opacity="0.8"
-          :stroke-weight="1"
-          fill-color="#91DF74"
-          :fill-opacity="0.3"
-          :editing="false"
+          :item="item"
         />
       </div>
       <!--城管人员-->
@@ -202,7 +190,7 @@
 <script>
   // 百度地图
   import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
-  import { BmPolygon, BmlHeatmap } from 'vue-baidu-map'
+  import { BmlHeatmap } from 'vue-baidu-map'
   import { ak } from './config'
   import styleJson from './styleJson' // 地图样式
   // 百度地图 end
@@ -210,17 +198,20 @@
   import overlayUser1 from './components/overlay-user1'
   import overlayUser2 from './components/overlay-user2'
   import overlayBike from './components/overlay-bike'
+  import polygonPoint from './components/polygon-point'
+  import PolygonFence from './components/polygon-fence'
 
   export default {
     name: 'MapV',
     components: {
+      PolygonFence,
       BaiduMap,
-      BmPolygon,
       BmlHeatmap,
       overlayCamera,
       overlayUser1,
       overlayUser2,
-      overlayBike
+      overlayBike,
+      polygonPoint
     },
     data() {
       return {
@@ -237,10 +228,9 @@
           },
           zoom: 14 // 范围 1-19
         },
-        checked: [1, 2, 3, 4, 5],
-        checkedId: '',
+        checked: [1, 3, 4, 5], // 1-摄像头,2-电子围栏,3-停车点,4-城管人员,5-运营人员,6-异常车,7-违章投放,8-违章热力图,9-停放热力图, 999-全部
         camera_data: [],
-        user1_data: [
+        user1_data: [ // 城管人员
           // { lng: 104.06401, lat: 30.67002 },
           // { lng: 104.06801, lat: 30.66002 },
           // { lng: 104.07151, lat: 30.67502 }
@@ -277,7 +267,7 @@
           //     'lat': 30.66225
           //   }]
           // }
-        ],
+        ], // 点位
         border2_Data: [], // 围栏
         hot_data1: [
           { 'lng': 104.072896, 'lat': 30.659407, count: 3 },
@@ -319,7 +309,7 @@
       }
     },
     created() {
-      this.getList()
+      this.getAllList()
     },
     methods: {
       getCameraList() {
@@ -405,10 +395,29 @@
           })
         }).catch()
       },
-      getList() {
+      getAllList() {
         this.getCameraList()
         this.getFenceList()
         this.getPointList()
+      },
+      initList() {
+        this.camera_data = []
+        this.border2_Data = []
+        this.border1_Data = []
+        this.user1_data = []
+        this.user2_data = []
+        this.bike_data = []
+        this.hot_data1 = []
+        this.hot_data2 = []
+      },
+      filterList(id) {
+        if (id === 1) {
+          this.getCameraList()
+        } else if (id === 2) {
+          this.getFenceList()
+        } else if (id === 3) {
+          this.getPointList()
+        }
       },
       handler({ BMap, map }) {
         //   map.setMapStyle(this.mapStyle)
@@ -424,8 +433,10 @@
         } else {
           if (id === 999) {
             this.checked = [999, 1, 2, 3, 4, 5]
+            this.getAllList()
           } else {
             this.checked.push(id)
+            this.filterList(id)
           }
         }
       },
@@ -523,7 +534,7 @@
       justify-content: center;
 
       .b-item {
-        background-image: url("./image/box.png");
+        background-image: url("./image/b-box.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         width: 150/9.6vw;
