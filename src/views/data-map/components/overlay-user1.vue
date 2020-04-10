@@ -10,8 +10,8 @@
       <div v-if="showTips" class="user-tips">
         <div class="line" />
         <div class="tip-con">
-          <div>桂溪街道</div>
-          <div>李四</div>
+          <div>{{ data.deptName }}</div>
+          <div>{{ data.userName }}</div>
         </div>
       </div>
     </div>

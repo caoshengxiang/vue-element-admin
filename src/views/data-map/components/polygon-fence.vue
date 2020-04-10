@@ -2,10 +2,10 @@
   <bm-polygon
     :path="item.paths"
     stroke-style="dashed"
-    :stroke-color="item.detail.type===2?'#00FF2A':'#FF5E5E'"
+    :stroke-color="item.detail.type===1?'#00FF2A':'#FF5E5E'"
     :stroke-opacity="0.8"
-    :stroke-weight="3"
-    :fill-color="item.detail.type===2?'#27C541':'#FF5E5E'"
+    :stroke-weight="2"
+    :fill-color="item.detail.type===1?'#27C541':'#FF5E5E'"
     :fill-opacity="0.3"
     :editing="false"
   />

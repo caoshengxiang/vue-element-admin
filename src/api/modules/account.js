@@ -20,5 +20,8 @@ export default {
   },
   resetPwd(params) {
     return request2.post('system/user/resetSelfPwd', params)
+  },
+  userList(params) {
+    return request2.get('system/user/page', { params: params })
   }
 }

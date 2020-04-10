@@ -39,5 +39,8 @@ export default {
   },
   bikeAndillegalTotal(params) {
     return request2.get('supervisor/statistic/bikeAndillegalTotal', { params: params })
+  },
+  gisStatics(params) {
+    return request2.get('supervisor/statistic/gisStatics', { params: params })
   }
 }

@@ -1,16 +1,14 @@
 <template>
-  <div>
-    <bm-polygon
-      :path="item.paths"
-      stroke-style="solid"
-      stroke-color="#91DF74"
-      :stroke-opacity="0.8"
-      :stroke-weight="1"
-      fill-color="#91DF74"
-      :fill-opacity="0.3"
-      :editing="false"
-    />
-  </div>
+  <bm-polygon
+    :path="item.paths"
+    stroke-style="solid"
+    stroke-color="#91DF74"
+    :stroke-opacity="0.8"
+    :stroke-weight="1"
+    fill-color="#91DF74"
+    :fill-opacity="0.3"
+    :editing="false"
+  />
 </template>
 
 <script>

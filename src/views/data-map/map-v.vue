@@ -45,7 +45,7 @@
           v-for="(item, index) in user1_data"
           :key="index"
           :position="{lng: item.lng, lat: item.lat}"
-          :data="{}"
+          :data="item"
           @mouseover.native="active = true"
           @mouseleave.native="active = false"
         />
@@ -105,13 +105,13 @@
         <div class="check-item" :class="{active: isCheck(4)}" @click="checkHandle(4)">
           <img class="icon" src="./image/bar/bar-4.png" alt="">
           <span class="text">城管人员</span>
-          <span class="value">95</span>
+          <span class="value">{{ total4 }}</span>
         </div>
 
         <div class="check-item" :class="{active: isCheck(5)}" @click="checkHandle(5)">
           <img class="icon" src="./image/bar/bar-5.png" alt="">
           <span class="text">运营人员</span>
-          <span class="value">95</span>
+          <span class="value">{{ total5 }}</span>
         </div>
 
         <div class="check-item" :class="{active: isCheck(6)}" @click="checkHandle(6)">
@@ -147,21 +147,23 @@
         <img class="l-icon" src="./image/bottom/b1.png" alt="">
         <div class="t-box">
           <div class="t-title">辖区任务</div>
-          <div class="t1"><span class="t2">125</span>个</div>
+          <div class="t1"><span class="t2">{{ gisStatics.curTaskNum }}</span>个</div>
         </div>
         <div class="up-box">
-          <img class="up-icon" src="./image/bottom/up.png" alt="">
+          <img v-if="gisStatics.curTaskNum>=gisStatics.preTaskNum" class="up-icon" src="./image/bottom/up.png" alt="">
+          <img v-else class="up-icon" src="./image/bottom/down.png" alt="">
         </div>
       </div>
 
       <div class="b-item">
         <img class="l-icon" src="./image/bottom/b2.png" alt="">
         <div class="t-box">
-          <div class="t-title">辖区任务</div>
-          <div class="t1"><span class="t2">125</span>个</div>
+          <div class="t-title">辖区预警</div>
+          <div class="t1"><span class="t2">{{ gisStatics.curAlertNum }}</span>个</div>
         </div>
         <div class="up-box">
-          <img class="up-icon" src="./image/bottom/up.png" alt="">
+          <img v-if="gisStatics.curAlertNum>=gisStatics.preAlertNum" class="up-icon" src="./image/bottom/up.png" alt="">
+          <img v-else class="up-icon" src="./image/bottom/down.png" alt="">
         </div>
       </div>
 
@@ -169,11 +171,9 @@
         <img class="l-icon" src="./image/bottom/b3.png" alt="">
         <div class="t-box">
           <div class="t-title">预警点位</div>
-          <div class="t1"><span class="t2">125</span>个</div>
+          <div class="t1"><span class="t2">{{ gisStatics.alertSpotNum }}</span>个</div>
         </div>
-        <div class="up-box">
-          <img class="up-icon" src="./image/bottom/down.png" alt="">
-        </div>
+        <div class="up-box" />
       </div>
 
       <div class="b-item">
@@ -305,11 +305,19 @@
         total5: 0,
         total6: 0,
         total7: 0,
-        total8: 0
+        total8: 0,
+        gisStatics: {
+          curTaskNum: 0,
+          preTaskNum: 0,
+          curAlertNum: 0,
+          preAlertNum: 0,
+          alertSpotNum: 0
+        }
       }
     },
     created() {
       this.getAllList()
+      this.getGisStatics()
     },
     methods: {
       getCameraList() {
@@ -395,10 +403,49 @@
           })
         }).catch()
       },
+      getUser1List() {
+        this.$api.account.userList({
+          size: 100000000,
+          current: 1,
+          type: 2 // 用户类型 1:后台 2:城管 3:单车公司
+        }).then(res => {
+          const { data } = res
+          this.total4 = data.total
+          this.user1_data = data.records.filter(item => {
+            if (item.lat && item.lon) {
+              item.lng = item.lon
+              return item
+            }
+          })
+        }).catch()
+      },
+      getUser2List() {
+        this.$api.account.userList({
+          size: 100000000,
+          current: 1,
+          type: 3 // 用户类型 1:后台 2:城管 3:单车公司
+        }).then(res => {
+          const { data } = res
+          this.total5 = data.total
+          this.user2_data = data.records.filter(item => {
+            if (item.lat && item.lng) {
+              item.lng = item.lon
+              return item
+            }
+          })
+        }).catch()
+      },
+      getGisStatics() {
+        this.$api.statistics.gisStatics().then(res => {
+          this.gisStatics = res.data
+        }).catch()
+      },
       getAllList() {
         this.getCameraList()
         this.getFenceList()
         this.getPointList()
+        this.getUser1List()
+        this.getUser2List()
       },
       initList() {
         this.camera_data = []
@@ -417,6 +464,10 @@
           this.getFenceList()
         } else if (id === 3) {
           this.getPointList()
+        } else if (id === 4) {
+          this.getUser1List()
+        } else if (id === 5) {
+          this.getUser2List()
         }
       },
       handler({ BMap, map }) {
