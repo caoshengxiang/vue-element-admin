@@ -211,10 +211,12 @@
           this.$router.push({ name: 'point-capacity', query: { id: row.id }})
         }
         if (obj.key === 'taskNum') { // 任务
-          alert(obj.name)
+          const row = obj.row
+          this.$router.push({ name: 'task-index', query: { parkingSpotId: row.id }})
         }
         if (obj.key === 'alertNum') { // 预警
-          alert(obj.name)
+          const row = obj.row
+          this.$router.push({ name: 'warning-index', query: { parkingSpotId: row.id }})
         }
         if (obj.key === 'parkingNum' || obj.key === 'mtNum' || obj.key === 'qjNum' || obj.key === 'hlNum') { // 停放量
           const row = obj.row

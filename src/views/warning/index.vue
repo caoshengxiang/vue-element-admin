@@ -67,6 +67,18 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+              <el-col :xs="24" :sm="6">
+                <el-form-item label="点位" prop="parkingSpotId">
+                  <el-select v-model="searchForm.parkingSpotId" clearable placeholder="请选择">
+                    <el-option
+                      v-for="item in pointOptions"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
             </el-row>
             <el-row :gutter="20" style="padding-left: 90px;">
               <el-col :xs="24" :sm="6">
@@ -127,7 +139,8 @@
           company: '',
           state: '',
           eventType: '',
-          fenceName: ''
+          fenceName: '',
+          parkingSpotId: ''
         },
         pageForm: {
           size: 20,
@@ -136,8 +149,9 @@
         },
         total: 0,
         tableData: [],
-        defaultFormThead: defaultFormThead
+        defaultFormThead: defaultFormThead,
         /**/
+        pointOptions: []
       }
     },
     computed: {
@@ -148,6 +162,10 @@
       ])
     },
     created() {
+      this.getPoint()
+      if (this.$route.query.parkingSpotId) {
+        this.searchForm.parkingSpotId = this.$route.query.parkingSpotId
+      }
       this.getList()
     },
     methods: {
@@ -183,7 +201,16 @@
           this.$router.push({ name: 'warning-add', query: { id: row.id, viewType: 'detail' }})
         }
       },
-      add() {}
+      add() {},
+      getPoint() {
+        this.$api.points.list({
+          size: 1000,
+          current: 1
+        }).then(res => {
+          const { data } = res
+          this.pointOptions = data.records
+        })
+      }
     }
   }
 </script>

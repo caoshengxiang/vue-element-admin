@@ -174,6 +174,9 @@
       ])
     },
     created() {
+      if (this.$route.query.parkingSpotId) {
+        this.searchForm.parkingSpotId = this.$route.query.parkingSpotId
+      }
       this.getPoint()
       this.getList()
     },
