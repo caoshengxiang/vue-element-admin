@@ -61,7 +61,12 @@
             </el-row>
             <el-row :gutter="20" style="padding-left: 90px;">
               <el-col :xs="24" :sm="6">
-                <el-button icon="el-icon-search" type="primary" style="width: 100%;margin-bottom: 14px" @click="search('searchForm')">查 询
+                <el-button
+                  icon="el-icon-search"
+                  type="primary"
+                  style="width: 100%;margin-bottom: 14px"
+                  @click="search('searchForm')"
+                >查 询
                 </el-button>
               </el-col>
               <el-col :xs="24" :sm="6">
@@ -88,7 +93,8 @@
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="handleType(scope.row, 2)">详情</el-button>
               <el-button type="text" size="small" @click="handleType(scope.row, 4)">编辑</el-button>
-              <el-button class="com-color-danger" type="text" size="small" @click="handleType(scope.row, 1)">删除</el-button>
+              <el-button class="com-color-danger" type="text" size="small" @click="handleType(scope.row, 1)">删除
+              </el-button>
             </template>
           </el-table-column>
         </fixed-thead>

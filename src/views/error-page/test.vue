@@ -18,8 +18,7 @@
 <script>
   export default {
     name: 'Test',
-    components: {
-    },
+    components: {},
     data() {
       return {
         playerOptions: {

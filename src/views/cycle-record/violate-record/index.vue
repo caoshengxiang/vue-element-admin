@@ -146,8 +146,7 @@
         /**/
         loading: false,
         moreShow: false,
-        searchForm: {
-        },
+        searchForm: {},
         pageForm: {
           size: 20,
           current: 1,

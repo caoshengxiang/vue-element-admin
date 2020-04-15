@@ -3,6 +3,7 @@ import store from '@/store'
 const defaultFormThead = [{
   key: 'stopTime',
   name: '消除时间'
+  // sortable: 'custom'
 },
   {
     key: 'fenceName',

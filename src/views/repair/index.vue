@@ -138,8 +138,10 @@
             min-width="90px"
           >
             <template slot-scope="scope">
-              <el-button v-if="scope.row.state === 1" type="text" size="small" @click="handleType(scope.row, 1)">处理</el-button>
-              <el-button type="text" class="com-color-danger" size="small" @click="handleType(scope.row, 2)">删除</el-button>
+              <el-button v-if="scope.row.state === 1" type="text" size="small" @click="handleType(scope.row, 1)">处理
+              </el-button>
+              <el-button type="text" class="com-color-danger" size="small" @click="handleType(scope.row, 2)">删除
+              </el-button>
             </template>
           </el-table-column>
         </fixed-thead>

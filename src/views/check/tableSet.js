@@ -52,6 +52,7 @@ const defaultFormThead = [{
   key: 'response',
   name: '平均响应时间',
   minWidth: '90'
+  // sortable: 'custom'
 }, {
   key: 'complain',
   name: '投诉数量',

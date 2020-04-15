@@ -25,6 +25,7 @@ const defaultFormThead = [{
 }, {
   key: 'eventTime',
   name: '上报时间'
+  // sortable: 'custom'
   // formatter: (row, column, cellValue, index) => {
   //   return moment(row.t3).format('YYYY-MM-DD HH:mm:ss')
   // }

@@ -552,10 +552,12 @@
     width: 100%;
     height: 600px;
   }
+
   #Chart2 {
     width: 100%;
     height: 600px;
   }
+
   #Chart3 {
     width: 100%;
     height: 600px;

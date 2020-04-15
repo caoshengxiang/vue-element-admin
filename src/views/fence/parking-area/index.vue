@@ -96,7 +96,8 @@
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="handleType(scope.row, 3)">详情</el-button>
               <el-button type="text" size="small" @click="handleType(scope.row, 1)">编辑</el-button>
-              <el-button class="com-color-danger" type="text" size="small" @click="handleType(scope.row, 2)">删除</el-button>
+              <el-button class="com-color-danger" type="text" size="small" @click="handleType(scope.row, 2)">删除
+              </el-button>
             </template>
           </el-table-column>
         </fixed-thead>

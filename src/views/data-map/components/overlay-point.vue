@@ -138,10 +138,12 @@
             width: 100%;
             display: flex;
             align-items: center;
+
             .div2-t1 {
               display: inline-block;
               width: 34px;
             }
+
             .div2-t2 {
               display: inline-block;
               width: 120px;

@@ -26,6 +26,7 @@ const defaultFormThead = [{
 }, {
   key: 'eventTime',
   name: '骑行时间'
+  // sortable: 'custom'
 }, {
   key: 'rideMintues',
   name: '骑行分钟数',

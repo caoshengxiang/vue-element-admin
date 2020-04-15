@@ -24,7 +24,13 @@
         <!--          </el-radio-group>-->
         <!--        </el-form-item>-->
         <el-form-item label="摄像头:" prop="cameraId">
-          <el-select v-model="ruleForm.cameraId" :disabled="viewType === 'detail'" clearable placeholder="摄像头" filterable>
+          <el-select
+            v-model="ruleForm.cameraId"
+            :disabled="viewType === 'detail'"
+            clearable
+            placeholder="摄像头"
+            filterable
+          >
             <el-option
               v-for="item in cameraList"
               :key="item.id"

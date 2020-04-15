@@ -153,8 +153,10 @@
           >
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="handleType(scope.row, 1)">编辑</el-button>
-              <el-button type="text" class="com-color-warning" size="small" @click="handleType(scope.row, 2)">注销</el-button>
-              <el-button type="text" class="com-color-danger" size="small" @click="handleType(scope.row, 3)">删除</el-button>
+              <el-button type="text" class="com-color-warning" size="small" @click="handleType(scope.row, 2)">注销
+              </el-button>
+              <el-button type="text" class="com-color-danger" size="small" @click="handleType(scope.row, 3)">删除
+              </el-button>
               <el-button type="text" size="small" @click="handleType(scope.row, 4)">维保</el-button>
             </template>
           </el-table-column>

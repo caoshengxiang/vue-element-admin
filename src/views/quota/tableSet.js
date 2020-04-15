@@ -7,6 +7,7 @@ const defaultFormThead = [{
   key: 'operateTime',
   name: '操作时间',
   minWidth: '120'
+  // sortable: 'custom'
 }, {
   key: 'company',
   name: '公司',

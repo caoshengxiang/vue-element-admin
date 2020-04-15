@@ -30,9 +30,11 @@ const defaultFormThead = [{
 }, {
   key: 'taskTime',
   name: '任务调度时间'
+  // sortable: 'custom'
 }, {
   key: 'fishTime',
   name: '任务完成时间'
+  // sortable: 'custom'
 }, {
   key: 'taskType',
   name: '调度类型',

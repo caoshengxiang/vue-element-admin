@@ -26,6 +26,7 @@ const defaultFormThead = [{
 }, {
   key: 'eventTime',
   name: '违章骑行时间'
+  // sortable: 'custom'
 }, {
   key: 'eventAddr',
   name: '违章地点'

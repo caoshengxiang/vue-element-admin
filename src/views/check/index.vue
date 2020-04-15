@@ -140,24 +140,24 @@
       // handleType(row, type) {
       //   if (type === 1) {
       //   } else if (type === 2) {
-          // this.$confirm('确认注销, 是否继续?', '提示', {
-          //   confirmButtonText: '确定',
-          //   cancelButtonText: '取消',
-          //   type: 'warning'
-          // }).then(() => {
-          //   this.$api.electronicLicense.revoke(row.id).then(res => {
-          //     if (res.code === 200) {
-          //       this.$message.success('注销成功')
-          //       this.getList()
-          //     }
-          //   })
-          // }).catch(() => {
-          //   this.$message({
-          //     type: 'info',
-          //     message: '已取消'
-          //   })
-          // })
-        // }
+      // this.$confirm('确认注销, 是否继续?', '提示', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消',
+      //   type: 'warning'
+      // }).then(() => {
+      //   this.$api.electronicLicense.revoke(row.id).then(res => {
+      //     if (res.code === 200) {
+      //       this.$message.success('注销成功')
+      //       this.getList()
+      //     }
+      //   })
+      // }).catch(() => {
+      //   this.$message({
+      //     type: 'info',
+      //     message: '已取消'
+      //   })
+      // })
+      // }
       // }
       // add() {
       //   this.$router.push({ name: 'electronic-license-add' })
