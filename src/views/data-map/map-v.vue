@@ -10,6 +10,8 @@
       :scroll-wheel-zoom="true"
       :map-click="false"
       @ready="handler"
+      @click="mapClick"
+      @zoomend="zoomend"
     >
       <!--摄像头-->
       <div v-if="isCheck(1)">
@@ -32,12 +34,27 @@
       </div>
       <!--点位-->
       <div v-if="isCheck(3)">
-        <!--多边形，地图边界-->
-        <polygon-point
+        <div
           v-for="(item, index) in border1_Data"
-          :key="'100'+index"
-          :item="item"
-        />
+          :key="'10011'+index"
+        >
+          <!--多边形，地图边界-->
+          <polygon-point
+            :item="item"
+          />
+          <overlay-point
+            v-if="map.zoom > 15"
+            :position="{lng: item.detail.lon, lat: item.detail.lat}"
+            :data="item.detail"
+          />
+          <bm-label
+            :content="item.detail.name"
+            :position="{lng: item.detail.lon, lat: item.detail.lat}"
+            :offset="{width: -20}"
+            :label-style="{color: '#FFFFFF', fontSize : '12px', border: 0,background: 'rgba(255,255,255,0)'}"
+            title="Hover me"
+          />
+        </div>
       </div>
       <!--城管人员-->
       <div v-if="isCheck(4)">
@@ -56,7 +73,7 @@
           v-for="(item, index) in user2_data"
           :key="index"
           :position="{lng: item.lng, lat: item.lat}"
-          :data="{}"
+          :data="item"
           @mouseover.native="active = true"
           @mouseleave.native="active = false"
         />
@@ -67,7 +84,7 @@
           v-for="(item, index) in bike_data"
           :key="index"
           :position="{lng: item.lng, lat: item.lat}"
-          :data="item.data"
+          :data="item"
         />
       </div>
 
@@ -117,13 +134,14 @@
         <div class="check-item" :class="{active: isCheck(6)}" @click="checkHandle(6)">
           <img class="icon" src="./image/bar/bar-6.png" alt="">
           <span class="text">异常车</span>
-          <span class="value">95</span>
+          <span class="value">{{ total6 }}</span>
         </div>
 
-        <div class="check-item" :class="{active: isCheck(7)}" @click="checkHandle(7)">
+        <!--        <div class="check-item" :class="{active: isCheck(7)}" @click="checkHandle(7)">-->
+        <div class="check-item">
           <img class="icon" src="./image/bar/bar-7.png" alt="">
           <span class="text">违章投放</span>
-          <span class="value">9500</span>
+          <span class="value">{{ total7 }}</span>
         </div>
 
         <div class="check-item" :class="{active: isCheck(8)}" @click="checkHandle(8)">
@@ -143,46 +161,58 @@
 
     <!--底部-->
     <div class="bottom">
-      <div class="b-item">
-        <img class="l-icon" src="./image/bottom/b1.png" alt="">
-        <div class="t-box">
-          <div class="t-title">辖区任务</div>
-          <div class="t1"><span class="t2">{{ gisStatics.curTaskNum }}</span>个</div>
+      <router-link :to="{path: '/event/task-index'}">
+        <div class="b-item">
+          <img class="l-icon" src="./image/bottom/b1.png" alt="">
+          <div class="t-box">
+            <div class="t-title">辖区任务</div>
+            <div class="t1"><span class="t2">{{ gisStatics.curTaskNum }}</span>个</div>
+          </div>
+          <div class="up-box">
+            <img v-if="gisStatics.curTaskNum>=gisStatics.preTaskNum" class="up-icon" src="./image/bottom/up.png" alt="">
+            <img v-else class="up-icon" src="./image/bottom/down.png" alt="">
+          </div>
         </div>
-        <div class="up-box">
-          <img v-if="gisStatics.curTaskNum>=gisStatics.preTaskNum" class="up-icon" src="./image/bottom/up.png" alt="">
-          <img v-else class="up-icon" src="./image/bottom/down.png" alt="">
-        </div>
-      </div>
+      </router-link>
 
-      <div class="b-item">
-        <img class="l-icon" src="./image/bottom/b2.png" alt="">
-        <div class="t-box">
-          <div class="t-title">辖区预警</div>
-          <div class="t1"><span class="t2">{{ gisStatics.curAlertNum }}</span>个</div>
+      <router-link to="/event/warning-index">
+        <div class="b-item">
+          <img class="l-icon" src="./image/bottom/b2.png" alt="">
+          <div class="t-box">
+            <div class="t-title">辖区预警</div>
+            <div class="t1"><span class="t2">{{ gisStatics.curAlertNum }}</span>个</div>
+          </div>
+          <div class="up-box">
+            <img
+              v-if="gisStatics.curAlertNum>=gisStatics.preAlertNum"
+              class="up-icon"
+              src="./image/bottom/up.png"
+            >
+            <img v-else class="up-icon" src="./image/bottom/down.png" alt="">
+          </div>
         </div>
-        <div class="up-box">
-          <img v-if="gisStatics.curAlertNum>=gisStatics.preAlertNum" class="up-icon" src="./image/bottom/up.png" alt="">
-          <img v-else class="up-icon" src="./image/bottom/down.png" alt="">
-        </div>
-      </div>
+      </router-link>
 
-      <div class="b-item">
-        <img class="l-icon" src="./image/bottom/b3.png" alt="">
-        <div class="t-box">
-          <div class="t-title">预警点位</div>
-          <div class="t1"><span class="t2">{{ gisStatics.alertSpotNum }}</span>个</div>
+      <router-link to="/point/index">
+        <div class="b-item">
+          <img class="l-icon" src="./image/bottom/b3.png" alt="">
+          <div class="t-box">
+            <div class="t-title">预警点位</div>
+            <div class="t1"><span class="t2">{{ gisStatics.alertSpotNum }}</span>个</div>
+          </div>
+          <div class="up-box" />
         </div>
-        <div class="up-box" />
-      </div>
+      </router-link>
 
-      <div class="b-item">
-        <img class="l-icon" src="./image/bottom/b4.png" alt="">
-        <div class="t-box">
-          <div class="t3">任务下发</div>
+      <router-link :to="{path: '/event/task-add', query: {viewType: 'add'}}">
+        <div class="b-item">
+          <img class="l-icon" src="./image/bottom/b4.png" alt="">
+          <div class="t-box">
+            <div class="t3">任务下发</div>
+          </div>
+          <div class="up-box" />
         </div>
-        <div class="up-box" />
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -190,7 +220,7 @@
 <script>
   // 百度地图
   import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
-  import { BmlHeatmap } from 'vue-baidu-map'
+  import { BmlHeatmap, BmLabel } from 'vue-baidu-map'
   import { ak } from './config'
   import styleJson from './styleJson' // 地图样式
   // 百度地图 end
@@ -200,6 +230,7 @@
   import overlayBike from './components/overlay-bike'
   import polygonPoint from './components/polygon-point'
   import PolygonFence from './components/polygon-fence'
+  import overlayPoint from './components/overlay-point'
 
   export default {
     name: 'MapV',
@@ -211,10 +242,16 @@
       overlayUser1,
       overlayUser2,
       overlayBike,
-      polygonPoint
+      polygonPoint,
+      overlayPoint,
+      BmLabel
     },
     data() {
       return {
+        infoWindow: {
+          show: true,
+          contents: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        },
         mapStyle: {
           styleJson: styleJson
         },
@@ -228,7 +265,7 @@
           },
           zoom: 14 // 范围 1-19
         },
-        checked: [1, 3, 4, 5], // 1-摄像头,2-电子围栏,3-停车点,4-城管人员,5-运营人员,6-异常车,7-违章投放,8-违章热力图,9-停放热力图, 999-全部
+        checked: [1, 3], // 1-摄像头,2-电子围栏,3-停车点,4-城管人员,5-运营人员,6-异常车,7-违章投放,8-违章热力图,9-停放热力图, 999-全部
         camera_data: [],
         user1_data: [ // 城管人员
           // { lng: 104.06401, lat: 30.67002 },
@@ -270,33 +307,33 @@
         ], // 点位
         border2_Data: [], // 围栏
         hot_data1: [
-          { 'lng': 104.072896, 'lat': 30.659407, count: 3 },
-          { 'lng': 104.072896, 'lat': 30.659407, count: 8 },
-          { 'lng': 104.072896, 'lat': 30.659407, count: 3 },
-          { 'lng': 104.068896, 'lat': 30.659407, count: 6 },
-          { 'lng': 104.068896, 'lat': 30.659407, count: 10 },
-          { 'lng': 104.072896, 'lat': 30.659407, count: 5 },
-          { 'lng': 104.072896, 'lat': 30.659407, count: 8 },
-          { 'lng': 104.072896, 'lat': 30.659307, count: 5 },
-          { 'lng': 104.069896, 'lat': 30.659457, count: 10 },
-          { 'lng': 104.071796, 'lat': 30.659207, count: 3 },
-          { 'lng': 104.070796, 'lat': 30.659287, count: 10 },
-          { 'lng': 104.071796, 'lat': 30.659007, count: 3 },
-          { 'lng': 104.071196, 'lat': 30.65957, count: 7 },
-          { 'lng': 104.073796, 'lat': 30.659457, count: 3 },
-          { 'lng': 104.070796, 'lat': 30.659307, count: 8 },
-          { 'lng': 104.071796, 'lat': 30.659507, count: 1 },
-          { 'lng': 104.071296, 'lat': 30.659287, count: 8 },
-          { 'lng': 104.071396, 'lat': 30.659207, count: 3 },
-          { 'lng': 104.070796, 'lat': 30.659107, count: 10 }
+          // { 'lng': 104.072896, 'lat': 30.659407, count: 3 },
+          // { 'lng': 104.072896, 'lat': 30.659407, count: 8 },
+          // { 'lng': 104.072896, 'lat': 30.659407, count: 3 },
+          // { 'lng': 104.068896, 'lat': 30.659407, count: 6 },
+          // { 'lng': 104.068896, 'lat': 30.659407, count: 10 },
+          // { 'lng': 104.072896, 'lat': 30.659407, count: 5 },
+          // { 'lng': 104.072896, 'lat': 30.659407, count: 8 },
+          // { 'lng': 104.072896, 'lat': 30.659307, count: 5 },
+          // { 'lng': 104.069896, 'lat': 30.659457, count: 10 },
+          // { 'lng': 104.071796, 'lat': 30.659207, count: 3 },
+          // { 'lng': 104.070796, 'lat': 30.659287, count: 10 },
+          // { 'lng': 104.071796, 'lat': 30.659007, count: 3 },
+          // { 'lng': 104.071196, 'lat': 30.65957, count: 7 },
+          // { 'lng': 104.073796, 'lat': 30.659457, count: 3 },
+          // { 'lng': 104.070796, 'lat': 30.659307, count: 8 },
+          // { 'lng': 104.071796, 'lat': 30.659507, count: 1 },
+          // { 'lng': 104.071296, 'lat': 30.659287, count: 8 },
+          // { 'lng': 104.071396, 'lat': 30.659207, count: 3 },
+          // { 'lng': 104.070796, 'lat': 30.659107, count: 10 }
         ],
         hot_data2: [
-          { 'lng': 104.070896, 'lat': 30.659407, count: 3 },
-          { 'lng': 104.072896, 'lat': 30.659457, count: 9 },
-          { 'lng': 104.073796, 'lat': 30.659207, count: 6 },
-          { 'lng': 104.076796, 'lat': 30.659287, count: 10 },
-          { 'lng': 104.070796, 'lat': 30.659007, count: 5 },
-          { 'lng': 104.075796, 'lat': 30.65957, count: 7 }
+          // { 'lng': 104.070896, 'lat': 30.659407, count: 3 },
+          // { 'lng': 104.072896, 'lat': 30.659457, count: 9 },
+          // { 'lng': 104.073796, 'lat': 30.659207, count: 6 },
+          // { 'lng': 104.076796, 'lat': 30.659287, count: 10 },
+          // { 'lng': 104.070796, 'lat': 30.659007, count: 5 },
+          // { 'lng': 104.075796, 'lat': 30.65957, count: 7 }
         ],
         total1: 0,
         total2: 0,
@@ -320,6 +357,15 @@
       this.getGisStatics()
     },
     methods: {
+      infoWindowClose(e) {
+        this.infoWindow.show = false
+      },
+      infoWindowOpen(e) {
+        this.infoWindow.show = true
+      },
+      clear() {
+        this.infoWindow.contents = ''
+      },
       getCameraList() {
         this.$api.camera.list({
           size: 100000000,
@@ -382,6 +428,12 @@
           this.total3 = data.total
           this.border1_Data = []
           data.records.forEach(item => {
+            if (item.alertContent) {
+              item.alertContents = item.alertContent.split(';')
+            } else {
+              item.alertContents = []
+            }
+
             if (item.matrix) {
               try {
                 const matrixs = JSON.parse(item.matrix)
@@ -415,7 +467,11 @@
             if (item.lat && item.lon) {
               item.lng = item.lon
               return item
-            }
+            }/* else {
+              item.lng = 104.072896
+              item.lat = 30.659407
+              return item
+            }*/
           })
         }).catch()
       },
@@ -428,8 +484,55 @@
           const { data } = res
           this.total5 = data.total
           this.user2_data = data.records.filter(item => {
+            if (item.lat && item.lon) {
+              item.lng = item.lon
+              return item
+            }/* else {
+              item.lng = 104.072896
+              item.lat = 30.659407
+              return item
+            }*/
+          })
+        }).catch()
+      },
+      getUnusualBikeList() {
+        this.$api.statistics.unusualBikeList({
+          size: 100000000,
+          current: 1
+        }).then(res => {
+          const { data } = res
+          this.total6 = data.total
+          this.bike_data = data.records.filter(item => {
+            if (item.lat && item.lon) {
+              item.lng = item.lon
+              return item
+            }/* else {
+              item.lng = 104.072896
+              item.lat = 30.659407
+              return item
+            }*/
+          })
+        }).catch()
+      },
+      illegalPark() {
+        this.$api.statistics.illegalPark().then(res => {
+          const { data } = res
+          this.hot_data1 = data.list.filter(item => {
+            if (item.lat && item.lon) {
+              item.lng = item.lon
+              item.count = item.value
+              return item
+            }
+          })
+        }).catch()
+      },
+      parkHot() {
+        this.$api.statistics.parkHot().then(res => {
+          const { data } = res
+          this.hot_data2 = data.filter(item => {
             if (item.lat && item.lng) {
               item.lng = item.lon
+              item.count = item.value
               return item
             }
           })
@@ -439,6 +542,10 @@
         this.$api.statistics.gisStatics().then(res => {
           this.gisStatics = res.data
         }).catch()
+        this.$api.statistics.bikeRegistrationTotal().then(res => {
+          // this.num3 = res.data.registerTotal
+          this.total7 = res.data.unlicensTotal
+        })
       },
       getAllList() {
         this.getCameraList()
@@ -446,6 +553,7 @@
         this.getPointList()
         this.getUser1List()
         this.getUser2List()
+        this.getUnusualBikeList()
       },
       initList() {
         this.camera_data = []
@@ -468,10 +576,23 @@
           this.getUser1List()
         } else if (id === 5) {
           this.getUser2List()
+        } else if (id === 6) {
+          this.getUnusualBikeList()
+        } else if (id === 8) {
+          this.illegalPark()
+        } else if (id === 9) {
+          this.parkHot()
         }
       },
       handler({ BMap, map }) {
         //   map.setMapStyle(this.mapStyle)
+      },
+      mapClick({ type, target, point, pixel, overlay }) {
+        console.info(point, pixel)
+      },
+      zoomend({ type, target }) {
+        console.log(target.getZoom())
+        this.map.zoom = target.getZoom()
       },
       checkHandle(id) { // / 999 代表全部
         const index = this.checked.indexOf(id)
@@ -588,8 +709,8 @@
         background-image: url("./image/b-box.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
-        width: 150/9.6vw;
-        height: 63/9.6vw;
+        width: 130/9.6vw;
+        height: 60/9.6vw;
         display: flex;
         justify-content: space-between;
         align-items: center;

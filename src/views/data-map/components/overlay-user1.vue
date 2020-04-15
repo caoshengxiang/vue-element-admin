@@ -10,8 +10,8 @@
       <div v-if="showTips" class="user-tips">
         <div class="line" />
         <div class="tip-con">
-          <div>{{ data.deptName }}</div>
-          <div>{{ data.userName }}</div>
+          <div>{{ data.deptName }}&nbsp;&nbsp;{{ data.userName }}</div>
+          <div />
         </div>
       </div>
     </div>
@@ -49,8 +49,8 @@
       draw({ el, BMap, map }) {
         const { lng, lat } = this.position
         const pixel = map.pointToOverlayPixel(new BMap.Point(lng, lat))
-        el.style.left = pixel.x - 20 + 'px'
-        el.style.top = pixel.y - 30 + 'px'
+        el.style.left = pixel.x + 'px'
+        el.style.top = pixel.y + 'px'
         this.px = pixel.x
         this.py = pixel.y
       }

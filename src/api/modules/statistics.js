@@ -42,5 +42,14 @@ export default {
   },
   gisStatics(params) {
     return request2.get('supervisor/statistic/gisStatics', { params: params })
+  },
+  unusualBikeList(params) {
+    return request2.get('supervisor/maintenance-record/unusual', { params: params })
+  },
+  illegalPark(params) {
+    return request2.get('supervisor/statistic/illegalPark', { params: params })
+  },
+  parkHot(params) {
+    return request2.get('supervisor/statistic/parkHot', { params: params })
   }
 }

@@ -7,12 +7,12 @@
       @draw="draw"
     >
       <div class="item" @click="showTips = !showTips">
-        <img v-if="data.type === 'h'" class="icon" src="../image/bike/h.png" alt="">
-        <img v-if="data.type === 'o'" class="icon" src="../image/bike/o.png" alt="">
-        <img v-if="data.type === 'm'" class="icon" src="../image/bike/m.png" alt="">
-        <img v-if="data.type === 'q'" class="icon" src="../image/bike/q.png" alt="">
+        <img v-if="data.company === 1" class="icon" src="../image/bike/h.png" alt="">
+        <img v-if="data.company === 4" class="icon" src="../image/bike/o.png" alt="">
+        <img v-if="data.company === 3" class="icon" src="../image/bike/m.png" alt="">
+        <img v-if="data.company === 2" class="icon" src="../image/bike/q.png" alt="">
         <div v-if="showTips" class="user-tips">
-          <div class="line" />
+          <!--          <div class="line"/>-->
           <div class="tip-con">
             <!--          <div>{{data.detail}}</div>-->
             <div>{{ data.detail }}</div>
@@ -25,6 +25,7 @@
 
 <script>
   import { BmOverlay, BmlMarkerClusterer } from 'vue-baidu-map'
+  import { mapState } from 'vuex'
 
   export default {
     components: {
@@ -39,6 +40,11 @@
         py: 0,
         showTips: true
       }
+    },
+    computed: {
+      ...mapState('const', [
+        'bikeCompany'
+      ])
     },
     watch: {
       position: {

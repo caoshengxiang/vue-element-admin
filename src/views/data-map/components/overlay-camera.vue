@@ -8,11 +8,16 @@
     <div class="item">
       <img class="icon" src="../img/2.png" alt="" @click="showTips = !showTips">
       <div v-if="showTips" class="tips">
-        <div class="line" />
+        <!--        <div class="line" />-->
         <div class="tip-con">
-          <div style="text-align: center;padding: 10px;">桂溪街道</div>
+          <div
+            style="text-align: center;padding: 10px;position: relative"
+          >桂溪街道
+            <img style="position: absolute;right: 10px;" src="../img/close.png" alt="" @click="showTips = false">
+          </div>
           <video-player
             ref="videoPlayer"
+            style="width: 500px"
             class="video-player vjs-custom-skin"
             :playsinline="true"
             :options="playerOptions"
@@ -73,6 +78,11 @@
           this.$refs.customOverlay.reload()
         },
         deep: true
+      },
+      showTips(val) {
+        if (!val) {
+          this.$refs.videoPlayer.player.pause()
+        }
       }
     },
     methods: {
@@ -82,8 +92,8 @@
       draw({ el, BMap, map }) {
         const { lng, lat } = this.position
         const pixel = map.pointToOverlayPixel(new BMap.Point(lng, lat))
-        el.style.left = pixel.x - 20 + 'px'
-        el.style.top = pixel.y - 30 + 'px'
+        el.style.left = pixel.x + 'px'
+        el.style.top = pixel.y + 'px'
         this.px = pixel.x
         this.py = pixel.y
       },
@@ -125,15 +135,15 @@
       }
 
       .tip-con {
-        background-image: url("../image/box.png");
+        background-image: url("../img/camera-box.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
-        padding: 5px 10px;
-        width: 500px;
-        height: 360px;
+        width: 580px;
+        height: 340px;
         position: absolute;
         bottom: -30px;
-        left: 20px;
+        left: 10px;
+        padding-left: 74px;
       }
     }
   }
