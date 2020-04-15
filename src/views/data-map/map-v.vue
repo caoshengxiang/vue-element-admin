@@ -11,6 +11,7 @@
       :map-click="false"
       @ready="handler"
       @click="mapClick"
+      @zoomstart="zoomstart"
       @zoomend="zoomend"
     >
       <!--摄像头-->
@@ -43,11 +44,12 @@
             :item="item"
           />
           <overlay-point
-            v-if="map.zoom > 15"
+            v-show="mapZoom15"
             :position="{lng: item.detail.lon, lat: item.detail.lat}"
             :data="item.detail"
           />
           <bm-label
+            v-if="mapZoom15"
             :content="item.detail.name"
             :position="{lng: item.detail.lon, lat: item.detail.lat}"
             :offset="{width: -20}"
@@ -265,6 +267,7 @@
           },
           zoom: 14 // 范围 1-19
         },
+        mapZoom15: false,
         checked: [1, 3], // 1-摄像头,2-电子围栏,3-停车点,4-城管人员,5-运营人员,6-异常车,7-违章投放,8-违章热力图,9-停放热力图, 999-全部
         camera_data: [],
         user1_data: [ // 城管人员
@@ -590,9 +593,15 @@
       mapClick({ type, target, point, pixel, overlay }) {
         console.info(point, pixel)
       },
+      zoomstart() {
+        this.mapZoom15 = false
+      },
       zoomend({ type, target }) {
         console.log(target.getZoom())
-        this.map.zoom = target.getZoom()
+        // this.map.zoom = target.getZoom()
+        if (target.getZoom() > 15) {
+          this.mapZoom15 = true
+        }
       },
       checkHandle(id) { // / 999 代表全部
         const index = this.checked.indexOf(id)

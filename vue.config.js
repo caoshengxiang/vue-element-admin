@@ -26,7 +26,7 @@ module.exports = {
    */
   // publicPath: '/',
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/' // ??history模式下打包有问题, 只能使用'/' 不能是'./'否则静态资源会报错?? https://cli.vuejs.org/zh/config/#publicpath
+    ? '/' // ??history模式下打包有问题, 只能使用'/' 不能是'./'否则静态资源会报错，要直接点访问只能使用hash模式?? https://cli.vuejs.org/zh/config/#publicpath
     : '/',
   outputDir: 'dist',
   assetsDir: 'static',
