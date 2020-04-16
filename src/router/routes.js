@@ -2,6 +2,8 @@
 * 路由定义规范说明：
 * path尽量为文件路径
 * component 接口返回做文件映射时，已尽量为文件路径，所有首字母大写 如： component: () => import('@/views/redirect/index') // ViewsRedirectIndex
+*
+* 添加meta 属性 target: '_blank' ,菜单会新开标签页
 * */
 
 import Layout from '@/layout/index'
@@ -350,8 +352,10 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'http://49.235.131.71:9512/#/data/v',
-        meta: { title: '大屏', icon: 'link' }
+        // path: 'http://49.235.131.71:9512/#/data/v',
+        path: '/datav',
+        meta: { title: '大屏', icon: 'link', target: '_blank' },
+        redirect: '/data/v'
       }
     ]
   },
@@ -366,6 +370,12 @@ export const constantRoutes = [
         redirect: '/data/map'
       }
     ]
+  },
+  {
+    path: '/data/v',
+    name: 'dataV',
+    component: () => import('@/views/data-bicycle/data-v'),
+    hidden: true
   },
   {
     path: '/data/map',

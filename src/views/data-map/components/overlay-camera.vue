@@ -12,7 +12,7 @@
         <div class="tip-con">
           <div
             style="text-align: center;padding: 10px;position: relative"
-          >桂溪街道
+          >{{ data.fenceName }}
             <img style="position: absolute;right: 10px;" src="../img/close.png" alt="" @click="showTips = false">
           </div>
           <video-player

@@ -20,7 +20,7 @@
           v-for="(item, index) in camera_data"
           :key="index"
           :position="{lng: item.lng, lat: item.lat}"
-          :data="{}"
+          :data="item"
           @mouseover.native="active = true"
           @mouseleave.native="active = false"
         />
@@ -161,6 +161,8 @@
       </div>
     </div>
 
+    <!--页头-->
+    <div class="main-header"><span>共享单车综合智慧治理平台</span></div>
     <!--底部-->
     <div class="bottom">
       <router-link :to="{path: '/event/task-index'}">
@@ -377,17 +379,23 @@
           const { data } = res
           this.total1 = data.total
           this.camera_data = []
-          data.records.forEach(item => {
-            if (item.matrix) {
-              try {
-                const matrixs = JSON.parse(item.matrix)
-                // console.log(matrixs[0])
-                this.camera_data.push(Object.assign({},
-                  matrixs[0].center,
-                  { detail: item }))
-              } catch (e) {
-                console.error('点位格式有误-》matrix')
-              }
+          // data.records.forEach(item => {
+          //   if (item.matrix) {
+          //     try {
+          //       const matrixs = JSON.parse(item.matrix)
+          //       // console.log(matrixs[0])
+          //       this.camera_data.push(Object.assign({},
+          //         matrixs[0].center,
+          //         { detail: item }))
+          //     } catch (e) {
+          //       console.error('点位格式有误-》matrix')
+          //     }
+          //   }
+          // })
+          this.camera_data = data.records.filter(item => {
+            if (item.lat && item.lon) {
+              item.lng = item.lon
+              return item
             }
           })
         }).catch()
@@ -757,6 +765,22 @@
           .up-icon {
           }
         }
+      }
+    }
+
+    .main-header {
+      position: absolute;
+      top: 0;
+      height: 40px;
+      width: 100vw;
+      color: rgba(255, 255, 255, 1);
+      background-image: url("./image/header-bg.png");
+      background-size: 100% 100%;
+      text-align: center;
+
+      span {
+        position: relative;
+        top: 10px;
       }
     }
   }

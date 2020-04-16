@@ -12,3 +12,4 @@ import './styles'
 
 // globalComponents
 import './globalComponents/video'
+import './globalComponents/dataView'
