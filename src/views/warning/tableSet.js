@@ -34,12 +34,12 @@ const defaultFormThead = [{
     width: '80'
   }, {
     key: 'earlyTime',
-    name: '最早预警时间',
-    sortable: 'custom'
+    name: '最早预警时间'
+    // sortable: 'custom'
   }, {
     key: 'eventTime',
-    name: '最新事件时间',
-    sortable: 'custom'
+    name: '最新事件时间'
+    // sortable: 'custom'
   }, {
     key: 'state',
     name: '预警状态',
