@@ -4,7 +4,7 @@
       <div class="com-bar">
         <div class="com-bar-show">
           <div class="com-bar-left">
-            <span class="com-bar-item"><el-button type="primary" @click="add">添加</el-button></span>
+            <span v-if="platformType === 1" class="com-bar-item"><el-button type="primary" @click="add">添加</el-button></span>
           </div>
           <div class="com-bar-right">
             <span class="com-search-item com-bar-item">
@@ -92,8 +92,8 @@
           >
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="handleType(scope.row, 2)">详情</el-button>
-              <el-button type="text" size="small" @click="handleType(scope.row, 4)">编辑</el-button>
-              <el-button class="com-color-danger" type="text" size="small" @click="handleType(scope.row, 1)">删除
+              <el-button v-if="platformType === 1" type="text" size="small" @click="handleType(scope.row, 4)">编辑</el-button>
+              <el-button v-if="platformType === 1" class="com-color-danger" type="text" size="small" @click="handleType(scope.row, 1)">删除
               </el-button>
             </template>
           </el-table-column>
@@ -106,12 +106,14 @@
 <script>
   import FixedThead from '../../components/BaseTable/FixedThead'
   import defaultFormThead from './tableSet'
+  import { platformType } from '@/utils/config'
 
   export default {
     name: 'PointIndex',
     components: { FixedThead },
     data() {
       return {
+        platformType: platformType,
         /**/
         loading: false,
         moreShow: false,

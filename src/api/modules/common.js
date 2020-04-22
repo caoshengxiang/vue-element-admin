@@ -12,5 +12,9 @@ export default {
   },
   upload(params) {
     return request2.post('dfs/upload', params)
+  },
+  /* 上传记录*/
+  batchTask(params) {
+    return request2.get('supervisor/batchTask', { params: params })
   }
 }

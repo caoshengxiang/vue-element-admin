@@ -43,9 +43,10 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <div v-if="!dynamicValidateForm.domains || !dynamicValidateForm.domains.length" style="padding: 10px;color: #cccc;">暂未配置</div>
         <el-form-item>
-          <el-button type="success" @click="addCap">添加时间段</el-button>
-          <el-button style="width: 200px" type="primary" @click="submitForm('dynamicValidateForm')">保存</el-button>
+          <el-button v-if="platformType === 1" type="success" @click="addCap">添加时间段</el-button>
+          <el-button v-if="platformType === 1" style="width: 200px" type="primary" @click="submitForm('dynamicValidateForm')">保存</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -53,11 +54,13 @@
 </template>
 
 <script>
+  import { platformType } from '../../utils/config'
 
   export default {
     name: 'Capacity',
     data() {
       return {
+        platformType: platformType,
         loading: false,
         tableData: [],
         dynamicValidateForm: {

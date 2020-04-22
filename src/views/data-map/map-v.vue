@@ -396,7 +396,11 @@
             if (item.lat && item.lon) {
               item.lng = item.lon
               return item
-            }
+            } /* else {
+              item.lng = 104.06401
+              item.lat = 30.67002
+              return item
+            } */
           })
         }).catch()
       },

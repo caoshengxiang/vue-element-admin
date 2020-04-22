@@ -76,6 +76,12 @@ const state = {
   repairState: [
     { label: '待处理', value: 1 },
     { label: '已处理', value: 2 }
+  ],
+  // 上传类型
+  uploadType: [
+    { label: '批量备案', value: 1 },
+    { label: '批量注销', value: 2 },
+    { label: '骑行人上报', value: 3 }
   ]
 }
 

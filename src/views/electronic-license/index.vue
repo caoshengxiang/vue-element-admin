@@ -17,6 +17,11 @@
             </span>
 
             <span class="com-bar-item"><el-button type="text" @click="excelExport">下载注册模板</el-button></span>
+            <span class="com-bar-item"><el-button
+              type="text"
+              style="color: #ffa949"
+              @click="showUploadHisList1"
+            >批量注册记录</el-button></span>
             <span class="com-bar-item">
               <el-upload
                 action=""
@@ -28,6 +33,11 @@
               </el-upload>
             </span>
             <span class="com-bar-item"><el-button type="text" @click="excelExport2">下载注销模板</el-button></span>
+            <span class="com-bar-item"><el-button
+              type="text"
+              style="color: #ffa949"
+              @click="showUploadHisList2"
+            >批量注销记录</el-button></span>
           </div>
           <div class="com-bar-right">
             <span class="com-search-item com-bar-item">
@@ -157,7 +167,7 @@
               </el-button>
               <el-button type="text" class="com-color-danger" size="small" @click="handleType(scope.row, 3)">删除
               </el-button>
-              <el-button type="text" size="small" @click="handleType(scope.row, 4)">维保</el-button>
+              <!--              <el-button type="text" size="small" @click="handleType(scope.row, 4)">维保</el-button>-->
             </template>
           </el-table-column>
         </fixed-thead>
@@ -314,6 +324,12 @@
       },
       excelExport2() { // 注销
         fileDown('supervisor/register/revoke/template')
+      },
+      showUploadHisList1() {
+        this.$router.push({ name: 'electronic-license-uploadList', query: { cate: '1' }})
+      },
+      showUploadHisList2() {
+        this.$router.push({ name: 'electronic-license-uploadList', query: { cate: '2' }})
       }
     }
   }

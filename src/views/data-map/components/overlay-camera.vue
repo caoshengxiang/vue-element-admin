@@ -56,7 +56,7 @@
           sources: [
             {
               type: 'application/x-mpegURL', // 这里的种类支持很多种：基本视频格式、直播、流媒体等，具体可以参看git网址项目
-              src: 'http://192.168.0.150:9589/test.m3u8' // url地址
+              src: '' // url地址
             }
           ],
           hls: true,
@@ -73,6 +73,11 @@
       }
     },
     watch: {
+      data(val) {
+        if (val.liveUrl) {
+          this.playerOptions.sources[0].src = val.liveUrl
+        }
+      },
       position: {
         handler() {
           this.$refs.customOverlay.reload()
@@ -82,6 +87,9 @@
       showTips(val) {
         if (!val) {
           this.$refs.videoPlayer.player.pause()
+        }
+        if (!this.playerOptions.sources[0].src) {
+          this.playerOptions.sources[0].src = this.data.liveUrl
         }
       }
     },

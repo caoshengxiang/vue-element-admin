@@ -16,6 +16,7 @@
             </span>
 
             <span class="com-bar-item"><el-button type="text" @click="excelExport">下载模板</el-button></span>
+            <span class="com-bar-item"><el-button type="text" style="color: #ffa949" @click="showUploadHisList3">批量上传记录</el-button></span>
           </div>
           <div class="com-bar-right">
             <span class="com-search-item com-bar-item">
@@ -232,6 +233,9 @@
           }
         })
         return false
+      },
+      showUploadHisList3() {
+        this.$router.push({ name: 'electronic-license-uploadList', query: { cate: '3' }})
       }
     }
   }
