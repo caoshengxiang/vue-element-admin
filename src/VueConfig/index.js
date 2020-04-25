@@ -6,6 +6,7 @@ import './prototype/api'
 import './prototype/vueCookies'
 import './prototype/qs'
 import './prototype/echarts'
+import './prototype/targetNewPage'
 
 // styles
 import './styles'

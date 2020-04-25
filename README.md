@@ -143,3 +143,4 @@ Modern browsers and Internet Explorer 10+.
 1. api 使用
     如：this.$api.md.list()  md 代表api/modules/目录下得 js文件名
     添加一个模块，只需要在api/modules/目录下 添加一个js 文件即可工程化引入
+1. 

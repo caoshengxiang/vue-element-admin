@@ -48,7 +48,7 @@
         }).then(da => {
           this.config = {
             header: ['任务描述', '时间'],
-            columnWidth: [140, 100],
+            columnWidth: [200, 100],
             headerBGC: '',
             oddRowBGC: '',
             evenRowBGC: '',
