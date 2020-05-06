@@ -68,7 +68,7 @@
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12">
-                <el-form-item label="骑行时间" prop="">
+                <el-form-item label="时间" prop="">
                   <el-date-picker
                     v-model="valueTime"
                     value-format="yyyy-MM-dd HH:mm:ss"

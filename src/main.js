@@ -24,6 +24,9 @@ import * as filters from './filters' // global filters
 // vueConfig
 import './VueConfig'
 
+// 混入
+import mixin from './VueConfig/mixin'
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -50,6 +53,7 @@ Vue.config.productionTip = false
 
 new Vue({
   el: '#app',
+  mixins: [mixin],
   router,
   store,
   render: h => h(App)
